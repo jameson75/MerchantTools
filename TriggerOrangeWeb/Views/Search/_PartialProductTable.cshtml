@@ -1,0 +1,50 @@
+﻿<table st-table="products" st-pipe="getProductsPipe" class="table table-striped" ng-cloak>
+    <thead>
+        <tr>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>         
+        <tr ng-show="isLoading == false && !isEmpty" ng-repeat="product in products">
+            <!--<td><img src='{{product.SmallImageUrl}}' /></td>-->
+            <td><oib-Fit-Image oib-Src='{{product.SmallImageUrl}}' oib-Height="250px" oib-Width="250px" /></td>
+            <td>
+                <div>
+                    <a class="searchResultsTitle" href="{{product.ProductUrl}}" target="_blank">{{product.Name}}</a>
+                </div>
+                <div>
+                    <span>Price</span> {{product.Price | currency}}
+                </div>
+                <div>
+                    <span>Watch Count</span> {{product.WatchCount}}
+                </div>
+                <div>
+                    <span>Units Sold</span> {{product.UnitsSold}}
+                </div>    
+                <div>
+                    <span>Seller Score</span> {{product.SellerScore}}
+                </div>         
+                <div>
+                    <span>Listing Start</span> {{product.ListingStartTime | date : "medium"}}
+                </div>   
+                <div class="findSourcingNav">
+                    <a href='@Url.Action("Update", "Product")/{{product.Id}}' target='_blank'>Edit Product</a>                
+                </div>
+            </td>
+        </tr>
+        <tr ng-show="isLoading">           
+            <td>
+                <table width='100' height='100' align='center' valign='center'><tr><td><img src="@Url.Content("/Content/ajax-loader.gif")" /></td></tr></table>
+            </td>
+        </tr>
+        <tr ng-show="isEmpty && !isLoading">
+            <td colspan="7">NO RESULTS FOUND</td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td class="text-center" st-pagination="" st-items-by-page="10" colspan="4"></td>
+        </tr>
+    </tfoot>
+</table>

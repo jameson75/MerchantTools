@@ -1,0 +1,99 @@
+﻿@model CipherPark.TriggerOrange.Web.Models.DetailsViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/smarttable/js")
+}
+
+<h2>@Model.MasterName</h2>
+
+<span ng-show="reportPreviewChanged">Preview Changed</span>
+<br/>
+<br/>
+<input type="button" value="GenerateReport" class="catSearch" ng-click="onGenerateReport()" />
+<br />
+<table st-table="dataList" st-pipe="getDataListPipe" class="table table-striped" ng-cloak>
+    <tr ng-repeat="listItem in dataList">
+        <td>
+            <div>
+                <oib-Fit-Image oib-Src="{{listItem.LargeImageUrl}}" oib-Height="250px" oib-Width="250px" />
+                <br />
+            </div>
+        </td>
+        <td>
+            <a href="{{listItem.ProductUrl}}" target="_blank">{{reportData.ProductName}}</a>
+            <br />
+            <label>Price: </label><span>{{listItem.Price | currency}}</span>
+            <br />
+            <label>Watch Count: </label><span>{{listItem.WatchCount}}</span>
+            <br />
+            <label>Units Sold: </label><span>{{listItem.UnitsSold}}</span>
+            <br />
+            <label>Competitor Count: </label><span>{{listItem.CompetitorCount}}</span>
+            <br />
+            <label>Market High: </label><span>{{listItem.MarketPriceHigh |currency}}</span>
+            <br />
+            <label>Market Low: </label><span>{{listItem.MarketPriceLow | currency}}</span>
+            <br />
+            <label>Source Count: </label><span>{{listItem.SourceCount}}</span>
+            <br />
+            <label>Source High: </label><span>{{listItem.SourcePriceHigh | currency}}</span>
+            <br />
+            <label>Source Low: </label><span>{{listItem.SourcePriceLow | currency}}</span>
+            <br />                        
+            <label>Sold In Last Day: </label><span>{{listItem.SoldInLastDay}}</span>
+            <br />
+            <label>Sold In Last 5 Days: </label><span>{{listItem.SoldInLastFiveDays}}</span>
+            <br />
+            <label>Sold In Last 15 Days: </label><span>{{listItem.SoldInLastFifteenDays}}</span>
+            <br />
+            <label>Sold In Last 30 Days: </label><span>{{listItem.SoldInLastThirtyDays}}</span>
+            <br />
+        </td>
+    </tr>
+</table>
+@section ready
+{
+   <script>
+        angular.module('triggerOrangeApp', ['smart-table', 'orange', 'ngAnimate', 'ui.bootstrap'])
+           .controller('triggerOrangeCtlr', function ($scope, $http) {
+               $scope.isLoading = false;
+               $scope.isInitializing = true;
+               $scope.getDataListPipe = function (tableState) {
+                   if ($scope.isInitializing == true) {
+                       $scope.isInitializing = false;
+                   }
+                   $scope.tableState = tableState;
+                   $scope.isLoading = true;
+                   $scope.GetList(tableState);
+               };
+               $scope.GetList = function(tableState)
+               {
+                   var postData = {
+                       "listId" : @Model.MasterId,
+                   };
+                   $http.post('@Url.Action("GetListDetails")', postData).success(function (result) {
+                       tableState.pagination.numberOfPages = result.numberOfPages;
+                       tableState.pagination.start = result.start;
+                       tableState.pagination.totalItemCount = result.totalItemCount;
+                       $scope.dataList = result.dataList;
+                       $scope.isloading = false;
+                   }).error(function (result) {
+                       $scope.isloading = false;
+                   });
+               };
+               $scope.onGenerateReport = function () {
+                   var postData = {
+                       "listId": @Model.MasterId,
+                   };
+                   $http.post('@Url.Action("GenerateReport")', postData).success(function (result) {
+                       //todo:show message box.
+                   });
+               }
+           });
+   </script>
+}

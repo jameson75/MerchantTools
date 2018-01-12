@@ -1,0 +1,36 @@
+﻿@using CipherPark.TriggerOrange.Web.Helpers
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @RenderSection("meta", false)
+    <title>@ViewBag.Title - Trigger Red</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />      
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/customized-bootstrap.css" rel="stylesheet" type="text/css" />    
+    @RenderSection("links", false)    
+    <link href="~/Content/Landing.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    @Scripts.Render("~/bundles/angular/js")
+    @Scripts.Render("~/bundles/angularui/js")
+    @Scripts.Render("~/bundles/orange/js")
+    @RenderSection("scripts", false)
+    @RenderSection("localcss", false)       
+</head>
+<body style="margin:0px 0px;padding:72px 0px 0px 0px">
+    <div ng-app="triggerOrangeApp">
+        <div ng-controller="triggerOrangeCtlr">
+            <div class="navbar navbar-default navbar-fixed-top">
+                <div class="navContainer">                
+                   @Html.Partial("_PartialNavHeader")      
+                </div>
+            </div>              
+            <oib-Hero oib-src="~/Content/trigger_red_hero.jpg" oib-min-width="500" oib-actual-width="1472" oib-actual-height="659">
+                @RenderBody()
+            </oib-Hero>                      
+        </div>
+    </div>
+    @RenderSection("ready", false)
+</body>
+</html>

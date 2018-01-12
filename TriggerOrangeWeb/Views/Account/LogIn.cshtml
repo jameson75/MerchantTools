@@ -1,0 +1,68 @@
+﻿@model CipherPark.TriggerOrange.Web.Models.LoginViewModel
+@{
+    ViewBag.Title = "Trigger Red | Login";
+    Layout = "~/Views/_Shared/_Layout.cshtml";
+}
+
+<div class="c-layout-page">    
+    <!-- BEGIN: LAYOUT/BREADCRUMBS/BREADCRUMBS-2 -->
+    <div class="c-layout-breadcrumbs-1 c-subtitle c-fonts-uppercase c-fonts-bold c-bordered c-bordered-both">
+        <div class="container">
+            <div class="c-page-title c-pull-left">
+                <h3 class="c-font-uppercase c-font-sbold">Login</h3>
+                <h4 class="">Log in to the Trigger Red Reporting Engine</h4>
+            </div>
+        </div>
+    </div>
+    <!-- END: LAYOUT/BREADCRUMBS/BREADCRUMBS-2 -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div>
+                    <div>
+                        <div>
+                            <div>                                
+                                <p class="c-font-red-1 c-font-bold c-margin-t-20 c-margin-b-10" id="login-errormessage">@Model.Error &nbsp;</p>                                
+                                <form action="~/Account/LoginSubmit" method="post">
+                                    <div class="form-group">
+                                        <label for="login-email" class="hide" >Username</label>
+                                        <input type="text" ng-class="{'c-border-red' : isError()}" class="form-control input-lg c-square" id="login-username" name="userName" placeholder="Username" value="@Model.UserName">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="login-password" class="hide" >Password</label>
+                                        <input type="password" ng-class="{'c-border-red' : isError()}" class="form-control input-lg c-square" id="login-password" name="password" placeholder="Password">
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="c-checkbox">
+                                            <input type="checkbox" id="login-rememberme" class="c-check">
+                                            <label for="login-rememberme" class="c-font-thin c-font-17">
+                                                <span></span>
+                                                <span class="check"></span>
+                                                <span class="box"></span>
+                                                Remember Me
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn c-theme-btn btn-md c-btn-uppercase c-btn-bold c-btn-square c-btn-login">Login</button>
+                                        <input type="hidden" id="login-returnurl" name="returnUrl" value="@Model.ReturnUrl" />
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END: CONTENT/USER/LOGIN-FORM -->
+        </div>
+    </div>
+</div>
+
+@section ready {
+        <script>
+        var controllers = angular.module('triggerOrangeApp', ['ngAnimate', 'ui.bootstrap', 'orange']);
+        controllers.controller('triggerOrangeCtlr', function ($scope, $http, $uibModal) {             
+            $scope.isError = function () { return "@Model.Error" !== ""; }
+        });
+        </script>
+  }

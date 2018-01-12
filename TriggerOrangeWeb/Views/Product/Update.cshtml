@@ -1,0 +1,312 @@
+﻿@model CipherPark.TriggerOrange.Web.Models.UpdateProductViewModel
+
+@{
+    ViewBag.Title = "Sourcing";
+}
+
+@section links
+{
+
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/smarttable/js")
+}
+<div>
+    Create and save meta data for this product. Add this product to a report/list.<a href="#none" ng-click="isGuideCollapsed = !isGuideCollapsed">Guide</a>
+    <div uib-collapse="isGuideCollapsed">
+        <ul>            
+        </ul>
+    </div>
+</div>
+<table ng-cloak>
+    <tr>
+        <td valign="top">
+            <div>
+                <oib-Fit-Image oib-Src="@Model.Product.LargeImageUrl" oib-Height="350px" oib-Width="350px" />
+                <br />
+            </div>
+        </td>
+        <td>
+            <h3>General</h3>            
+            <a href="@Model.Product.ProductUrl" target="_blank">@Model.Product.Name</a>
+            <br />
+            <br />
+            <label>Price: </label><span>{{price | currency}}</span>
+            <br />
+            <label>Watch Count: </label><span>{{watchCount}}</span>
+            <br />
+            <label>Units Sold: </label><span>{{unitsSold}}</span>
+            <br />  
+            <label>Seller Score: </label><span>{{sellerScore}}</span>
+            <br />  
+            <input type="button" value="Add To" class="catSearch" ng-click="onBeginAddProductToReport()" />
+            <br />          
+            <hr />
+            <h3>Sourcing</h3>                       
+            <label>Source Price Description: </label><input ng-show="editMode" ng-model="sourcePriceDescription" /><span ng-hide="editMode">{{sourcePriceDescription}}</span>
+            <br />            
+            <label>Source Url: </label><input ng-show="editMode" ng-model="deepLink" /><span ng-hide="editMode">{{deepLink}}</span>
+            <br />
+            <input type="button" ng-show="editMode" class="catSearch" name="saveSourcingInfo" ng-click="onSaveSourceInfo()" value="Save Source Info" />
+            <input type="button" ng-show="editMode" class="catSearch" name="cancelEditSourcingInfo" ng-click="onCancelEditSourceInfo()" value="Cancel Edit" />
+            <input type="button" ng-hide="editMode" class="catSearch" name="editSourcingInfo" ng-click="editMode = true" value="Edit Source Info" />
+            <br />
+            <hr />          
+            <!--                         
+            <hr />                             
+            <input type="button" class="catSearch" name="saveProductMeta" ng-click="onSaveProductMeta()" ng-disabled="saveChangesDisabled" value="Save Changes" />
+            <br />          
+            -->
+        </td>
+    </tr>
+</table>
+<div style="padding-top:30px;padding-bottom:30px;">    
+    <input type="button" value="Show Similar" class="catSearch" ng-click="onShowSimilarClick()"/>
+</div>
+<table st-table="sources" st-pipe="getSimilarProductsPipe" class="table table-striped" ng-cloak>
+    <thead>
+        <tr>
+            <th><!--Image Url--></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-hide="isLoading" ng-repeat="product in similarProducts">
+            <td><oib-Fit-Image oib-Src='{{product.SmallImageUrl}}' oib-Height="250px" oib-Width="250px" /></td>
+            <td>
+                <div>
+                    <a class="searchResultsTitle" href="{{product.ProductUrl}}" target="_blank">{{product.Name}}</a>
+                </div>
+                <div>
+                    <span>Price</span> {{product.Price | currency}}
+                </div>
+                <div>
+                    <span>Watch Count</span> {{product.WatchCount}}
+                </div>
+                <div>
+                    <span>Units Sold</span> {{product.UnitsSold}}
+                </div>     
+                <div>
+                    <span>Seller Score</span> {{product.SellerScore}}
+                </div>                    
+                <div>
+                    <span>Listing Start</span> {{product.ListingStartTime | date : "medium"}}
+                </div>      
+            </td>
+        </tr>
+        <tr ng-show="isLoading">
+            <td>
+                <table width='100' height='100' align='center' valign='center'><tr><td><img src="@Url.Content("/Content/ajax-loader.gif")" /></td></tr></table>
+            </td>
+        </tr>
+        <tr ng-show="isEmpty && !isLoading">
+            <td colspan="7">NO RESULTS FOUND</td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <!--
+        <tr>
+            <td class="text-center" st-pagination="" st-items-by-page="10" colspan="4"></td>            
+        </tr>
+        -->
+        <!--
+        <tr>
+
+            <td class="text-center"><input type="button" class="catSearch" name="saveProductMetaFooter" ng-click="onSaveProductMeta()" ng-disabled="saveChangesDisabled" value="Save Changes" /></td>
+        </tr>
+        -->
+    </tfoot>
+</table>
+<script type="text/ng-template" id="AddToModal.html">
+    <div class="modal-header">
+        <h3>Header</h3>
+        <div><input type="text" ng-model="newListName"/><input type="button" value="Add New"  ng-click="onAddNewList()"/></div>
+    </div>
+    <div class="modal-body">
+        <div ng-repeat="list in lists">
+            <div><input type="checkbox" value="{{list.Id}}" ng-model="list.IsChecked" ng-change="$parent.onCheckChanged(list)"/><span>{{list.Name}}</span><input type="button" value="Delete" ng-click="$parent.onDeleteList(list)"/></div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <span>Footer</span>
+    </div>
+</script>
+<br />
+@section ready
+{
+    <script>
+        angular.module('triggerOrangeApp', ['smart-table', 'orange', 'ngAnimate', 'ui.bootstrap'])
+           .controller('triggerOrangeCtlr', function ($scope, $http, $uibModal) {
+               $scope.selectedValues = {
+                   site: null
+               };
+               $scope.isGuideCollapsed = true;
+               $scope.isLoading = false;
+               $scope.isEmpty = false;
+               $scope.isInitializing = true;
+               $scope.price = @Model.Product.Price;
+               $scope.watchCount = @Model.Product.WatchCount;
+               $scope.unitsSold = @Model.Product.UnitsSold;
+               $scope.marketPriceHigh = @Model.ProductMeta.MarketPriceHigh;
+               $scope.marketPriceLow = @Model.ProductMeta.MarketPriceLow;
+               $scope.marketCount = @Model.ProductMeta.MarketCount;
+               $scope.deepLink = "@Model.ProductMeta.SourceUrl";
+               $scope.sourcePriceDescription = "@Model.ProductMeta.SourcePriceDescription";
+               $scope.sourceCount = @Model.ProductMeta.SourceCount;
+               $scope.sourcePriceHigh = @Model.ProductMeta.SourcePriceHigh;
+               $scope.sourcePriceLow = @Model.ProductMeta.SourcePriceLow;
+               $scope.soldInLastDay = @Model.ProductMeta.SoldInLastDay;
+               $scope.soldInLastFiveDays = @Model.ProductMeta.SoldInLastFiveDays;
+               $scope.soldInLastFifteenDays = @Model.ProductMeta.SoldInLastFifteenDays;
+               $scope.soldInLastThirtyDays = @Model.ProductMeta.SoldInLastThirtyDays;
+               $scope.sellerScore = @Model.Product.SellerScore;
+               $scope.saveChangesDisabled = true;
+               $scope.editMode = false;
+               $scope.pipeEnabled = false;
+               $scope.getSimilarProductsPipe = function (tableState) {
+                   if ($scope.isInitializing == true) {
+                       $scope.isInitializing = false;
+                   };
+                   $scope.tableState = tableState;
+                   if($scope.pipeEnabled) {
+                       var postData = {
+                           "productId" : @Model.Product.Id,
+                       };
+                       $scope.isLoading = true;
+                       $http.post('@Url.Action("GetSimilarProducts")', postData).success(function (result) {
+                           tableState.pagination.number = result.pageSize;
+                           tableState.pagination.numberOfPages = result.numberOfPages;
+                           tableState.pagination.start = result.start;
+                           tableState.pagination.totalItemCount = result.totalItemCount;
+                           $scope.similarProducts = result.similarProducts;
+                           $scope.isLoading = false;
+                           $scope.saveChangesDisabled = false;
+                           $scope.isEmpty = result.similarProducts.length == 0;                                                                       
+                       }).error(function (result) {
+                           $scope.isLoading = false;
+                           $scope.isEmpty = true;
+                       });
+                   }
+               };
+               $scope.onSearchClick = function () {
+                   $scope.tableState.pagination.start = 0;
+                   $scope.getSimilarProductsPipe($scope.tableState);
+               };
+               $scope.onSelectChanged = function() {
+
+               };
+               $scope.onBeginAddProductToReport = function() {
+                   const modalInstance = $uibModal.open({
+                       "templateUrl" : "AddToModal.html",
+                       "controller" : "ModalInstanceCtrl",
+                       "size" : "lg"
+                   });
+                   return modalInstance;
+               };
+               $scope.statusButtonTextForProduct = function(product) {
+                   if( product.IsChecked)
+                       return "Included in Meta";
+                   else
+                       return "Excluded from Meta";
+               };
+               $scope.statusButtonClassForProduct = function(product) {
+                   if(product.IsChecked)
+                       return "catSearch";
+                   else
+                       return "";
+               };
+               $scope.onUpdateSalesHistory = function() {
+                   var postData = {
+                       "productId" : @Model.Product.Id,
+                   };
+                   $http.post('@Url.Action("UpdateSalesHistory")', postData).success(function (result) {
+                       //todo: show success message box.
+                       $scope.soldInLastDay = result.SoldInLastDay;
+                       $scope.soldInLastFiveDays = result.SoldInLastFiveDays;
+                       $scope.soldInLastFifteenDays = result.SoldInLastFifteenDays;
+                       $scope.soldInLastThirtyDays = result.SoldInLastThirtyDays;
+                   });
+               };
+               $scope.onSaveSourceInfo = function() {
+                   var postData = {
+                       "productId" : @Model.Product.Id,
+                       "deepLink" : $scope.deepLink,
+                       "sourceCount" : $scope.sourceCount,
+                       "sourcePriceLow" : $scope.sourcePriceLow,
+                       "sourcePriceHigh" : $scope.sourcePriceHigh,
+                       "sourcePriceDescription" : $scope.sourcePriceDescription,
+                   };
+                   $http.post('@Url.Action("SaveSourcingMeta")', postData).success(function (result) {
+                       $scope.getProductMeta();
+                       $scope.editMode = false;
+                   });
+               };
+               $scope.onCancelEditSourceInfo = function() {
+                   $scope.getProductMeta();
+                   $scope.editMode = false;
+               };
+               $scope.getProductMeta = function() {
+                   var postData = {
+                       "productId" : @Model.Product.Id,
+                   };
+                   $http.post('@Url.Action("GetProductMeta")', postData).success(function (result) {
+                       $scope.sourceCount = result.SourceCount;
+                       $scope.sourcePriceHigh = result.SourcePriceHigh;
+                       $scope.sourcePriceLow = result.SourcePriceLow;
+                       $scope.deepLink = result.SourceUrl;
+                       $scope.sourcePriceDescription = result.SourcePriceDescription; 
+                   });                                     
+               };
+               $scope.onShowSimilarClick = function() {
+                   $scope.pipeEnabled = true;
+                   $scope.getSimilarProductsPipe($scope.tableState);
+               };
+           })
+          .controller("ModalInstanceCtrl", function($scope, $uibModalInstance, $http) {
+              $scope.ok = function() {
+              };
+              $scope.cancel = function() {
+                  $uibModalInstance.dismiss('cancel');
+              };
+              $scope.onAddNewList = function() {
+                  var postData = {
+                      "listName":$scope.newListName,
+                  };
+                  $http.post('@Url.Action("CreateList")', postData).success(function(result) {
+                      $scope.getLists();
+                      $scope.newListName = null;
+                  });
+              };
+              $scope.onDeleteList = function(list) {
+                  var postData = {
+                      "listId":list.Id,
+                  };
+                  $http.post('@Url.Action("DeleteList")', postData).success(function(result) {
+                      $scope.getLists();
+                  });
+              };
+              $scope.onCheckChanged = function(list) {
+                  var postData = {
+                      "listId":list.Id,
+                      "productId":@Model.Product.Id,
+                  };
+                  if(list.IsChecked)
+                      $http.post('@Url.Action("AddProductToList")', postData);
+                  else
+                      $http.post('@Url.Action("RemoveProductFromList")', postData);
+                  getLists();
+              };
+              $scope.getLists = function() {
+                  var postData = {
+                      "productId": @Model.Product.Id,
+                  };
+                  $http.post('@Url.Action("GetLists")', postData).success(function(result) {
+                      $scope.lists = result.lists;
+                  });
+              };
+              $scope.getLists();
+          });
+    </script>
+}

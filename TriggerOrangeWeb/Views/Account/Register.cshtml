@@ -1,0 +1,21 @@
+﻿@model CipherPark.TriggerOrange.Web.Models.RegisterViewModel
+
+@{
+    ViewBag.Title = "Register";
+}
+
+<h2>Register</h2>
+
+@using (Html.BeginForm("RegisterSubmit", "Account"))
+{
+    <label>@Html.DisplayFor(m => m.Error)
+           @Html.DisplayFor(m => m.Success)
+    </label><br/>
+    <label>Username:</label>@Html.TextBoxFor(m => m.UserName) <br />
+    <label>Email:</label> @Html.TextBoxFor(m => m.Email) <br />
+    <label>Password:</label><input id="Password" name="Password" type="password" /> <br />
+    <label>Confirm Password:</label> <input id="ConfirmPassword" name="ConfirmPassword" type="password" /> <br />
+    <label>Role:</label> @Html.DropDownListFor(m => m.SelectedRole, Model.Roles ) <br />
+    <input type="submit" value="Register" /> <br />   
+}
+

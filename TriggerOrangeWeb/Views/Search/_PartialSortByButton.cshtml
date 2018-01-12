@@ -1,0 +1,13 @@
+﻿@using CipherPark.TriggerOrange.Core;
+<div uib-dropdown style="display:inline-block">          
+    <button class="sortByButton" id="sort-dropdown-button" uib-dropdown-toggle type="button">{{sortKey}}
+    <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="sort-dropdown-button">
+        <li><a href="" ng-click="sortKey = '@SearchSortKey.WatchCount'">@SearchSortKey.WatchCount</a></li>
+        <li><a href="" ng-click="sortKey = '@SearchSortKey.UnitSold'">@SearchSortKey.UnitSold</a></li>
+        <li><a href="" ng-click="sortKey = '@SearchSortKey.PriceHighToLow'">@SearchSortKey.PriceHighToLow</a></li>
+        <li><a href="" ng-click="sortKey = '@SearchSortKey.PriceLowToHigh'">@SearchSortKey.PriceLowToHigh</a></li>
+    </ul>
+</div>
+

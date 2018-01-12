@@ -1,0 +1,365 @@
+﻿@using CipherPark.TriggerOrange.Core;
+
+@model CipherPark.TriggerOrange.Web.Models.SearchHotStartersViewModel
+
+@{
+    ViewBag.Title = "Hot Starters";
+    Layout = "~/Views/_Shared/_Layout.cshtml";
+}
+
+<!-- BEGIN: PAGE CONTAINER -->
+<div class="c-layout-page">
+    <!-- BEGIN: LAYOUT/BREADCRUMBS/BREADCRUMBS-2 -->
+    <div class="c-layout-breadcrumbs-1 c-subtitle c-fonts-uppercase c-fonts-bold c-bordered c-bordered-both">
+        <div class="container">
+            <div class="c-page-title c-pull-left">
+                <h3 class="c-font-uppercase c-font-sbold">Search Products</h3>
+                <h4 class="">Search Recent Ebay Hot Starters</h4>
+            </div>
+        </div>
+    </div><!-- END: LAYOUT/BREADCRUMBS/BREADCRUMBS-2 -->
+    <div class="container">
+        <div class="c-layout-sidebar-menu c-theme ">
+            <!-- BEGIN: LAYOUT/SIDEBARS/SHOP-SIDEBAR-MENU-2 -->
+            <!-- BEGIN: CONTENT/SHOPS/SHOP-FILTER-SEARCH-1 -->
+            <ul class="c-shop-filter-search-1 list-unstyled">               
+                <li>
+                    <label class="control-label c-font-uppercase c-font-bold">Price Range</label>
+                    <div class="c-price-range-box input-group">
+                        <div class="c-price input-group col-md-6 pull-left">
+                            <span class="input-group-addon c-square c-theme">$</span>
+                            <input type="text" class="form-control c-square c-theme" placeholder="from">
+                        </div>
+                        <div class="c-price input-group col-md-6 pull-left">
+                            <span class="input-group-addon c-square c-theme">$</span>
+                            <input type="text" class="form-control c-square c-theme" placeholder="to">
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <label class="control-label c-font-uppercase c-font-bold">Seller Ranking</label>
+                    <div class="input-group">
+                        <div class="c-checkbox">
+                            <input type="checkbox" id="checkbox-sidebar-1-1" class="c-check"> <label for="checkbox-sidebar-1-1">
+                                <span class="inc"></span> <span class="check"></span> <span class="box"></span> 0 - 499
+                            </label>
+                        </div>
+                        <div class="c-checkbox">
+                            <input type="checkbox" id="checkbox-sidebar-1-2" class="c-check"> <label for="checkbox-sidebar-1-2">
+                                <span class="inc"></span> <span class="check"></span> <span class="box"></span> 500 - 1999
+                            </label>
+                        </div>
+                        <div class="c-checkbox">
+                            <input type="checkbox" id="checkbox-sidebar-1-3" class="c-check"> <label for="checkbox-sidebar-1-3">
+                                <span class="inc"></span> <span class="check"></span> <span class="box"></span> 2000 - 9999
+                            </label>
+                        </div>
+                        <div class="c-checkbox c-checkbox-height">
+                            <input type="checkbox" id="checkbox-sidebar-1-4" class="c-check"> <label for="checkbox-sidebar-1-4">
+                                <span class="inc"></span> <span class="check"></span> <span class="box"></span> 10000 and up
+                            </label>
+                        </div>
+                    </div>
+                </li>
+            </ul><!-- END: CONTENT/SHOPS/SHOP-FILTER-SEARCH-1 -->
+            <!-- END: LAYOUT/SIDEBARS/SHOP-SIDEBAR-MENU-2 -->
+        </div>
+        <div class="c-layout-sidebar-content ">
+            <!-- BEGIN: PAGE CONTENT -->
+            <!-- BEGIN: CONTENT/SHOPS/SHOP-ADVANCED-SEARCH-1 -->
+            <form class="c-shop-advanced-search-1">
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label class="control-label">Keywords</label>
+                        <input type="text" class="form-control c-square c-theme input-lg" placeholder="Enter keywords" ng-model="keywords">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label class="control-label">Category</label>
+                        <select id="RootCategories" class="form-control c-square c-theme input-lg" ng-options="cat.Value as cat.Name for cat in allRootCategories" ng-model="selectedValues.rootCategory" ng-change="onRootCategoryChange(true)"></select>
+                    </div>
+                </div>
+                <div class="form-group" role="group">
+                    <button type="submit" class="btn btn-lg c-theme-btn c-btn-square c-btn-uppercase c-btn-bold" ng-click="onSearchClick()"><i class="fa fa-search"></i>Search</button>
+                    <button type="submit" class="btn btn-lg btn-default c-btn-square c-btn-uppercase c-btn-bold" ng-click="onClearClick()">Clear</button>
+                </div>
+            </form><!-- END: CONTENT/SHOPS/SHOP-ADVANCED-SEARCH-1 -->
+
+            <div class="c-margin-t-30"></div>
+
+            <!-- BEGIN: CONTENT/SHOPS/SHOP-RESULT-FILTER-1 -->
+            <div class="c-shop-result-filter-1 clearfix form-inline">
+                <div class="c-filter">
+                    <label class="control-label c-font-16">Show:</label>
+                    <select class="form-control c-square c-theme c-input">
+                        <option value="#?limit=24" selected="selected">24</option>
+                        <option value="#?limit=25">25</option>
+                        <option value="#?limit=50">50</option>
+                        <option value="#?limit=75">75</option>
+                        <option value="#?limit=100" selected>100</option>
+                    </select>
+                </div>
+                <div class="c-filter">
+                    <label class="control-label c-font-16">Sort&nbsp;By:</label>
+                    <select class="form-control c-square c-theme c-input">
+                        <option value="#?sort=p.sort_order&amp;order=ASC" selected="selected">Default</option>
+                        <option value="#?sort=pd.name&amp;order=ASC">Name (A - Z)</option>
+                        <option value="#?sort=pd.name&amp;order=DESC">Name (Z - A)</option>
+                        <option value="#?sort=p.price&amp;order=ASC">Price (Low &gt; High)</option>
+                        <option value="#?sort=p.price&amp;order=DESC" selected>Price (High &gt; Low)</option>
+                        <option value="#?sort=rating&amp;order=DESC">Rating (Highest)</option>
+                        <option value="#?sort=rating&amp;order=ASC">Rating (Lowest)</option>
+                        <option value="#?sort=p.model&amp;order=ASC">Model (A - Z)</option>
+                        <option value="#?sort=p.model&amp;order=DESC">Model (Z - A)</option>
+                    </select>
+                </div>
+            </div><!-- END: CONTENT/SHOPS/SHOP-RESULT-FILTER-1 -->
+
+            <div class="c-margin-t-20"></div>
+
+            <!-- BEGIN: CONTENT/SHOPS/SHOP-2-8 -->
+            <!-- BEGIN: CSS TABLE -->
+            <div ng-repeat="product in products">
+                <div class="row c-margin-b-40">
+                    <div class="c-content-product-2 c-bg-white">
+                        <div class="col-md-4">
+                            <div class="c-content-overlay">
+                                <div class="c-overlay-wrapper">
+                                    <div class="c-overlay-content">
+                                        <a href="shop-product-details.html" class="btn btn-md c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">Explore</a>
+                                    </div>
+                                </div>
+                                <div class="c-bg-img-center c-overlay-object" data-height="height" style="height: 230px; background-image: url({{product.SmallImageUrl}});"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="c-info-list">
+                                <h3 class="c-title c-font-bold c-font-22 c-font-dark">
+                                    <a class="c-theme-link" href="shop-product-details.html">{{product.Name}}</a>
+                                </h3>
+                                <p class="c-desc c-font-16 c-font-thin">Seller Score {{product.SellerScore}}</p>                                
+                            </div>
+                            <div>
+                                <button ng-click="onBeginAddProductToReport()" type="submit" class="btn btn-sm c-theme-btn c-btn-square c-btn-uppercase c-btn-bold">
+                                    <i class="fa fa-file-text"></i>Add To Report
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END CSS TABLE -->
+            <!-- END: CONTENT/SHOPS/SHOP-2-8 -->
+            <div class="c-margin-t-20"></div>
+            <ul uib-pagination
+                template-url="template/pagination/orangepagination.html"
+                ng-model="tableState.pagination.currentPage"
+                ng-change="onPageChanged()"
+                max-size="tableState.pagination.pageSize"
+                total-items="tableState.pagination.totalItemCount"
+                boundary-link-numbers="true"
+                class="pagination-sm"
+                rotate="false"></ul>
+        </div>
+    </div>
+</div>
+<!-- END: PAGE CONTAINER -->
+<!-- BEGIN: LAYOUT/FOOTERS/FOOTER-6 -->
+<a name="footer"></a>
+<footer class="c-layout-footer c-layout-footer-6 c-bg-grey-1">
+    <div class="c-postfooter c-bg-dark-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-12 c-col">
+                    <p class="c-copyright c-font-grey">
+                        2015 &copy; JANGO
+                        <span class="c-font-grey-3">All Rights Reserved.</span>
+                    </p>
+                </div>
+                <div class="col-md-6 col-sm-12 c-col">
+                    <ul class="list-unstyled list-inline pull-right">
+                        <li><img class="img-responsive" src="/Content/jango/assets/base/img/content/payments/light/1.png" width="60" /></li>
+                        <li><img class="img-responsive" src="/Content/jango/assets/base/img/content/payments/light/2.png" width="60" /></li>
+                        <li><img class="img-responsive" src="/Content/jango/assets/base/img/content/payments/light/22.png" width="60" /></li>
+                        <li><img class="img-responsive" src="/Content/jango/assets/base/img/content/payments/light/5.png" width="60" /></li>
+                        <li><img class="img-responsive" src="/Content/jango/assets/base/img/content/payments/light/6.png" width="60" /></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- END: LAYOUT/FOOTERS/FOOTER-6 -->
+<!-- BEGIN: LAYOUT/FOOTERS/GO2TOP -->
+<div class="c-layout-go2top">
+    <i class="icon-arrow-up"></i>
+</div><!-- END: LAYOUT/FOOTERS/GO2TOP -->
+<!-- BEGIN: LAYOUT/BASE/BOTTOM -->
+<!-- BEGIN: CORE PLUGINS -->
+
+<script id="template/pagination/orangepagination.html" type="text/ng-template">
+    <ul class="c-content-pagination c-square c-theme">
+        <li ng-if="::boundaryLinks" ng-class="{disabled: noPrevious()||ngDisabled}"><a href="#" ng-click="selectPage(1, $event)"><i class="fa fa-angle-double-left"></i></a></li>
+        <li ng-if="::directionLinks" ng-class="{disabled: noPrevious()||ngDisabled}"><a href="#" ng-click="selectPage(page - 1, $event)"><i class="fa fa-angle-left"></i></a></li>
+        <li ng-repeat="page in pages track by $index" ng-class="{'c-active': page.active}"><a href="#" ng-click="selectPage(page.number, $event)">{{page.text}}</a></li>
+        <li ng-if="::directionLinks" ng-class="{disabled: noNext()||ngDisabled}"><a href="#" ng-click="selectPage(page + 1, $event)"><i class="fa fa-angle-right"></i></a></li>
+        <li ng-if="::boundaryLinks" ng-class="{disabled: noNext()||ngDisabled}"><a href="#" ng-click="selectPage(totalPages, $event)"><i class="fa fa-angle-double-right"></i></a></li>
+    </ul>
+</script>
+
+@section ready{
+    <!-- BEGIN TRIGGER ORANGE APP ANGULAR CONTROLLER(S) -->
+    <script>
+            angular.module('triggerOrangeApp', ['orange', 'ngAnimate', 'ui.bootstrap'])
+                //*** Main Controller ***
+            .controller('triggerOrangeCtlr', function ($scope, $http, $uibModal) {
+                $scope.tableState = {
+                    pagination: {
+                        currentPage: 1,
+                        pageSize: 10,
+                        totalItemCount: 0
+                    },
+                };
+               $scope.selectedValues = {
+                   site: null,
+                   rootCategory: null,
+                };
+               $scope.keywords = "@Html.Raw(Model.Keywords)";
+               $scope.allRootCategories = null;
+               $scope.allChildCategories = null;
+               $scope.sortKey = "@SearchSortKey.UnitSold";
+               $scope.filter = {
+                   priceLow: null,
+                   priceHigh: null,
+                   unitsLow: null,
+                   unitsHigh: null,
+                   sellerRankLow: null,
+                   sellerRankHigh: null
+               };
+               $scope.isGuideCollapsed = true;
+               $scope.isEmpty = null;
+               $scope.isLoading = false;
+               $scope.isInitializing = true;
+               $scope.getProductsPipe = function (tableState) {
+                   if ($scope.isInitializing == true) {
+                       $scope.selectedValues.site = "@Model.SelectedSite";
+                       $scope.initCategories();
+                       $scope.selectedValues.rootCategory = "@Model.SelectedRootCategory";
+                       $scope.isInitializing = false;
+                   }
+                   $scope.tableState = tableState;
+                   var postData = {
+                       "pageSize": tableState.pagination.pageSize,
+                       "currentPage": tableState.pagination.currentPage,
+                       "site": $scope.selectedValues.site,
+                       "root": $scope.selectedValues.rootCategory,
+                       "keywords": $scope.keywords,
+                       "sortKey": $scope.sortKey,
+                       "filter": $scope.filter                                              
+                   };
+                   $scope.isLoading = true;
+                   $scope.isEmpty = true;
+                   $http.post('@Url.Action("GetHotStarterProducts")', postData).success(function (result) {
+                       tableState.pagination.numberOfPages = result.numberOfPages;
+                       tableState.pagination.currentPage = result.currentPage;
+                       tableState.pagination.totalItemCount = result.totalItemCount;
+                       $scope.products = result.products;
+                       $scope.isLoading = false;
+                       $scope.isEmpty = result.products.length == 0;
+                       ajaxHistory.Save({
+                       });
+                   }).error(function (result) {
+                       $scope.isLoading = false;
+                       $scope.isEmpty = true;
+                   });
+               };
+               $scope.onSearchClick = function () {
+                   $scope.tableState.pagination.currentPage = 1;
+                   $scope.getProductsPipe($scope.tableState);
+                };
+
+               $scope.initCategories = function () {
+                   var postData = {
+                       "site": $scope.selectedValues.site
+                   };
+                   $http.post('@Url.Action("GetRootCategories")', postData).success(function (result) {
+                       $scope.allRootCategories = result.categories;
+                   });
+                };
+                $scope.onBeginAddProductToReport = function () {
+                    const modalInstance = $uibModal.open({
+                        "templateUrl": "AddToModal.html",
+                        "controller": "ModalInstanceCtrl",
+                    });
+                    return modalInstance;
+               };
+               $scope.onPageChanged = function () {
+                   $scope.getProductsPipe($scope.tableState);
+               };
+               $scope.getProductsPipe($scope.tableState);
+                    })
+            // *** Modal Instance Controller ***/
+            .controller("ModalInstanceCtrl", function ($scope, $uibModalInstance, $http) {
+
+                $scope.lists = [];
+                $scope.ok = function () {
+                };
+                $scope.cancel = function () {
+                    $uibModalInstance.dismiss('cancel');
+                };
+                $scope.onAddNewList = function () {
+                    var postData = {
+                        "listName": $scope.newListName,
+                    };
+                    //$http.post('@Url.Action("CreateList")', postData).success(function (result) {
+                    //    $scope.getLists();
+                    //    $scope.newListName = null;
+                    //});
+                };
+                $scope.onDeleteList = function (list) {
+                    var postData = {
+                        "listId": list.Id,
+                    };
+                    //$http.post('@Url.Action("DeleteList")', postData).success(function (result) {
+                    //    $scope.getLists();
+                    //});
+                };
+                $scope.onCheckChanged = function (list) {
+                    var postData = {
+                        "listId": list.Id,
+                        "productId": 0,
+                    };
+                    //if (list.IsChecked)
+                    //    $http.post('@Url.Action("AddProductToList")', postData);
+                    //else
+                    //    $http.post('@Url.Action("RemoveProductFromList")', postData);
+                    //getLists();
+                };
+                $scope.getLists = function () {
+                    var postData = {
+                        "productId": 0,
+                    };
+                    //    $http.post('@Url.Action("GetLists")', postData).success(function (result) {
+                    //        $scope.lists = result.lists;
+                    //});
+                    $scope.lists = [];
+                    for (var i = 0; i < 20; i++)
+                        $scope.lists.push({
+                            Id: i,
+                            IsChecked: false,
+                            Name: "List#" + i,
+                        });
+                };
+                $scope.getLists();
+            });
+    </script>
+    <!-- END TRIGGER ORANGE APP ANGULAR CONTROLLER(S) -->
+}
+
+
+
+
+
+
+

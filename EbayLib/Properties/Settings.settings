@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="CipherPark.Ebay.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="EbayAPI_AppId" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">EugeneAd-aa5b-48be-a0c7-9cb1684a80723afd1b165da1</Value>
+    </Setting>
+    <Setting Name="EbayAPI_Version" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">825</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
