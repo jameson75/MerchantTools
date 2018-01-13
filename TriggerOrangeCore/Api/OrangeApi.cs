@@ -825,15 +825,16 @@ namespace CipherPark.TriggerOrange.Core
                     if (containsParamBuilder.Length > 0)
                     {
                         string p1 = containsParamBuilder.ToString();
-                        var results = db.Database.SqlQuery<Data.Product>(query, p0, p1);
-                        totalMatches = results.Count();
                         //**************************************************************************************************
-                        //NOTE: The only query sent to the database is the one we manually constructed. The filter, order, 
-                        //and skip operations occur in resident memory.
+                        //NOTE: Even though LINQ is used below, there is NO deferred query. The SQL constructed above
+                        //is the only part of the query sent to the database. The filter, order, and skip operations, 
+                        //below, occur in resident memory.
                         //TODO: Optimize by constructing the filter, order, and skip operations into the query.
                         //**************************************************************************************************
-                        return results.FilterProductWhere(filter)
-                                      .OrderProductBy(sortKey)     
+                        var results = db.Database.SqlQuery<Data.Product>(query, p0, p1)
+                                                 .FilterProductWhere(filter);
+                        totalMatches = results.Count();
+                        return results.OrderProductBy(sortKey)     
                                       .Skip(firstItemIndex)
                                       .Take(pageSize)
                                       .ToList();
