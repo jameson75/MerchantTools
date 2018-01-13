@@ -55,7 +55,7 @@ namespace CipherPark.TriggerOrange.Console
         {
             //ConnectivityTest();
             //BestSellingTest();
-            EbayHotStarters();
+            //EbayHotStarters();
         }
 
         private void ConsoleBackOffice()
