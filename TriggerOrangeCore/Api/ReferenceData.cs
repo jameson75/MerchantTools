@@ -10,7 +10,7 @@ namespace CipherPark.TriggerOrange.Core
     {
         public const string eBayHotStarters = "eBay Hot Starters";
         public const string eBayMostWatched = "eBay Most Watched";
-        public const string Amazon = "Amazon";       
+        public const string Amazon = "Amazon";
         public static string[] All = new string[] { eBayMostWatched, Amazon, eBayHotStarters };
         public static string[] AllSupported = new string[] { eBayMostWatched, eBayHotStarters };
     }
@@ -25,7 +25,7 @@ namespace CipherPark.TriggerOrange.Core
     }
 
     public static class OperationNames
-    {       
+    {
         public const string UpdateEbayMostWatchedCategories = "Update Ebay Most Watched Categories";
         public const string UpdateEbayHotStartersCategories = "Update Ebay Hot Starters Categories";
         public const string UpdateAmazonCategories = "Update Amazon Categories";
@@ -45,16 +45,16 @@ namespace CipherPark.TriggerOrange.Core
     }
 
     public static class LongRunningTaskNames
-    {       
+    {
         public const string UpdateMarketPlaceCategories = "Categories Update";
-        public const string UpdateMarketPlaceHotLists = "Hot List Update";        
+        public const string UpdateMarketPlaceHotLists = "Hot List Update";
         public static string[] All
         {
             get
             {
-                return new[] { 
+                return new[] {
                     UpdateMarketPlaceCategories,
-                    UpdateMarketPlaceHotLists                    
+                    UpdateMarketPlaceHotLists
                 };
             }
         }
@@ -88,8 +88,10 @@ namespace CipherPark.TriggerOrange.Core
     public static class SearchSortKey
     {
         public const string WatchCount = "Watch Count";
-        public const string UnitSold = "Units Sold";
+        public const string UnitsSold = "Units Sold";
         public const string PriceHighToLow = "Price High->Low";
         public const string PriceLowToHigh = "Price Low->High";
+        public const string SellerScore = "Seller Score";
+        public static string[] All { get { return new[] { UnitsSold, SellerScore, PriceHighToLow, PriceLowToHigh }; } }
     }
 }

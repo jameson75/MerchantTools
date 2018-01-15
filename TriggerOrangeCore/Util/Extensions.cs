@@ -188,12 +188,14 @@ namespace CipherPark.TriggerOrange.Core
         {
             switch(sortKey)
             {
-                case SearchSortKey.UnitSold:
+                case SearchSortKey.UnitsSold:
                     return sqlQuery.OrderByDescending(p => p.UnitsSold);
                 case SearchSortKey.PriceHighToLow:
                     return sqlQuery.OrderByDescending(p => p.Price);
                 case SearchSortKey.PriceLowToHigh:
                     return sqlQuery.OrderBy(p => p.Price);
+                case SearchSortKey.SellerScore:
+                    return sqlQuery.OrderBy(p => p.SellerScore);
                 default:
                     return sqlQuery.OrderByDescending(p => p.WatchCount);
             }
@@ -203,12 +205,14 @@ namespace CipherPark.TriggerOrange.Core
         {
             switch (sortKey)
             {
-                case SearchSortKey.UnitSold:
+                case SearchSortKey.UnitsSold:
                     return sqlQuery.OrderByDescending(p => p.UnitsSold);
                 case SearchSortKey.PriceHighToLow:
                     return sqlQuery.OrderByDescending(p => p.Price);
                 case SearchSortKey.PriceLowToHigh:
                     return sqlQuery.OrderBy(p => p.Price);
+                case SearchSortKey.SellerScore:                   
+                    return sqlQuery.OrderBy(p => p.SellerScore);
                 default:
                     return sqlQuery.OrderByDescending(p => p.WatchCount);
             }

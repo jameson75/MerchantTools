@@ -93,27 +93,16 @@
             <div class="c-shop-result-filter-1 clearfix form-inline">
                 <div class="c-filter">
                     <label class="control-label c-font-16">Show:</label>
-                    <select class="form-control c-square c-theme c-input">
-                        <option value="#?limit=24" selected="selected">24</option>
-                        <option value="#?limit=25">25</option>
-                        <option value="#?limit=50">50</option>
-                        <option value="#?limit=75">75</option>
-                        <option value="#?limit=100" selected>100</option>
+                    <select class="form-control c-square c-theme c-input" ng-model="tableState.pagination.pageSize">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>                       
                     </select>
                 </div>
                 <div class="c-filter">
                     <label class="control-label c-font-16">Sort&nbsp;By:</label>
-                    <select class="form-control c-square c-theme c-input">
-                        <option value="#?sort=p.sort_order&amp;order=ASC" selected="selected">Default</option>
-                        <option value="#?sort=pd.name&amp;order=ASC">Name (A - Z)</option>
-                        <option value="#?sort=pd.name&amp;order=DESC">Name (Z - A)</option>
-                        <option value="#?sort=p.price&amp;order=ASC">Price (Low &gt; High)</option>
-                        <option value="#?sort=p.price&amp;order=DESC" selected>Price (High &gt; Low)</option>
-                        <option value="#?sort=rating&amp;order=DESC">Rating (Highest)</option>
-                        <option value="#?sort=rating&amp;order=ASC">Rating (Lowest)</option>
-                        <option value="#?sort=p.model&amp;order=ASC">Model (A - Z)</option>
-                        <option value="#?sort=p.model&amp;order=DESC">Model (Z - A)</option>
-                    </select>
+                    @Html.DropDownList("sortKey", Model.SortKeys, new { @class= "form-control c-square c-theme c-input", @ng_model = "sortKey" })                  
                 </div>
             </div><!-- END: CONTENT/SHOPS/SHOP-RESULT-FILTER-1 -->
 
@@ -128,21 +117,29 @@
                             <div class="c-content-overlay">
                                 <div class="c-overlay-wrapper">
                                     <div class="c-overlay-content">
-                                        <a href="shop-product-details.html" class="btn btn-md c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">Explore</a>
+                                        <a href="{{product.ProductUrl}}" target="_blank" class="btn btn-md c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">Explore</a>
                                     </div>
                                 </div>
-                                <div class="c-bg-img-center c-overlay-object" data-height="height" style="height: 230px; background-image: url({{product.SmallImageUrl}});"></div>
+                                <div class="c-bg-img-center c-overlay-object" data-height="height" style="height: 230px;" ng-style="{'background-image': 'url(' + product.SmallImageUrl + ')'}"></div>
                             </div>
                         </div>
                         <div class="col-md-8">
                             <div class="c-info-list">
                                 <h3 class="c-title c-font-bold c-font-22 c-font-dark">
-                                    <a class="c-theme-link" href="shop-product-details.html">{{product.Name}}</a>
-                                </h3>
-                                <p class="c-desc c-font-16 c-font-thin">Seller Score {{product.SellerScore}}</p>                                
+                                    <a class="c-theme-link" href="{{product.ProductUrl}}" target="_blank">{{product.Name}}</a>
+                                </h3>                                
                             </div>
                             <div>
-                                <button ng-click="onBeginAddProductToReport()" type="submit" class="btn btn-sm c-theme-btn c-btn-square c-btn-uppercase c-btn-bold">
+                                <span class="c-desc c-font-20 c-font-bold">{{product.Price | currency}}</span> 
+                            </div>
+                            <div>
+                                <span class="c-desc c-font-16 c-font-bold">Units Sold: {{product.UnitsSold}}</span>
+                            </div>
+                            <div>
+                                <span class="c-desc c-font-16 c-font-bold">Seller Score: {{product.SellerScore}}</span> 
+                            </div>
+                            <div class="c-margin-t-10">
+                                <button ng-click="onBeginAddProductToReport()" type="submit" class="btn btn-sm c-theme-btn c-btn-square c-btn-uppercase c-block-text">
                                     <i class="fa fa-file-text"></i>Add To Report
                                 </button>
                             </div>
@@ -157,9 +154,10 @@
                 template-url="template/pagination/orangepagination.html"
                 ng-model="tableState.pagination.currentPage"
                 ng-change="onPageChanged()"
-                max-size="tableState.pagination.pageSize"
+                max-size="10"
                 total-items="tableState.pagination.totalItemCount"
                 boundary-link-numbers="true"
+                items-per-page="tableState.pagination.pageSize"
                 class="pagination-sm"
                 rotate="false"></ul>
         </div>
@@ -218,18 +216,18 @@
                 $scope.tableState = {
                     pagination: {
                         currentPage: 1,
-                        pageSize: 10,
+                        pageSize: "10",
                         totalItemCount: 0
                     },
                 };
                $scope.selectedValues = {
                    site: null,
-                   rootCategory: null,
+                   rootCategory: null
                 };
                $scope.keywords = "@Html.Raw(Model.Keywords)";
                $scope.allRootCategories = null;
                $scope.allChildCategories = null;
-               $scope.sortKey = "@SearchSortKey.UnitSold";
+               $scope.sortKey = "@Model.SelectedSortKey";
                $scope.filter = {
                    priceLow: null,
                    priceHigh: null,
