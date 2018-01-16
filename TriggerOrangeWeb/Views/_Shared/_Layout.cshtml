@@ -57,7 +57,7 @@
     @RenderSection("links", false)
     @RenderSection("localcss", false)
 </head>
-<body class="c-layout-header-fixed c-layout-header-mobile-fixed">
+<body class="c-layout-header-fixed c-layout-header-mobile-fixed" style="min-height:100vh; height:100vh">
     <div ng-app="triggerOrangeApp">
         <div ng-controller="triggerOrangeCtlr">
             <!-- BEGIN NOTIFICATION BAR-->
@@ -249,7 +249,35 @@
                     </div>
                 </div>
             </nav><!-- END: LAYOUT/SIDEBARS/QUICK-SIDEBAR -->
-            @RenderBody()
+            @RenderBody()           
+            <!-- BEGIN: LAYOUT/FOOTERS/FOOTER-6 -->
+            <a name="footer"></a>
+            <footer class="c-layout-footer c-layout-footer-6 c-bg-grey-1">
+                <div class="c-postfooter c-bg-dark-2">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12 c-col">
+                                <img src="~/Content/orange/images/tr-logo3-i.png" alt="Trigger Red" class="c-desktop-logo">
+                            </div>
+                            <div class="col-md-6 col-sm-12 c-col">
+                                <div class="pull-right">
+                                    <p class="c-copyright c-font-grey">
+                                        2018 &copy; Trigger<span class="c-font-red">Red</span>
+                                        <span class="c-font-grey-3">All Rights Reserved.</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <!-- END: LAYOUT/FOOTERS/FOOTER-6 -->
+            <!-- BEGIN: LAYOUT/FOOTERS/GO2TOP -->
+            <div class="c-layout-go2top">
+                <i class="icon-arrow-up"></i>
+            </div><!-- END: LAYOUT/FOOTERS/GO2TOP -->
+            <!-- BEGIN: LAYOUT/BASE/BOTTOM -->
+            <!-- BEGIN: CORE PLUGINS -->
         </div>
     </div>
     <!-- BEGIN: LAYOUT/BASE/BOTTOM -->
