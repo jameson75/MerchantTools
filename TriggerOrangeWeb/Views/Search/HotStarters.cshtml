@@ -22,7 +22,7 @@
         <div class="c-layout-sidebar-menu c-theme ">
             <!-- BEGIN: LAYOUT/SIDEBARS/SHOP-SIDEBAR-MENU-2 -->
             <!-- BEGIN: CONTENT/SHOPS/SHOP-FILTER-SEARCH-1 -->
-            <ul class="c-shop-filter-search-1 list-unstyled">               
+            <ul class="c-shop-filter-search-1 list-unstyled">
                 <li>
                     <label class="control-label c-font-uppercase c-font-bold">Price Range</label>
                     <div class="c-price-range-box input-group">
@@ -89,30 +89,36 @@
 
             <div class="c-margin-t-30"></div>
 
-            <!-- BEGIN: CONTENT/SHOPS/SHOP-RESULT-FILTER-1 -->
-            <div class="c-shop-result-filter-1 clearfix form-inline">
+            <!-- BEGIN: CONTENT/SHOPS/SHOP-RESULT-FILTER-1 -->            
+            <div class="c-shop-result-filter-1 clearfix form-inline"> 
+                
                 <div class="c-filter">
                     <label class="control-label c-font-16">Show:</label>
                     <select class="form-control c-square c-theme c-input" ng-model="tableState.pagination.pageSize">
                         <option value="10">10</option>
                         <option value="25">25</option>
                         <option value="50">50</option>
-                        <option value="100">100</option>                       
+                        <option value="100">100</option>
                     </select>
                 </div>
                 <div class="c-filter">
-                    <label class="control-label c-font-16">Sort&nbsp;By:</label>
-                    @Html.DropDownList("sortKey", Model.SortKeys, new { @class= "form-control c-square c-theme c-input", @ng_model = "sortKey" })                  
-                </div>
-            </div><!-- END: CONTENT/SHOPS/SHOP-RESULT-FILTER-1 -->
+                    <label class="control-label c-font-16" style="margin-left:50px">Sort&nbsp;By:</label>
+                    @Html.DropDownList("sortKey", Model.SortKeys, new { @class = "form-control c-square c-theme c-input", @ng_model = "sortKey" })
+                </div>  
+                <div class="c-filter c-margin-t-5" ng-show="!isLoading && !isEmpty">
+                    <h4 class="c-font-grey-4">Showing {{resultRangeText()}} of {{tableState.pagination.totalItemCount}} Results</h4>
+                </div>                      
+            </div>
+            <!-- END: CONTENT/SHOPS/SHOP-RESULT-FILTER-1 -->           
 
+            <div class="c-margin-t-40"></div>
             <div class="c-margin-t-20"></div>
 
             <!-- BEGIN: CONTENT/SHOPS/SHOP-2-8 -->
             <!-- BEGIN: CSS TABLE -->
-            <div ng-repeat="product in products">
+            <div ng-cloak ng-repeat="product in products" ng-show="!isLoading && !isEmpty">
                 <div class="row c-margin-b-40">
-                    <div class="c-content-product-2 c-bg-white">
+                    <div class="c-content-product-2 c-bg-white" >
                         <div class="col-md-4">
                             <div class="c-content-overlay">
                                 <div class="c-overlay-wrapper">
@@ -127,39 +133,54 @@
                             <div class="c-info-list">
                                 <h3 class="c-title c-font-bold c-font-22 c-font-dark">
                                     <a class="c-theme-link" href="{{product.ProductUrl}}" target="_blank">{{product.Name}}</a>
-                                </h3>                                
+                                </h3>
                             </div>
                             <div>
-                                <span class="c-desc c-font-20 c-font-bold">{{product.Price | currency}}</span> 
+                                <span class="c-desc c-font-20 c-font-bold">{{product.Price | currency}}</span>
                             </div>
                             <div>
                                 <span class="c-desc c-font-16 c-font-bold">Units Sold: {{product.UnitsSold}}</span>
                             </div>
                             <div>
-                                <span class="c-desc c-font-16 c-font-bold">Seller Score: {{product.SellerScore}}</span> 
+                                <span class="c-desc c-font-16 c-font-bold">Seller Score: {{product.SellerScore}}</span>
                             </div>
                             <div class="c-margin-t-10">
-                                <button ng-click="onBeginAddProductToReport()" type="submit" class="btn btn-sm c-theme-btn c-btn-square c-btn-uppercase c-block-text">
-                                    <i class="fa fa-file-text"></i>Add To Report
+                                <button ng-click="onAddToList(product.Id)" type="submit" class="btn btn-sm c-theme-btn c-btn-square c-btn-uppercase c-block-text">
+                                    <i class="fa fa-list"></i> Add To List
                                 </button>
                             </div>
                         </div>
-                    </div>
+                    </div>                    
+                </div>
+            </div>           
+            <div ng-show="!isLoading && isEmpty">
+                <div class="c-center">
+                    <span class="c-font-20 c-font-red-1"><i class="fa fa-meh-o fa-5x fa-red"></i></span><br /><br />                 
+                    <div class="c-desc c-font-20 c-font-bold c-font-grey-3"> NO RESULTS FOUND. TRY <span class="c-font-red-1">AGAIN</span>.</div>
+                </div>
+            </div>
+            <div ng-show="isLoading">
+                <div class="c-center">
+                    <span class="c-font-20 c-font-red-1"><i class="fa fa-spinner fa-pulse fa-5x"></i></span><br /><br />
+                    <div class="c-desc c-font-20 c-font-bold c-font-grey-3"> LOADING RESULTS. PLEASE <span class="c-font-red-1">WAIT</span>.</div>
                 </div>
             </div>
             <!-- END CSS TABLE -->
             <!-- END: CONTENT/SHOPS/SHOP-2-8 -->
             <div class="c-margin-t-20"></div>
-            <ul uib-pagination
-                template-url="template/pagination/orangepagination.html"
-                ng-model="tableState.pagination.currentPage"
-                ng-change="onPageChanged()"
-                max-size="10"
-                total-items="tableState.pagination.totalItemCount"
-                boundary-link-numbers="true"
-                items-per-page="tableState.pagination.pageSize"
-                class="pagination-sm"
-                rotate="false"></ul>
+            <div class="c-center">
+                <ul uib-pagination
+                    template-url="template/pagination/orangepagination.html"
+                    ng-model="tableState.pagination.currentPage"
+                    ng-change="onPageChanged()"
+                    max-size="10"
+                    total-items="tableState.pagination.totalItemCount"
+                    boundary-link-numbers="true"
+                    items-per-page="tableState.pagination.pageSize"
+                    class="pagination-sm"
+                    rotate="false"
+                    ng-show="!isLoading && !isEmpty"></ul>
+            </div>
         </div>
     </div>
 </div>
@@ -180,7 +201,7 @@
     <script>
             angular.module('triggerOrangeApp', ['orange', 'ngAnimate', 'ui.bootstrap'])
                 //*** Main Controller ***
-            .controller('triggerOrangeCtlr', function ($scope, $http, $uibModal) {
+            .controller('triggerOrangeCtlr', function ($scope, $http, $window, $uibModal) {
                 $scope.tableState = {
                     pagination: {
                         currentPage: 1,
@@ -223,7 +244,7 @@
                        "root": $scope.selectedValues.rootCategory,
                        "keywords": $scope.keywords,
                        "sortKey": $scope.sortKey,
-                       "filter": $scope.filter                                              
+                       "filter": $scope.filter
                    };
                    $scope.isLoading = true;
                    $scope.isEmpty = true;
@@ -245,7 +266,6 @@
                    $scope.tableState.pagination.currentPage = 1;
                    $scope.getProductsPipe($scope.tableState);
                 };
-
                $scope.initCategories = function () {
                    var postData = {
                        "site": $scope.selectedValues.site
@@ -253,7 +273,11 @@
                    $http.post('@Url.Action("GetRootCategories")', postData).success(function (result) {
                        $scope.allRootCategories = result.categories;
                    });
-                };
+               };
+               $scope.onAddToList = function (productId) {
+
+               };
+                /*
                 $scope.onBeginAddProductToReport = function () {
                     const modalInstance = $uibModal.open({
                         "templateUrl": "AddToModal.html",
@@ -261,9 +285,17 @@
                     });
                     return modalInstance;
                };
+                */
                $scope.onPageChanged = function () {
+                   $window.scrollTo(0, 0);
                    $scope.getProductsPipe($scope.tableState);
                };
+               $scope.resultRangeText = function () {
+                   var firstItemOrdinal = ($scope.tableState.pagination.currentPage - 1) * $scope.tableState.pagination.pageSize + 1;
+                   var lastItemOrdinal = Math.min($scope.tableState.pagination.currentPage * $scope.tableState.pagination.pageSize, $scope.tableState.pagination.totalItemCount);
+                   return firstItemOrdinal + " - " + lastItemOrdinal;
+               }
+
                $scope.getProductsPipe($scope.tableState);
                     })
             // *** Modal Instance Controller ***/
