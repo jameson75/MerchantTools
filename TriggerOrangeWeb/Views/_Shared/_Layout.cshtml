@@ -53,6 +53,9 @@
         .modal-dialog {
             margin-top: 80px;
         }
+        [ng\:cloak], [ng-cloak], .ng-cloak {
+            display: none !important;
+        }
     </style>
     @RenderSection("links", false)
     @RenderSection("localcss", false)
@@ -307,9 +310,17 @@
     <script src="~/Content/jango/assets/base/js/components.js" type="text/javascript"></script>
     <script src="~/Content/jango/assets/base/js/components-shop.js" type="text/javascript"></script>
     <script src="~/Content/jango/assets/base/js/app.js" type="text/javascript"></script>
-
     <!-- END: THEME SCRIPTS -->
     <!-- END: LAYOUT/BASE/BOTTOM -->
+    <script>
+        //Add a new method to arrays which
+        Array.prototype.find = function (predicate) {
+            for (i = 0; i < this.length; i++)
+                if (predicate(this[i]) == true)
+                    return this[i];
+            return null;
+        };
+    </script>
     @Scripts.Render("~/bundles/angular/js")
     @Scripts.Render("~/bundles/angularui/js")
     @Scripts.Render("~/bundles/orange/js")
@@ -331,16 +342,7 @@
         });
     </script>
     <!-- END JANGO TEMPLATE INITIALIZATION -->
-    <!-- BEGIN MISCELLANEOUS JAVASCRIPT HELPERS/EXTENSIONS -->
-    <script>
-        //Add a new method to arrays which
-        Array.prototype.find = function (predicate) {
-            for (i = 0; i < this.length; i++)
-                if (predicate(this[i]) == true)
-                    return this[i];
-            return null;
-        };
-    </script>
+    <!-- BEGIN MISCELLANEOUS JAVASCRIPT HELPERS/EXTENSIONS -->    
     <!-- END MISCELLANEOUS JAVASCRIPT HELPERS/EXTENSIONS -->
     @RenderSection("ready", false)
 </body>

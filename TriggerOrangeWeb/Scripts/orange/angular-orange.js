@@ -117,9 +117,9 @@
     .directive('oibJangoNotification', function () {
         return {
             restrict: 'EA',
-            scope: {
-                result: '&',
-                messages: '='
+            scope: {               
+                messages: '=',  
+                onClose: '&'
             },
             template: 
             '<div ng-repeat="m in messages">' +           
@@ -133,7 +133,7 @@
                             '</div>' +
                             '<div class="col-md-3">' +
                                 '<div class="c-cookies-bar-btn" >' +
-                                    '<a ng-click="result()" class="c-cookies-bar-close btn c-btn-white c-btn-border-1x c-btn-bold c-btn-square c-cookie-bar-link">Close</a>' +                                       
+                                    '<a href ng-click="onClose(m)" class="btn c-btn-white c-btn-border-1x c-btn-bold c-btn-square c-cookie-bar-link">Close</a>' +                                       
                                 '</div>' +
                             '</div>' +
                         '</div>' +
@@ -141,8 +141,17 @@
                 '</div>' + 
             '</div>',            
             replace: true,            
-            link: function (scope, element, attrs) { 
-                
+            link: function (scope, element, attrs) {                
+                setInterval(function () {                    
+                    if (Array.isArray(scope.messages)) {
+                        var _messages = scope.messages.slice();
+                        _messages.forEach(function (m) {
+                            var currentTime = new Date().getTime();
+                            if (currentTime - m.timeStamp > 30000)
+                                scope.messages.splice(_messages.indexOf(m), 1);
+                        });
+                    }                
+                }, 1000);              
             }
         };
     }).directive('oibCheckbox', function () {

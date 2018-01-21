@@ -18,7 +18,7 @@
             </div>
         </div>
     </div><!-- END: LAYOUT/BREADCRUMBS/BREADCRUMBS-2 -->
-    <div class="container">
+    <div class="container" ng-cloak>
         <div class="c-layout-sidebar-menu c-theme ">
             <!-- BEGIN: LAYOUT/SIDEBARS/SHOP-SIDEBAR-MENU-2 -->
             <!-- BEGIN: CONTENT/SHOPS/SHOP-FILTER-SEARCH-1 -->
@@ -116,7 +116,8 @@
 
             <!-- BEGIN: CONTENT/SHOPS/SHOP-2-8 -->
             <!-- BEGIN: CSS TABLE -->
-            <div ng-cloak ng-repeat="product in products" ng-show="!isLoading && !isEmpty">
+            
+            <div ng-repeat="product in products" ng-show="!isLoading && !isEmpty">
                 <div class="row c-margin-b-40">
                     <div class="c-content-product-2 c-bg-white" >
                         <div class="col-md-4">
@@ -145,7 +146,7 @@
                                 <span class="c-desc c-font-16 c-font-bold">Seller Score: {{product.SellerScore}}</span>
                             </div>
                             <div class="c-margin-t-10">
-                                <button ng-click="onAddToList(product.Id)" type="submit" class="btn btn-sm c-theme-btn c-btn-square c-btn-uppercase c-block-text">
+                                <button ng-click="onAddProductToList(product.Id)" type="submit" class="btn btn-sm c-theme-btn c-btn-square c-btn-uppercase c-block-text">
                                     <i class="fa fa-list"></i> Add To List
                                 </button>
                             </div>
@@ -165,6 +166,7 @@
                     <div class="c-desc c-font-20 c-font-bold c-font-grey-3"> LOADING RESULTS. PLEASE <span class="c-font-red-1">WAIT</span>.</div>
                 </div>
             </div>
+            
             <!-- END CSS TABLE -->
             <!-- END: CONTENT/SHOPS/SHOP-2-8 -->
             <div class="c-margin-t-20"></div>
@@ -185,6 +187,7 @@
     </div>
 </div>
 <!-- END: PAGE CONTAINER -->
+<oibJangoNotification messages="notifications" on-close="onClose()"/>
 
 <script id="template/pagination/orangepagination.html" type="text/ng-template">
     <ul class="c-content-pagination c-square c-theme">
@@ -229,6 +232,7 @@
                $scope.isEmpty = null;
                $scope.isLoading = false;
                $scope.isInitializing = true;
+               $scope.notifications = [];
                $scope.getProductsPipe = function (tableState) {
                    if ($scope.isInitializing == true) {
                        $scope.selectedValues.site = "@Model.SelectedSite";
@@ -274,18 +278,9 @@
                        $scope.allRootCategories = result.categories;
                    });
                };
-               $scope.onAddToList = function (productId) {
-
-               };
-                /*
-                $scope.onBeginAddProductToReport = function () {
-                    const modalInstance = $uibModal.open({
-                        "templateUrl": "AddToModal.html",
-                        "controller": "ModalInstanceCtrl",
-                    });
-                    return modalInstance;
-               };
-                */
+               $scope.onAddProductToList = function (productId) {
+                   $scope.notifications.push({ data: "Product added to list.", timeStamp: new Date().getTime() })
+               };                
                $scope.onPageChanged = function () {
                    $window.scrollTo(0, 0);
                    $scope.getProductsPipe($scope.tableState);
@@ -294,64 +289,14 @@
                    var firstItemOrdinal = ($scope.tableState.pagination.currentPage - 1) * $scope.tableState.pagination.pageSize + 1;
                    var lastItemOrdinal = Math.min($scope.tableState.pagination.currentPage * $scope.tableState.pagination.pageSize, $scope.tableState.pagination.totalItemCount);
                    return firstItemOrdinal + " - " + lastItemOrdinal;
-               }
-
+               };                          
+               $scope.onClose = function (m) {
+                   var index = $scope.notifications.indexOf(m)
+                   if(index >= 0)
+                    $scope.notifications.splice(index, 1);
+               };
                $scope.getProductsPipe($scope.tableState);
-                    })
-            // *** Modal Instance Controller ***/
-            .controller("ModalInstanceCtrl", function ($scope, $uibModalInstance, $http) {
-
-                $scope.lists = [];
-                $scope.ok = function () {
-                };
-                $scope.cancel = function () {
-                    $uibModalInstance.dismiss('cancel');
-                };
-                $scope.onAddNewList = function () {
-                    var postData = {
-                        "listName": $scope.newListName,
-                    };
-                    //$http.post('@Url.Action("CreateList")', postData).success(function (result) {
-                    //    $scope.getLists();
-                    //    $scope.newListName = null;
-                    //});
-                };
-                $scope.onDeleteList = function (list) {
-                    var postData = {
-                        "listId": list.Id,
-                    };
-                    //$http.post('@Url.Action("DeleteList")', postData).success(function (result) {
-                    //    $scope.getLists();
-                    //});
-                };
-                $scope.onCheckChanged = function (list) {
-                    var postData = {
-                        "listId": list.Id,
-                        "productId": 0,
-                    };
-                    //if (list.IsChecked)
-                    //    $http.post('@Url.Action("AddProductToList")', postData);
-                    //else
-                    //    $http.post('@Url.Action("RemoveProductFromList")', postData);
-                    //getLists();
-                };
-                $scope.getLists = function () {
-                    var postData = {
-                        "productId": 0,
-                    };
-                    //    $http.post('@Url.Action("GetLists")', postData).success(function (result) {
-                    //        $scope.lists = result.lists;
-                    //});
-                    $scope.lists = [];
-                    for (var i = 0; i < 20; i++)
-                        $scope.lists.push({
-                            Id: i,
-                            IsChecked: false,
-                            Name: "List#" + i,
-                        });
-                };
-                $scope.getLists();
-            });
+    });
     </script>
     <!-- END TRIGGER ORANGE APP ANGULAR CONTROLLER(S) -->
 }
