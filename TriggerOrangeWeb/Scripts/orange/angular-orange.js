@@ -115,32 +115,31 @@
         };
     })
     .directive('oibJangoNotification', function () {
-        return {
+        return {            
             restrict: 'EA',
-            scope: {               
-                messages: '=',  
-                onClose: '&'
+            scope: {                         
+                messages: '=',                  
             },
-            template: 
-            '<div ng-repeat="m in messages">' +           
-                '<div class="c-cookies-bar c-cookies-bar-1 c-cookies-bar-top c-bg-red animated fadeOutUp" data-wow - delay="2s" style= "visibility: visible; animation-delay: 2s; animation-name: fadeOutUp; opacity: 1;" > ' +
-                    '<div class="c-cookies-bar-container">' +
-                        '<div class="row">' +
-                            '<div class="col-md-9">' +
-                                '<div class="c-cookies-bar-content c-font-white">' +
-                                    '{{m.data}}'+
+            template:            
+                '<div ng-repeat="m in messages">' +           
+                    '<div ng-class="getNfBgClass(m)" class="c-cookies-bar c-cookies-bar-1 c-cookies-bar-top animated fadeOutUp" data-wow - delay="2s" style= "visibility: visible; animation-delay: 2s; animation-name: fadeOutUp; opacity: 1;" > ' +
+                        '<div class="c-cookies-bar-container">' +
+                            '<div class="row">' +
+                                '<div class="col-md-9">' +
+                                    '<div class="c-cookies-bar-content c-font-white">' +
+                                        '<i class="fa" ng-class="getNfIconClass(m)" /> <span class="c-font-bold" style="margin-right:6px">{{getNfTitle(m)}}</span><span class="c-font-25" style="margin-right:5px">|</span> {{m.data}}'+
+                                    '</div>' +
                                 '</div>' +
-                            '</div>' +
-                            '<div class="col-md-3">' +
-                                '<div class="c-cookies-bar-btn" >' +
-                                    '<a href ng-click="onClose(m)" class="btn c-btn-white c-btn-border-1x c-btn-bold c-btn-square c-cookie-bar-link">Close</a>' +                                       
+                                '<div class="col-md-3">' +
+                                    '<div class="c-cookies-bar-btn" style="margin-top:7px" >' +
+                                        '<a href ng-click="onCloseNotification(m)" class="btn c-btn-white c-btn-border-1x c-btn-bold c-btn-square c-cookie-bar-link">Close</a>' +                                       
+                                    '</div>' +
                                 '</div>' +
                             '</div>' +
                         '</div>' +
-                    '</div>' +
-                '</div>' + 
-            '</div>',            
-            replace: true,            
+                    '</div>' + 
+                '</div>',                                 
+            replace: true,         
             link: function (scope, element, attrs) {                
                 setInterval(function () {                    
                     if (Array.isArray(scope.messages)) {
@@ -151,7 +150,37 @@
                                 scope.messages.splice(_messages.indexOf(m), 1);
                         });
                     }                
-                }, 1000);              
+                }, 1000);   
+                scope.$parent.onCloseNotification = function (m) {
+                    var index = scope.messages.indexOf(m)
+                    if (index >= 0)
+                        scope.messages.splice(index, 1);
+                };
+                scope.$parent.getNfBgClass = function (m) {
+                    if (m.hasOwnProperty('type') == false || m.type == "success")
+                        return "c-bg-green-2";
+                    else if (m.type == "error")
+                        return "c-bg-red-2";
+                    else if (m.type == "info")
+                        return "c-bg-blue-1";                        
+                };
+                scope.$parent.getNfTitle = function (m) {
+                    if (m.hasOwnProperty('type') == false || m.type == "success")
+                        return "SUCCESS";
+                    else if (m.type == "error")
+                        return "ERROR";
+                    else if (m.type == "info")
+                        return "INFO";
+                };
+                scope.$parent.getNfIconClass = function (m) {
+                    if (m.hasOwnProperty('type') == false || m.type == "success")
+                        return "fa-thumbs-o-up";
+                    else if (m.type == "error")
+                        return "fa-meh-o";
+                    else if (m.type == "info")
+                        return "fa-star-o";
+                    return "";
+                };
             }
         };
     }).directive('oibCheckbox', function () {

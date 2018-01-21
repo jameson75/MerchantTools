@@ -187,7 +187,7 @@
     </div>
 </div>
 <!-- END: PAGE CONTAINER -->
-<oibJangoNotification messages="notifications" on-close="onClose()"/>
+<oib-Jango-Notification messages="notifications"></oib-Jango-Notification>
 
 <script id="template/pagination/orangepagination.html" type="text/ng-template">
     <ul class="c-content-pagination c-square c-theme">
@@ -279,7 +279,7 @@
                    });
                };
                $scope.onAddProductToList = function (productId) {
-                   $scope.notifications.push({ data: "Product added to list.", timeStamp: new Date().getTime() })
+                   $scope.notifications.push({ type: "error", data: "Product Added To List", timeStamp: new Date().getTime() })
                };                
                $scope.onPageChanged = function () {
                    $window.scrollTo(0, 0);
@@ -290,11 +290,7 @@
                    var lastItemOrdinal = Math.min($scope.tableState.pagination.currentPage * $scope.tableState.pagination.pageSize, $scope.tableState.pagination.totalItemCount);
                    return firstItemOrdinal + " - " + lastItemOrdinal;
                };                          
-               $scope.onClose = function (m) {
-                   var index = $scope.notifications.indexOf(m)
-                   if(index >= 0)
-                    $scope.notifications.splice(index, 1);
-               };
+               
                $scope.getProductsPipe($scope.tableState);
     });
     </script>
