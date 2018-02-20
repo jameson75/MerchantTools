@@ -146,9 +146,9 @@
                                 <span class="c-desc c-font-16 c-font-bold">Seller Score: {{product.SellerScore}}</span>
                             </div>
                             <div class="c-margin-t-10">
-                                <button ng-click="onAddProductToList(product.Id)" type="submit" class="btn btn-sm c-theme-btn c-btn-square c-btn-uppercase c-block-text">
-                                    <i class="fa fa-list"></i> Add To List
-                                </button>
+                                <button ng-click="onAddRemoveListedProduct(product.Id)" type="submit" ng-class="{'btn':true, 'c-btn':!isProductListed(product.Id), 'c-btn-red-2':isProductListed(product.Id), 'c-btn-border-2x':isProductListed(product.Id), 'btn-sm':true, 'c-font-bold':true, 'c-font-white':!isProductListed(product.Id), 'c-theme-btn':!isProductListed(product.Id), 'c-btn-square':true, 'c-font-uppercase':true, 'c-block-text':true}">
+                                    <i class="fa fa-list"></i> {{ !isProductListed(product.Id)? "Add To List" : "Remove From List" }}
+                                </button>                                
                             </div>
                         </div>
                     </div>                    
@@ -233,6 +233,7 @@
                $scope.isLoading = false;
                $scope.isInitializing = true;
                $scope.notifications = [];
+               $scope.listedProductIds = [];
                $scope.getProductsPipe = function (tableState) {
                    if ($scope.isInitializing == true) {
                        $scope.selectedValues.site = "@Model.SelectedSite";
@@ -257,6 +258,7 @@
                        tableState.pagination.currentPage = result.currentPage;
                        tableState.pagination.totalItemCount = result.totalItemCount;
                        $scope.products = result.products;
+                       $scope.listedProductIds = result.listedProductIds;
                        $scope.isLoading = false;
                        $scope.isEmpty = result.products.length == 0;
                        ajaxHistory.Save({
@@ -278,9 +280,51 @@
                        $scope.allRootCategories = result.categories;
                    });
                };
-               $scope.onAddProductToList = function (productId) {
-                   $scope.notifications.push({ type: "error", data: "Product Added To List", timeStamp: new Date().getTime() })
-               };                
+               $scope.isProductListed = function (productId) {
+                   return $scope.listedProductIds.find(function (id) { return id == productId; });
+               };
+               $scope.onAddRemoveListedProduct = function (productId) {
+                   if (!$scope.isProductListed(productId)) {
+                       var postData = {
+                           productId: productId,
+                           listId: null, //default user list.
+                       };
+                       $http.post('@Url.Action("AddProductToList", "Product")', postData).success(function (result) {
+                           var notificationType = null;
+                           if (result.isError)
+                               notificationType = "error";
+                           else {
+                               notificationType = "success";
+                               if(!$scope.listedProductIds.includes(productId)) 
+                                    $scope.listedProductIds.push(productId);
+                           }
+                           $scope.notifications.push({ type: notificationType, data: result.message, timeStamp: new Date().getTime() });
+                       }).error(function (result) {
+                           var errorMessage = "Request failed.";
+                           $scope.notifications.push({ type: "error", data: errorMessage, timeStamp: new Date().getTime() });
+                       });
+                   }
+                   else {                      
+                       var postData = {
+                           productId: productId,
+                           listId: null, //default user list.
+                       };
+                       $http.post('@Url.Action("RemoveProductFromList", "Product")', postData).success(function (result) {
+                           var notificationType = null;
+                           if (result.isError)
+                               notificationType = "error";
+                           else {
+                               notificationType = "success";
+                               if ($scope.listedProductIds.includes(productId))
+                                   $scope.listedProductIds.splice($scope.listedProductIds.indexOf(productId), 1);
+                           }
+                           $scope.notifications.push({ type: notificationType, data: result.message, timeStamp: new Date().getTime() });
+                       }).error(function (result) {
+                           var errorMessage = "Request failed.";
+                           $scope.notifications.push({ type: "error", data: errorMessage, timeStamp: new Date().getTime() });
+                       });
+                   }
+               };
                $scope.onPageChanged = function () {
                    $window.scrollTo(0, 0);
                    $scope.getProductsPipe($scope.tableState);
@@ -289,8 +333,7 @@
                    var firstItemOrdinal = ($scope.tableState.pagination.currentPage - 1) * $scope.tableState.pagination.pageSize + 1;
                    var lastItemOrdinal = Math.min($scope.tableState.pagination.currentPage * $scope.tableState.pagination.pageSize, $scope.tableState.pagination.totalItemCount);
                    return firstItemOrdinal + " - " + lastItemOrdinal;
-               };                          
-               
+               };
                $scope.getProductsPipe($scope.tableState);
     });
     </script>

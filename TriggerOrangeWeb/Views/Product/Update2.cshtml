@@ -20,12 +20,12 @@
     </div><!-- END: LAYOUT/BREADCRUMBS/BREADCRUMBS-2 -->
     <!-- BEGIN: PAGE CONTENT -->
     <!-- BEGIN: CONTENT/SHOPS/SHOP-PRODUCT-DETAILS-2 -->
-    <div class="c-content-box c-size-lg c-overflow-hide c-bg-white">
+    <div class="c-content-box c-size-md c-overflow-hide c-bg-white">
         <div class="container">
             <div class="c-shop-product-details-2">
                 <div class="row">
                     <div class="col-md-6">
-                        <<div class="c-content-overlay">
+                        <div class="c-content-overlay">
                             <div class="c-overlay-wrapper">
                                 <div class="c-overlay-content">
                                     <a href="@Model.Product.ProductUrl" target="_blank" class="btn btn-md c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">Explore</a>
@@ -35,31 +35,33 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="c-product-meta c-margin-t-20">
+                        <div class="c-product-meta">
                             <div class="c-content-title-1">
                                 <h3 class="c-font-uppercase c-font-bold"><a href="@Model.Product.ProductUrl" target="_blank">@Model.Product.Name</a></h3>                                
                             </div>                                                        
-                            <div class="c-product-price">$@Model.Product.Price</div>                          
+                            <div class="c-product-price c-margin-b-5">$@Model.Product.Price</div>                          
                             <div class="row c-product-variant">
                                 <div class="col-sm-12 col-xs-12">
-                                    <p class="c-product-meta-label c-product-margin-1 c-font-uppercase c-font-bold">Units Sold:</p>
-                                    <span class="c-product-meta-label c-font-uppercase c-font-bold">
+                                    <span class="c-font-uppercase c-font-bold">Units Sold:</span>
+                                    <span class="c-font-uppercase c-font-bold">
                                         @Model.Product.UnitsSold
                                     </span>
                                 </div>
                                 <div class="col-sm-12 col-xs-12">
                                     <div class="c-product-color">
-                                        <p class="c-product-meta-label c-font-uppercase c-font-bold">Seller Score:</p>
-                                        <span class="c-product-meta-label c-font-uppercase c-font-bold">
+                                        <span class="c-font-uppercase c-font-bold">Seller Score:</span>
+                                        <span class="c-font-uppercase c-font-bold">
                                             @Model.Product.SellerScore
                                         </span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="c-product-add-cart">
+                            <div ng-cloak class="c-product-add-cart">
                                 <div class="row">                                    
                                     <div class="col-sm-12 col-xs-12 c-margin-t-20">
-                                        <button ng-click="onAddProductToList(@Model.Product.Id )" class="btn c-btn btn-lg c-font-bold c-font-white c-theme-btn c-btn-square c-font-uppercase"><i class="fa fa-list"></i> Add To List</button>
+                                        <button ng-click="onAddRemoveProductListedProduct(@Model.Product.Id)" ng-class="{'btn':true, 'c-btn':!isProductListed, 'c-btn-red-2':isProductListed, 'c-btn-border-2x':isProductListed, 'btn-lg':true, 'c-font-bold':true, 'c-font-white':!isProductListed, 'c-theme-btn':!isProductListed, 'c-btn-square':true, 'c-font-uppercase':true}">
+                                            <i class="fa fa-list"></i> {{isProductListed == false ? "Add To List" : "Remove From List"}}
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -74,7 +76,7 @@
     <div class="c-content-box c-size-md c-overflow-hide c-bs-grid-small-space">
         <div class="container">
             <div class="c-content-title-4">
-                <h3 class="c-font-uppercase c-center c-font-bold c-line-strike"><span class="c-bg-white">Most Popular</span></h3>
+                <h3 class="c-font-uppercase c-center c-font-bold c-line-strike"><span class="c-bg-white">Similar Items On Ebay</span></h3>
             </div>
             <div class="row">
                 <div data-slider="owl">
@@ -263,6 +265,7 @@
     <!-- END: PAGE CONTENT -->
 </div>
 <!-- END: PAGE CONTAINER -->
+<oib-Jango-Notification messages="notifications"></oib-Jango-Notification>
 
 <script id="template/pagination/orangepagination.html" type="text/ng-template">
     <ul class="c-content-pagination c-square c-theme">
@@ -280,7 +283,48 @@
         angular.module('triggerOrangeApp', ['orange', 'ngAnimate', 'ui.bootstrap'])
             //*** Main Controller ***
             .controller('triggerOrangeCtlr', function ($scope, $http, $window, $uibModal) {
-
+                $scope.notifications = [];
+                $scope.isProductListed = @Json.Encode(Model.IsProductListed);
+                $scope.onAddRemoveProductListedProduct = function (productId) {
+                    if (!$scope.isProductListed) {
+                        var postData = {
+                            productId: productId,
+                            listId: null, //default user list.
+                        };
+                        $http.post('@Url.Action("AddProductToList")', postData).success(function (result) {
+                            var notificationType = null;
+                            if (result.isError)
+                                notificationType = "error";
+                            else {
+                                notificationType = "success";
+                                $scope.isProductListed = true;
+                            }
+                            $scope.notifications.push({ type: notificationType, data: result.message, timeStamp: new Date().getTime() });
+                        }).error(function (result) {
+                            var errorMessage = "Request failed.";
+                            $scope.notifications.push({ type: "error", data: errorMessage, timeStamp: new Date().getTime() });
+                        });
+                    }
+                    else {
+                        var postData = {
+                            productId: productId,
+                            listId: null, //default user list.
+                        };
+                        $http.post('@Url.Action("RemoveProductFromList")', postData).success(function (result) {
+                            var notificationType = null;
+                            if (result.isError)
+                                notificationType = "error";
+                            else {
+                                notificationType = "success";
+                                $scope.isProductListed = false;
+                            }
+                            $scope.notifications.push({ type: notificationType, data: result.message, timeStamp: new Date().getTime() });
+                        }).error(function (result) {
+                            var errorMessage = "Request failed.";
+                            $scope.notifications.push({ type: "error", data: errorMessage, timeStamp: new Date().getTime() });
+                        });
+                    }
+                };
             });
     </script>
     <!-- END TRIGGER ORANGE APP ANGULAR CONTROLLER(S) -->

@@ -26,6 +26,7 @@ namespace CipherPark.Ebay.Api.Finding
 
     public class PaginationInput
     {
+        public const int PageFetchLimit = 100;
         [XmlElement("entriesPerPage")]
         public int EntriesPerPage { get; set; }
         [XmlElement("pageNumber")]

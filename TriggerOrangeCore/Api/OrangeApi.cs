@@ -454,7 +454,8 @@ namespace CipherPark.TriggerOrange.Core
                                     {
                                         allFoundItems.AddRange(findItemsResponse.SearchResult.Items);
                                     }
-                                } while (findItemsResponse.PaginationOutput.PageNumber < findItemsResponse.PaginationOutput.TotalPages);
+                                } while (findItemsResponse.PaginationOutput.PageNumber < findItemsResponse.PaginationOutput.TotalPages &&
+                                         findItemsResponse.PaginationOutput.PageNumber < PaginationInput.PageFetchLimit);
                                 LogOperationInfo(operationName, "Item search complete.");
 
                                 var nPurged = allFoundItems.Count(x => x.ListingInfo.StartTime < startTimeFrom || x.ListingInfo.StartTime > startTimeTo);
