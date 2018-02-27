@@ -168,7 +168,7 @@ namespace CipherPark.TriggerOrange.Core
 
         #endregion        
 
-        #region Task Management
+        #region Long Running Task Management
 
         private void CancelRunningTasks()
         {
@@ -311,7 +311,7 @@ namespace CipherPark.TriggerOrange.Core
 
         #endregion
 
-        #region Unit Tasks
+        #region Long Running Tasks
        
         public void UpdateMarketPlaceCategories(string siteName)
         {
@@ -333,7 +333,11 @@ namespace CipherPark.TriggerOrange.Core
                                    });
         }
 
-        #endregion       
+        #endregion
+
+        #region Short Running Tasks
+       
+        #endregion
     }
 
     public class TaskSchedule

@@ -4618,6 +4618,7 @@
     <Content Include="Views\Product\Update2.cshtml" />
     <Content Include="Views\_Shared\_Layout.cshtml" />
     <Content Include="Views\_Shared\_LandingLayout.cshtml" />
+    <Content Include="Views\Reports\CreateFromList.cshtml" />
     <None Include="Web.Internal.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -4649,6 +4650,7 @@
     <Compile Include="Models\DetailsViewModel.cs" />
     <Compile Include="Models\ListModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\ProductListItemModel.cs" />
     <Compile Include="Models\ProductMetaModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\ReportItemModel.cs" />
