@@ -293,7 +293,7 @@
                     if (!$scope.isProductListed) {
                         var postData = {
                             productId: productId,
-                            listId: null, //default user list.
+                            listId: @Model.UserActiveListId, //default user list.
                         };
                         $http.post('@Url.Action("AddProductToList")', postData).success(function (result) {
                             var notificationType = null;
@@ -312,7 +312,7 @@
                     else {
                         var postData = {
                             productId: productId,
-                            listId: null, //default user list.
+                            listId: @Model.UserActiveListId, //default user list.
                         };
                         $http.post('@Url.Action("RemoveProductFromList")', postData).success(function (result) {
                             var notificationType = null;
