@@ -23,6 +23,8 @@ namespace CipherPark.TriggerOrange.Service
         void UpdateMarketPlaceHotLists(string siteName);
         //[OperationContract]
         //string GetLogFilePath();
+        [OperationContract]
+        void UpdateReportAnalytics(long reportId);
     }
 
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
@@ -45,7 +47,12 @@ namespace CipherPark.TriggerOrange.Service
         public void UpdateMarketPlaceHotLists(string siteName)
         {
             taskManager.UpdateMarketPlaceHotLists(siteName);            
-        }       
+        }      
+        
+        public void UpdateReportAnalytics(long reportId)
+        {
+            taskManager.UpdateReportAnalytics(reportId);
+        }
 
         #endregion
 

@@ -317,8 +317,7 @@ namespace CipherPark.TriggerOrange.Core
         {
             EnqueueLongRunningTask(LongRunningTaskNames.Generate(LongRunningTaskNames.UpdateMarketPlaceCategories, siteName),
                                    "User",
-                                   () =>
-                                   {
+                                   () => {
                                        _api.UpateMarketPlaceCategories(siteName);
                                    });
         }
@@ -327,10 +326,14 @@ namespace CipherPark.TriggerOrange.Core
         {
             EnqueueLongRunningTask(LongRunningTaskNames.Generate(LongRunningTaskNames.UpdateMarketPlaceHotLists, siteName),
                                    "User",
-                                   () =>
-                                   {
+                                   () => {
                                        _api.UpdateMarketPlaceHotLists(siteName);
                                    });
+        }
+
+        public void UpdateReportAnalytics(long reportId)
+        {
+            //Not yet implemented.
         }
 
         #endregion

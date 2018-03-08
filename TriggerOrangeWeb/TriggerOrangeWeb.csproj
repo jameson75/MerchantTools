@@ -4659,6 +4659,7 @@
     <Compile Include="Models\SimilarProductViewModel.cs" />
     <Compile Include="Models\SourceProductViewModel.cs" />
     <Compile Include="Models\SourcesViewModel.cs" />
+    <Compile Include="Services\ReportingServices.cs" />
     <Compile Include="Services\UserAuthServices.cs" />
     <Compile Include="Services\WebApiServices.cs" />
     <Compile Include="Util\DerivedDataHelper.cs" />
