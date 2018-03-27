@@ -135,4 +135,8 @@
         cursor: not-allowed;
     }
 
+    .blog-img {
+        max-width: 100%;
+        height: auto;       
+    }
    

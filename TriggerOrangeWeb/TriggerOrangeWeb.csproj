@@ -4410,6 +4410,10 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\mediator\meditor.css" />
+    <Content Include="Scripts\mediator\meditor.js" />
+    <Content Include="Scripts\mediator\meditor.min.css" />
+    <Content Include="Scripts\mediator\meditor.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\orange\angular-orange.js" />
     <Content Include="Scripts\smart-table-master\.gitignore" />
