@@ -4585,6 +4585,9 @@
     <Content Include="Views\Reports\CreateFromList.cshtml" />
     <Content Include="Views\Reports\Details2.cshtml" />
     <Content Include="Views\Reports\Index2.cshtml" />
+    <Content Include="Views\Reports\Details3.cshtml" />
+    <Content Include="Views\Reports\Details3SinglePage.cshtml" />
+    <Content Include="Views\Reports\Details4.cshtml" />
     <None Include="Web.Internal.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
