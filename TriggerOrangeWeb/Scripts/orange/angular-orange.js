@@ -115,33 +115,33 @@
         };
     })
     .directive('oibJangoNotification', function () {
-        return {            
+        return {
             restrict: 'EA',
-            scope: {                         
-                messages: '=',                  
+            scope: {
+                messages: '=',
             },
-            template:            
-                '<div ng-repeat="m in messages">' +           
-                    '<div ng-class="getNfBgClass(m)" class="c-cookies-bar c-cookies-bar-1 c-cookies-bar-top animated fadeOutUp" data-wow - delay="2s" style= "visibility: visible; animation-delay: 2s; animation-name: fadeOutUp; opacity: 1;" > ' +
-                        '<div class="c-cookies-bar-container">' +
-                            '<div class="row">' +
-                                '<div class="col-md-9">' +
-                                    '<div class="c-cookies-bar-content c-font-white">' +
-                                        '<i class="fa" ng-class="getNfIconClass(m)" /> <span class="c-font-bold" style="margin-right:6px">{{getNfTitle(m)}}</span><span class="c-font-25" style="margin-right:5px">|</span> {{m.data}}'+
-                                    '</div>' +
-                                '</div>' +
-                                '<div class="col-md-3">' +
-                                    '<div class="c-cookies-bar-btn" style="margin-top:7px" >' +
-                                        '<a href ng-click="onCloseNotification(m)" class="btn c-btn-white c-btn-border-1x c-btn-bold c-btn-square c-cookie-bar-link">Close</a>' +                                       
-                                    '</div>' +
-                                '</div>' +
-                            '</div>' +
-                        '</div>' +
-                    '</div>' + 
-                '</div>',                                 
-            replace: true,         
-            link: function (scope, element, attrs) {                
-                setInterval(function () {                    
+            template:
+            '<div ng-repeat="m in messages">' +
+            '<div ng-class="getNfBgClass(m)" class="c-cookies-bar c-cookies-bar-1 c-cookies-bar-top animated fadeOutUp" data-wow - delay="2s" style= "visibility: visible; animation-delay: 2s; animation-name: fadeOutUp; opacity: 1;" > ' +
+            '<div class="c-cookies-bar-container">' +
+            '<div class="row">' +
+            '<div class="col-md-9">' +
+            '<div class="c-cookies-bar-content c-font-white">' +
+            '<i class="fa" ng-class="getNfIconClass(m)" /> <span class="c-font-bold" style="margin-right:6px">{{getNfTitle(m)}}</span><span class="c-font-25" style="margin-right:5px">|</span> {{m.data}}' +
+            '</div>' +
+            '</div>' +
+            '<div class="col-md-3">' +
+            '<div class="c-cookies-bar-btn" style="margin-top:7px" >' +
+            '<a href ng-click="onCloseNotification(m)" class="btn c-btn-white c-btn-border-1x c-btn-bold c-btn-square c-cookie-bar-link">Close</a>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>',
+            replace: true,
+            link: function (scope, element, attrs) {
+                setInterval(function () {
                     if (Array.isArray(scope.messages)) {
                         var _messages = scope.messages.slice();
                         _messages.forEach(function (m) {
@@ -149,8 +149,8 @@
                             if (currentTime - m.timeStamp > 30000)
                                 scope.messages.splice(_messages.indexOf(m), 1);
                         });
-                    }                
-                }, 1000);   
+                    }
+                }, 1000);
                 scope.$parent.onCloseNotification = function (m) {
                     var index = scope.messages.indexOf(m)
                     if (index >= 0)
@@ -162,7 +162,7 @@
                     else if (m.type == "error")
                         return "c-bg-red-2";
                     else if (m.type == "info")
-                        return "c-bg-blue-1";                        
+                        return "c-bg-blue-1";
                 };
                 scope.$parent.getNfTitle = function (m) {
                     if (m.hasOwnProperty('type') == false || m.type == "success")
@@ -191,11 +191,11 @@
                 messages: '='
             },
             template:
-                '<label for="checkbox2-88">' +
-                '<span class="inc"></span>' +
-                '<span class="check"></span>' +
-                '<span class="box"></span>' +
-                'Checked Option</label>',
+            '<label for="checkbox2-88">' +
+            '<span class="inc"></span>' +
+            '<span class="check"></span>' +
+            '<span class="box"></span>' +
+            'Checked Option</label>',
             replace: true,
             link: function (scope, element, attrs) {
 
@@ -227,4 +227,40 @@
                 return html;
             }
         }
-    });
+    })
+    /*
+    Copyright 2018 Google Inc. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at http://angular.io/license
+    */
+    .directive('contenteditable', ['$sce', function ($sce) {
+        return {
+            restrict: 'A', // only activate on element attribute
+            require: '?ngModel', // get a hold of NgModelController
+            link: function (scope, element, attrs, ngModel) {
+                if (!ngModel) return; // do nothing if no ng-model
+
+                // Specify how UI should be updated
+                ngModel.$render = function () {
+                    element.html($sce.getTrustedHtml(ngModel.$viewValue || ''));
+                };
+
+                // Listen for change events to enable binding
+                element.on('blur keyup change', function () {
+                    scope.$evalAsync(read);
+                });
+                read(); // initialize
+
+                // Write data to the model
+                function read() {
+                    var html = element.html();
+                    // When we clear the content editable the browser leaves a <br> behind
+                    // If strip-br attribute is provided then we strip this out
+                    if (attrs.stripBr && html === '<br>') {
+                        html = '';
+                    }
+                    ngModel.$setViewValue(html);
+                }
+            }
+        };
+    }]);

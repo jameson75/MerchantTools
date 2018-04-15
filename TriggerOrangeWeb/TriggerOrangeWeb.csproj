@@ -4544,6 +4544,14 @@
     <Content Include="Scripts\smile\js\vendors\tweets\tweecool.min.js" />
     <Content Include="Scripts\smile\js\vendors\vmenu\script.js" />
     <Content Include="Scripts\smile\js\vendors\vmenu\styles.css" />
+    <Content Include="Scripts\textAngular-1.5.16\textAngular-rangy.min.js" />
+    <Content Include="Scripts\textAngular-1.5.16\textAngular-sanitize.js" />
+    <Content Include="Scripts\textAngular-1.5.16\textAngular-sanitize.min.js" />
+    <Content Include="Scripts\textAngular-1.5.16\textAngular.css" />
+    <Content Include="Scripts\textAngular-1.5.16\textAngular.js" />
+    <Content Include="Scripts\textAngular-1.5.16\textAngular.min.js" />
+    <Content Include="Scripts\textAngular-1.5.16\textAngular.umd.js" />
+    <Content Include="Scripts\textAngular-1.5.16\textAngularSetup.js" />
     <Content Include="Scripts\ui-bootstrap-tpls-0.14.3.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
