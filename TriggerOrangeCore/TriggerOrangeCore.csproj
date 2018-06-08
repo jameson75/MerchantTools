@@ -136,6 +136,9 @@
     <Compile Include="Data\ProductMeta.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\ProductStaging.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\Report.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

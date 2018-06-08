@@ -29,12 +29,73 @@ namespace CipherPark.Ebay.Api
             XmlSerializer serializer = new XmlSerializer(typeof(T));
             using (StringReader textReader = new StringReader(xml))
             {
-                object result = serializer.Deserialize(textReader);
-                return (T)result;
+                try
+                {
+                    object result = serializer.Deserialize(textReader);
+                    return (T)result;
+                }
+                catch 
+                {
+                    throw new InvalidOperationException("Failed to deserialize the following xml response: " + xml);
+                }               
            }
         }     
-    }   
+    }
 
+    public class ErrorMessage
+    {
+        [XmlElement("error")]
+        public List<Error> Errors { get; set; }
+    }
+
+    public class Error
+    {
+        [XmlElement("category")]
+        public ErrorCategory Category { get; set; }
+
+        [XmlElement("domain")]
+        public string Domain { get; set; }
+
+        [XmlElement("errorId")]
+        public long ErrorId { get; set; }
+
+        [XmlElement("exceptionId")]
+        public string ExceptionId { get; set; }
+
+        [XmlElement("message")]
+        public string Message { get; set; }
+
+        [XmlElement("parameter")]
+        public List<ErrorParameter> Parameters { get; set; }
+
+        [XmlElement("severity")]
+        public ErrorSeverity Severity { get; set; }
+
+        [XmlElement("subdomain")]
+        public string Subdomain { get; set; }
+    }
+
+    public class ErrorParameter
+    {
+        [XmlAttribute("name")]
+        public string Name { get; set; }
+
+        [XmlText]
+        public string Value { get; set; }
+    }
+
+    public enum ErrorSeverity
+    {
+        Error,
+        Warning
+    }
+
+    public enum ErrorCategory
+    {
+        Application,
+        Request,
+        System
+    }
     public enum EbayServiceEnvironment
     {
         Sandbox,

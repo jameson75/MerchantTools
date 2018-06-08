@@ -28,7 +28,7 @@ namespace CipherPark.TriggerOrange.Core
         public const string EbayProductionDevId = "ecc2a8ce-2bad-41b5-995b-603ef425a06e";
         public const string EbayProductionAppId = "EugeneAd-aa5b-48be-a0c7-9cb1684a8072";
         public const string EbayProductionCertId = "5090c7e1-7001-4c22-bbdb-0cccef6ac65d";       
-        public const string EbayUserTokenMeganova75 = "AgAAAA**AQAAAA**aAAAAA**LsmYVg**nY+sHZ2PrBmdj6wVnY+sEZ2PrA2dj6wFmIWlDJiGpAydj6x9nY+seQ**Pv4CAA**AAMAAA**4CqjXTl8CCk2p168EkoNpXWXIOEw8hn6z4aCEF1FFTuWge+MiFyZO5RI8QtzA0/tWvP3oWiOHvk3Lw/TtQw1+2btjJ9+3OKHwc0g6/0TQwkcv4dI6DBhwHOlhzZ7WtBuqLZjCtXS8UN3MIqQF+IePOjVg/dXqHIWzph2vbvAlotAYLlZPYFW4MUCWJDLcpHxXFsS8DPd7UxaKM0Ov86E30iYa1b8Fa4x3CyMgi2xCuMVYITxurv7+ykbBByrgynq3Wo6uQKLKB2j/RDv4f7SOj3CKDKd9CrbjdSskkvR+0CBCTXWR4Ml3nArGUI8H/5JyV582xTGOfXwm3Z5fI6+S90kVYVdstdr7fYrTO8Lw3YFZcgogYjEslIepjgc/p//DhQXCud4xaj0Nd03sS2iMU9xkFiIpQlx0QYztFsqTSARncobXsZRAypaOpRgF51jMcbXmRvdYPyLf35k5EFmiw+GjFgrdOVITNTFVpeiDyljTt7cUU2QJ044jICBV0AaVxqB+Zc6I9McmrVWKdTcE0ml8oIjzkOuy1q6dXqPLcHuepoPXQZndmUCCRfDmYVKzvWQoZO0dU/DrWAxLqDkl2xrT0mpXUDFOkxH5X6UZ3xMd1cDC8ddO4k8/MtRgQOAPzyvChnttwzBaV4yV0jeKbeUAJGXGlcIlT2RTGZ6JNgFm0cOOi15SmNiRjaIVDE9j1GKI+nLA0aStgweUtAKOkQAkgobLElBQWYu37EMh4cTdLRlsNzMK1n3KNIHTgra";      
+        public const string EbayUserTokenMeganova75 = "AgAAAA**AQAAAA**aAAAAA**P44QWw**nY+sHZ2PrBmdj6wVnY+sEZ2PrA2dj6wFmIWlDJiGpAydj6x9nY+seQ**Pv4CAA**AAMAAA**pNr23nJ90RfNzBDbWhmUqsqLLbqDmdpD4y5ZQ5SgH1pvsdLtUkTNbJIJWWjgm1z6d+ubpClN3zk6M83eaFEh+gtZ4TRYnRvO/x937X5wMb3gqL/v+eJl3pfCXxx0ba+seY4vYc4qt8XuWV58l6NheGbhUgd/+ZLGdeAiaQKmVokCXuIWcogBpkgPMwOXOm6N1Cxmm6Chv1WJh8pHgcZy0HSyOi6LxgxXhA1x5HNbJ2mNjJ8tp7BejrHoUCvieANXMdpfzp/rQC6iI83jJuWqzbAAW1emh/jFZ9hDZ8f8vekjLrcDz2C6YEcLvtblHSuSP+JraSLKYoRqKLn+UFFrTF9l/+AKvro3kSZJTOufalvFmXQC31bHpzvT0szBEWeeKhwYlC3/NfvnJeQQVu1ILRWfQfz66XRj67w1GQhRzGY1yAq4tyY6FiDEDYpEZFCppqPpb7iLe2e/Uv2Ibd1letQril6shpnmlsTKJE/n4348eujtsSL5RmScFaglq+p97O9Ggucih6Pzl1xVPBsN8GWlLn7QvSVOG0p/d51AHJl5fcqw+4dFvjFoTd5ycNferrnC5HVe7F6Cf2HdD1yeEbRbkWfj5KmHVD4bAkFXDAdRDyFBU8Y+A6/Va9r/GCZdRljKlWGMxzxK+QEobS0jcVgVjijDbL60GUa2nxILLi5U2X6/SLsgleH7Ee19HIr5AimDq2r5pLT58xV6LpuvjU/FLrfGY7ms+8CCCr4PCa44AN9y77p1WdUQ7OmDqaMa";      
 
         public static readonly DateTime EbayUserTokenExpiryMeganova75 = DateTime.Parse("2017-07-08 10:25:50");
 
@@ -139,6 +139,8 @@ namespace CipherPark.TriggerOrange.Core
                             "14339",    //Crafts
                             "26395",    //Health and beauty.
                         };
+                        //NOTE: The category update for ebay hot starters depends on the category update for Most Watched.
+                        //That task must be performed first.
                         var sourceCategories = db.Categories.Where(x => categoryReferenceIds.Contains(x.ReferenceId)).ToList();
                         db.Categories.AddRange(sourceCategories.Select(x => new Data.Category()
                         {
@@ -362,25 +364,23 @@ namespace CipherPark.TriggerOrange.Core
 
                 case MarketPlaceSiteNames.eBayHotStarters:
                     #region EbayHotAndNew
-                    const int HoursInADay = 24;
+                    const int HoursInADay = 1;
                     const int LookBackDays = 7;
-                    int MinSales = (int)Math.Ceiling(LookBackDays * 0.7);
-
-                    //Report operation start.
+                    const double MinSalesPerDay = 0.7;
+                    int MinSales = (int)Math.Ceiling(LookBackDays * MinSalesPerDay);
+                    
                     operationName = OperationNames.UpdateEbayHotStarters;
                     LogOperationStart(operationName);
 
                     using (OrangeEntities db = new OrangeEntities())
                     {
                         LogOperationInfo(operationName, $"Deleting all \"hot starter\" products");                                          
-                        BulkDeleteProductsForSite(MarketPlaceSiteNames.eBayHotStarters);                                                
+                        BulkDeleteStagedProductsForSite(MarketPlaceSiteNames.eBayHotStarters);                                                
 
                         var categories = db.Categories.Where(x => x.Site == siteName).ToList();
-
                         var now = DateTime.UtcNow;
                         var beginningOfDay = new DateTime(now.Year, now.Month, now.Day);
-
-                        //foreach (var category in categories)
+                       
                         Parallel.ForEach(categories, (category) =>
                         {
                             List<Ebay.Api.Shopping.SimpleItem> allItems = new List<Ebay.Api.Shopping.SimpleItem>();
@@ -443,7 +443,7 @@ namespace CipherPark.TriggerOrange.Core
                                     }
                                 };
 
-                                LogOperationInfo(operationName, $"Finding Fixed price items starting from {startTimeFrom} to {startTimeTo}...");
+                                LogOperationInfo(operationName, $"Finding Fixed price items for category, {category.Name}, starting from {startTimeFrom} to {startTimeTo}...");
                                 List<Ebay.Api.Finding.SearchItem> allFoundItems = new List<Ebay.Api.Finding.SearchItem>();
                                 FindItemsByCategoryResponse findItemsResponse = null;
                                 do
@@ -456,13 +456,13 @@ namespace CipherPark.TriggerOrange.Core
                                     }
                                 } while (findItemsResponse.PaginationOutput.PageNumber < findItemsResponse.PaginationOutput.TotalPages &&
                                          findItemsResponse.PaginationOutput.PageNumber < PaginationInput.PageFetchLimit);
-                                LogOperationInfo(operationName, "Item search complete.");
+                                LogOperationInfo(operationName, $"Item search complete for category, {category.Name}.");
 
                                 var nPurged = allFoundItems.Count(x => x.ListingInfo.StartTime < startTimeFrom || x.ListingInfo.StartTime > startTimeTo);
                                 allFoundItems.RemoveAll(x => x.ListingInfo.StartTime < startTimeFrom || x.ListingInfo.StartTime > startTimeTo);
                                 LogOperationInfo(operationName, $"Purged {nPurged} items because they fell outside the queried date range");
 
-                                LogOperationInfo(operationName, "Getting full details for each item...");
+                                LogOperationInfo(operationName, $"Getting full details for each item in category, {category.Name}...");
                                 foreach (var batch in allFoundItems.Batch(GetMultipleItemsRequest.MaxItemsLength))
                                 {
                                     var multipleItemsResponse = shoppingClient.GetMultipleItems(new GetMultipleItemsRequest()
@@ -473,13 +473,12 @@ namespace CipherPark.TriggerOrange.Core
                                     if (multipleItemsResponse.Items != null)
                                         allItems.AddRange(multipleItemsResponse.Items);
                                 }
-                                LogOperationInfo(operationName, $"Finished getting full details for for hour {i + 1} of {HoursInADay}.");
+                                LogOperationInfo(operationName, $"Finished getting full details for for hour {i + 1} of {HoursInADay} in category, {category.Name}.");
                             }
 
-                            LogOperationInfo(operationName, $"Finished getting full details for all items. Populating database with {allItems.Count} items");
-
-                            List<Data.Product> dbProducts = allItems.Where(x => x.QuantitySold >= MinSales)
-                                                                    .Select(x => new Data.Product
+                            LogOperationInfo(operationName, $"Finished getting full details for all items for category {category.Name}. Populating database with {allItems.Count} items");
+                            List<Data.ProductStaging> dbProducts = allItems.Where(x => x.QuantitySold >= MinSales)
+                                                                    .Select(x => new Data.ProductStaging
                                                                     {
                                                                         CategoryId = category.Id,
                                                                         Price = Convert.ToDecimal(x.ConvertedCurrentPrice),
@@ -499,11 +498,18 @@ namespace CipherPark.TriggerOrange.Core
                                                                         SellerId = x.Seller?.UserID,
                                                                         SellerScore = x.Seller?.FeedbackScore,
                                                                         Location = x.Location,
-                                                                    }).ToList();
-                            //db.Products.AddRange(dbProducts);
-                            //db.SaveChanges();   
+                                                                    }).ToList();                              
                             db.BulkInsert(dbProducts);
+                            LogOperationInfo(operationName, $"Finished populating database for category, {category.Name}");
                         });
+
+                        LogOperationInfo(operationName, "Transfering staged products");
+                        TransferStagedProducts(siteName);
+
+                        LogOperationInfo(operationName, "Initiating rebuild of Full Text Catalog (NOTE: rebuild operation is out-of-band).");
+                        RebuildFullTextCatalog();
+
+                        LogOperationComplete(operationName);
                     }
                     break;
                 #endregion
@@ -975,12 +981,59 @@ namespace CipherPark.TriggerOrange.Core
 
         #region Helper/Support methods        
 
+        private void TransferStagedProducts(string siteName)
+        {
+            using (OrangeEntities db = new OrangeEntities())
+            {
+                var tx = db.Database.BeginTransaction();
+                try
+                {
+                    BulkDeleteProductsForSite(siteName);
+                    db.Database.ExecuteSqlCommand(@"INSERT INTO Product SELECT * 
+                                                                    FROM ProductStaging
+                                                                    WHERE CategoryId IN 
+                                                                        (SELECT Id 
+                                                                         FROM Category
+                                                                         WHERE Site = @p0)", siteName);
+                    BulkDeleteStagedProductsForSite(siteName);
+                    tx.Commit();
+                }
+                catch (Exception ex)
+                {
+                    tx.Rollback();
+                    throw new InvalidOperationException("Failed to transfer staged products.", ex);
+                }
+            }
+        }
+
+        private void RebuildFullTextCatalog()
+        {
+            using (OrangeEntities db = new OrangeEntities())
+            {
+                db.Database.ExecuteSqlCommand(@"ALTER FULLTEXT CATALOG ProductKeywordsFTS REBUILD");
+            }
+        }
+
         private void BulkDeleteCategoriesForSite(string siteName)
         {
             using (OrangeEntities db = new OrangeEntities())
             {
                 //NOTE: 
-                db.Database.ExecuteSqlCommand($"DELETE Category WHERE Site = @p0", siteName);              
+                db.Database.ExecuteSqlCommand(@"DELETE Category WHERE Site = @p0", siteName);              
+            }
+        }
+
+        private void BulkDeleteStagedProductsForSite(string siteName)
+        {
+            using (OrangeEntities db = new OrangeEntities())
+            {
+                //**************************************************************
+                //NOTE: It's expected that all tables related to product have a
+                //Cascade on DELETE rule.
+                //**************************************************************
+                db.Database.ExecuteSqlCommand(@"DELETE ProductStaging WHERE CategoryId IN 
+                                                    (SELECT Id FROM Category
+                                                    WHERE Site = @p0)", siteName);
             }
         }
 
