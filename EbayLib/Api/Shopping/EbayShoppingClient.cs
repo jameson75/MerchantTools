@@ -60,7 +60,7 @@ namespace CipherPark.Ebay.Api.Shopping
                     requestStream.Write(System.Text.Encoding.ASCII.GetBytes(requestXml), 0, requestXml.Length);
                     requestStream.Close();
                 }
-                HttpWebResponse webResponse = (HttpWebResponse)webRequest.GetResponse();
+                HttpWebResponse webResponse = (HttpWebResponse)webRequest.GetResponseWithRetry();
                 Stream responseStream = webResponse.GetResponseStream();
                 StreamReader reader = new StreamReader(responseStream, Encoding.Default);
                 responseData = reader.ReadToEnd();

@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data.Entity.Core.Objects;
 using System.Data.Entity;
-using System.Data.SqlClient;
-using System.Data.Entity.Core;
 using EntityFramework.BulkInsert.Extensions;
 using CipherPark.TriggerOrange.Core.Data;
 using CipherPark.TriggerOrange.Core.ApplicationServices;
@@ -16,8 +13,6 @@ using CipherPark.Ebay.Api.Trading;
 using CipherPark.Ebay.Api.Merchandising;
 using CipherPark.Ebay.Api.Shopping;
 using CipherPark.Ebay.Util;
-using CipherPark.Walmart.Api;
-using CipherPark.BestBuy.Api;
 using CipherPark.Alibaba.Api;
 
 namespace CipherPark.TriggerOrange.Core
@@ -945,8 +940,7 @@ namespace CipherPark.TriggerOrange.Core
             }
             else
                 return null;
-        }       
-       
+        }      
 
         #region Operation Feedback
 
@@ -985,18 +979,29 @@ namespace CipherPark.TriggerOrange.Core
         {
             using (OrangeEntities db = new OrangeEntities())
             {
+                //Begin transaction for product transfer.
                 var tx = db.Database.BeginTransaction();
                 try
                 {
-                    BulkDeleteProductsForSite(siteName);
+                    //Clear product table.
+                    db.Database.ExecuteSqlCommand(@"DELETE Product WHERE CategoryId IN 
+                                                    (SELECT Id FROM Category
+                                                    WHERE Site = @p0)", siteName);
+                    //Allow identity inserts into product table.
+                    db.Database.ExecuteSqlCommand(@"SET IDENTITY_INSERT ON");
+                    //Copy staged products into product table.
                     db.Database.ExecuteSqlCommand(@"INSERT INTO Product SELECT * 
                                                                     FROM ProductStaging
                                                                     WHERE CategoryId IN 
                                                                         (SELECT Id 
                                                                          FROM Category
                                                                          WHERE Site = @p0)", siteName);
-                    BulkDeleteStagedProductsForSite(siteName);
+                    //Dissallow identity inserts into product table.
+                    db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT OFF");                    
+                    //Commit transaction.
                     tx.Commit();
+                    //Clear staging table.
+                    BulkDeleteStagedProductsForSite(siteName);
                 }
                 catch (Exception ex)
                 {
@@ -1037,8 +1042,8 @@ namespace CipherPark.TriggerOrange.Core
             }
         }
 
-        private void BulkDeleteProductsForSite(string siteName)
-        {
+        private void BulkDeleteProductsForSite(string siteName, DbContextTransaction tx = null)
+        {            
             using (OrangeEntities db = new OrangeEntities())
             {
                 //**************************************************************

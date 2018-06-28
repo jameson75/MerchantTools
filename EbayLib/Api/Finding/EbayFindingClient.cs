@@ -65,7 +65,7 @@ namespace CipherPark.Ebay.Api.Finding
                     requestStream.Write(System.Text.Encoding.ASCII.GetBytes(requestXml), 0, requestXml.Length);
                     requestStream.Close();
                 }
-                HttpWebResponse webResponse = (HttpWebResponse)webRequest.GetResponse();
+                HttpWebResponse webResponse = (HttpWebResponse)webRequest.GetResponseWithRetry();
                 using (Stream responseStream = webResponse.GetResponseStream())
                 {
                     using (StreamReader reader = new StreamReader(responseStream, Encoding.Default))

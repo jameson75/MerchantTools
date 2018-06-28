@@ -116,4 +116,24 @@ namespace CipherPark.Ebay.Api
             get { return Encoding.UTF8; }
         }
     }
+
+    public static class WebRequestExtensions
+    {
+        private const uint DefaultRetries = 5;
+
+        public static WebResponse GetResponseWithRetry(this HttpWebRequest webRequest, uint nRetries = DefaultRetries)
+        {
+            uint nFails = 0;
+            while(true)
+            {
+                try { return webRequest.GetResponse(); }
+                catch (Exception ex)
+                {
+                    nFails++;
+                    if (nFails > nRetries)
+                        throw new InvalidOperationException($"Web request failed after {nRetries} retries.", ex);
+                }
+            }
+        }
+    }
 }

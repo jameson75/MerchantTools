@@ -245,29 +245,29 @@ namespace CipherPark.TriggerOrange.Core
 
         public static IEnumerable<Data.Product> FilterProductWhere(this DbRawSqlQuery<Data.Product> sqlQuery, ProductSearchFilter filter)
         {
-            IEnumerable<Data.Product> r = sqlQuery.AsEnumerable();
+            IEnumerable<Data.Product> eResult = sqlQuery.AsEnumerable();
 
             if (filter != null)
             {
                 if (filter.PriceHigh != null)
-                    r = sqlQuery.Where(p => p.Price <= filter.PriceHigh);
+                    eResult = eResult.Where(p => p.Price <= filter.PriceHigh);
 
                 if (filter.PriceLow != null)
-                    r = sqlQuery.Where(p => p.Price >= filter.PriceLow);
+                    eResult = eResult.Where(p => p.Price >= filter.PriceLow);
 
                 if (filter.UnitsHigh != null)
-                    r = sqlQuery.Where(p => p.UnitsSold <= filter.UnitsHigh);
+                    eResult = eResult.Where(p => p.UnitsSold <= filter.UnitsHigh);
 
                 if (filter.UnitsLow != null)
-                    r = sqlQuery.Where(p => p.UnitsSold >= filter.UnitsLow);
+                    eResult = eResult.Where(p => p.UnitsSold >= filter.UnitsLow);
 
                 if (filter.SellerRankHigh != null)
-                    r = sqlQuery.Where(p => p.SellerScore <= filter.SellerRankHigh);
+                    eResult = eResult.Where(p => p.SellerScore <= filter.SellerRankHigh);
 
                 if (filter.SellerRankLow != null)
-                    r = sqlQuery.Where(p => p.SellerScore >= filter.SellerRankLow);
+                    eResult = eResult.Where(p => p.SellerScore >= filter.SellerRankLow);
             }
-            return sqlQuery;
+            return eResult;
         }
     }    
    
