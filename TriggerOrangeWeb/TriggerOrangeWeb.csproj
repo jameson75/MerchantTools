@@ -4525,8 +4525,8 @@
     <Content Include="Scripts\smart-table-master\dist\smart-table.min.js.map" />
     <Content Include="Scripts\smart-table-master\package.json" />
     <Content Include="Scripts\smart-table-master\readme.md" />
-    <Content Include="Views\Admin\TaskManager.cshtml" />
-    <Content Include="Views\Admin\TaskMessages.cshtml" />
+    <Content Include="Views\Admin\Scheduler.cshtml" />
+    <Content Include="Views\Admin\TaskDetails.cshtml" />
     <Content Include="Views\Admin\_ViewStart.cshtml" />
     <Content Include="Views\Search\ByCategory.cshtml" />
     <Content Include="Views\Search\ByKeywords.cshtml" />

@@ -986,18 +986,63 @@ namespace CipherPark.TriggerOrange.Core
                     //Clear product table.
                     db.Database.ExecuteSqlCommand(@"DELETE Product WHERE CategoryId IN 
                                                     (SELECT Id FROM Category
-                                                    WHERE Site = @p0)", siteName);
+                                                    WHERE Site = @p0)", siteName);                    
                     //Allow identity inserts into product table.
-                    db.Database.ExecuteSqlCommand(@"SET IDENTITY_INSERT ON");
+                    db.Database.ExecuteSqlCommand(@"SET IDENTITY_INSERT Product ON");
                     //Copy staged products into product table.
-                    db.Database.ExecuteSqlCommand(@"INSERT INTO Product SELECT * 
+                    db.Database.ExecuteSqlCommand(@"INSERT INTO Product ( [Id]
+                                                                  ,[ReferenceId]
+                                                                  ,[Name]
+                                                                  ,[Keywords]
+                                                                  ,[CategoryId]
+                                                                  ,[OnlineAvailability]
+                                                                  ,[DateCreated]
+                                                                  ,[DateModified]
+                                                                  ,[ProductUrl]
+                                                                  ,[AddToCartUrl]
+                                                                  ,[AffiliateAddToCartUrl]
+                                                                  ,[Price]
+                                                                  ,[Upc]
+                                                                  ,[SmallImageUrl]
+                                                                  ,[LargeImageUrl]
+                                                                  ,[ShippingCost]
+                                                                  ,[FreeShipping]
+                                                                  ,[UnitsSold]
+                                                                  ,[WatchCount]
+                                                                  ,[StartTime]
+                                                                  ,[SellerId]
+                                                                  ,[SellerScore]
+                                                                  ,[Location])
+                                                    SELECT  [Id]
+                                                                  ,[ReferenceId]
+                                                                  ,[Name]
+                                                                  ,[Keywords]
+                                                                  ,[CategoryId]
+                                                                  ,[OnlineAvailability]
+                                                                  ,[DateCreated]
+                                                                  ,[DateModified]
+                                                                  ,[ProductUrl]
+                                                                  ,[AddToCartUrl]
+                                                                  ,[AffiliateAddToCartUrl]
+                                                                  ,[Price]
+                                                                  ,[Upc]
+                                                                  ,[SmallImageUrl]
+                                                                  ,[LargeImageUrl]
+                                                                  ,[ShippingCost]
+                                                                  ,[FreeShipping]
+                                                                  ,[UnitsSold]
+                                                                  ,[WatchCount]
+                                                                  ,[StartTime]
+                                                                  ,[SellerId]
+                                                                  ,[SellerScore]
+                                                                  ,[Location] 
                                                                     FROM ProductStaging
                                                                     WHERE CategoryId IN 
                                                                         (SELECT Id 
                                                                          FROM Category
                                                                          WHERE Site = @p0)", siteName);
                     //Dissallow identity inserts into product table.
-                    db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT OFF");                    
+                    db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Product OFF");                    
                     //Commit transaction.
                     tx.Commit();
                     //Clear staging table.
@@ -1015,7 +1060,7 @@ namespace CipherPark.TriggerOrange.Core
         {
             using (OrangeEntities db = new OrangeEntities())
             {
-                db.Database.ExecuteSqlCommand(@"ALTER FULLTEXT CATALOG ProductKeywordsFTS REBUILD");
+                db.Database.ExecuteSqlCommand(TransactionalBehavior.DoNotEnsureTransaction, @"ALTER FULLTEXT CATALOG ProductKeywordsFTS REBUILD");
             }
         }
 
