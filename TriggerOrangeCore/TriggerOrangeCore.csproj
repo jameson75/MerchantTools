@@ -85,6 +85,9 @@
     <Compile Include="Api\ProductSearchFilter.cs" />
     <Compile Include="Api\SalesHistory.cs" />
     <Compile Include="Api\SourcingResult.cs" />
+    <Compile Include="Data\ActiveUserReport.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\Category.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -110,12 +113,6 @@
       <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
     <Compile Include="Data\Product.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\ProductList.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\ProductListItem.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\ProductMeta.cs">

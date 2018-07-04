@@ -146,7 +146,7 @@
                                 <span class="c-desc c-font-16 c-font-bold">Seller Score: {{product.SellerScore}}</span>
                             </div>
                             <div class="c-margin-t-10">
-                                <button ng-click="onAddRemoveListedProduct(product.Id)" type="submit" ng-class="{'btn':true, 'c-btn':!isProductListed(product.Id), 'c-btn-red-2':isProductListed(product.Id), 'c-btn-border-2x':isProductListed(product.Id), 'btn-sm':true, 'c-font-bold':true, 'c-font-white':!isProductListed(product.Id), 'c-theme-btn':!isProductListed(product.Id), 'c-btn-square':true, 'c-font-uppercase':true, 'c-block-text':true}">
+                                <button ng-disabled="activeReportExits() == false" ng-click="onAddProductToActiveList(product.Id)" type="submit" ng-class="{'btn':true, 'c-btn':!isProductListed(product.Id), 'c-btn-red-2':isProductListed(product.Id), 'c-btn-border-2x':isProductListed(product.Id), 'btn-sm':true, 'c-font-bold':true, 'c-font-white':!isProductListed(product.Id), 'c-theme-btn':!isProductListed(product.Id), 'c-btn-square':true, 'c-font-uppercase':true, 'c-block-text':true}">
                                     <i class="fa fa-list"></i> {{ !isProductListed(product.Id)? "Add To List" : "Remove From List" }}
                                 </button>                                
                             </div>
@@ -281,10 +281,18 @@
                        $scope.allRootCategories = result.categories;
                    });
                };
+               @*
                $scope.isProductListed = function (productId) {
                    return $scope.listedProductIds.find(function (id) { return id == productId; });
                };
-               $scope.onAddRemoveListedProduct = function (productId) {
+               *@
+               $scope.isProductListed = function (productId) {
+                   return $scope.activeReportExists && $scope.listedProductIds.find(function (id) { return id == productId; });                   
+               };
+               $scope.activeReportExists = function (productId) {
+                   return @Json.Encode(Model.UserActiveListId == 0); 
+               }
+               @*$scope.onAddRemoveListedProduct = function (productId) {
                    if (!$scope.isProductListed(productId)) {
                        var postData = {
                            productId: productId,
@@ -296,7 +304,7 @@
                                notificationType = "error";
                            else {
                                notificationType = "success";
-                               if(!$scope.listedProductIds.includes(productId)) 
+                               if(!$scope.listedProductIds.includes(productId))
                                     $scope.listedProductIds.push(productId);
                            }
                            $scope.notifications.push({ type: notificationType, data: result.message, timeStamp: new Date().getTime() });
@@ -305,7 +313,7 @@
                            $scope.notifications.push({ type: "error", data: errorMessage, timeStamp: new Date().getTime() });
                        });
                    }
-                   else {                      
+                   else {
                        var postData = {
                            productId: productId,
                            listId: @Model.UserActiveListId, //default user list.
@@ -325,6 +333,26 @@
                            $scope.notifications.push({ type: "error", data: errorMessage, timeStamp: new Date().getTime() });
                        });
                    }
+               };*@
+               $scope.onAddToActiveReport = function (productId) {
+                   var postData = {
+                           productId: productId,
+                           reportId: @Model.UserActiveListId, //default user list.
+                   };
+                   $http.post('@Url.Action("AddProductToActiveReport", "Product")', postData).success(function (result) {
+                        var notificationType = null;
+                        if (result.isError)
+                            notificationType = "error";
+                        else {
+                            notificationType = "success";
+                            if(!$scope.listedProductIds.includes(productId))
+                                $scope.listedProductIds.push(productId);
+                        }
+                        $scope.notifications.push({ type: notificationType, data: result.message, timeStamp: new Date().getTime() });
+                    }).error(function (result) {
+                        var errorMessage = "Request failed.";
+                        $scope.notifications.push({ type: "error", data: errorMessage, timeStamp: new Date().getTime() });
+                    });
                };
                $scope.onPageChanged = function () {
                    $window.scrollTo(0, 0);

@@ -359,7 +359,7 @@ namespace CipherPark.TriggerOrange.Core
 
                 case MarketPlaceSiteNames.eBayHotStarters:
                     #region EbayHotAndNew
-                    const int HoursInADay = 1;
+                    const int HoursInADay = 24;
                     const int LookBackDays = 7;
                     const double MinSalesPerDay = 0.7;
                     int MinSales = (int)Math.Ceiling(LookBackDays * MinSalesPerDay);
