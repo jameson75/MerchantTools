@@ -146,8 +146,8 @@
                                 <span class="c-desc c-font-16 c-font-bold">Seller Score: {{product.SellerScore}}</span>
                             </div>
                             <div class="c-margin-t-10">
-                                <button ng-disabled="activeReportExits() == false" ng-click="onAddProductToActiveList(product.Id)" type="submit" ng-class="{'btn':true, 'c-btn':!isProductListed(product.Id), 'c-btn-red-2':isProductListed(product.Id), 'c-btn-border-2x':isProductListed(product.Id), 'btn-sm':true, 'c-font-bold':true, 'c-font-white':!isProductListed(product.Id), 'c-theme-btn':!isProductListed(product.Id), 'c-btn-square':true, 'c-font-uppercase':true, 'c-block-text':true}">
-                                    <i class="fa fa-list"></i> {{ !isProductListed(product.Id)? "Add To List" : "Remove From List" }}
+                                <button disabled ng-disabled="activeReportExits() == false" ng-click="onAddProductToActiveList(product.Id)" type="submit" ng-class="{'btn':true, 'c-btn':!isProductListed(product.Id), 'c-btn-red-2':isProductListed(product.Id), 'c-btn-border-2x':isProductListed(product.Id), 'btn-sm':true, 'c-font-bold':true, 'c-font-white':!isProductListed(product.Id), 'c-theme-btn':!isProductListed(product.Id), 'c-btn-square':true, 'c-font-uppercase':true, 'c-block-text':true}">
+                                    <i class="fa fa-list"></i> {{ !isProductListed(product.Id)? "Add To Report" : "Remove From Report" }}
                                 </button>                                
                             </div>
                         </div>

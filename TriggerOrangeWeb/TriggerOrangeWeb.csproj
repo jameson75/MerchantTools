@@ -4420,10 +4420,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Search\_PartialQuickGuide.cshtml" />
     <Content Include="Views\Search\_PartialSortByButton.cshtml" />
-    <Content Include="Views\Reports\Details.cshtml" />
-    <Content Include="Views\Reports\Preview.cshtml" />
     <Content Include="Views\Lists\Index.cshtml" />
-    <Content Include="Views\Reports\Index.cshtml" />
     <Content Include="Views\Lists\Details.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Admin\Dashboard.cshtml" />
@@ -4431,12 +4428,10 @@
     <Content Include="Views\Product\Update2.cshtml" />
     <Content Include="Views\_Shared\_Layout.cshtml" />
     <Content Include="Views\_Shared\_LandingLayout.cshtml" />
-    <Content Include="Views\Reports\CreateFromList.cshtml" />
-    <Content Include="Views\Reports\Details2.cshtml" />
     <Content Include="Views\Reports\Index2.cshtml" />
-    <Content Include="Views\Reports\Details3.cshtml" />
-    <Content Include="Views\Reports\Details3SinglePage.cshtml" />
-    <Content Include="Views\Reports\Details4.cshtml" />
+    <Content Include="Views\Reports\Details5.cshtml" />
+    <Content Include="Views\Reports\Details5Single.cshtml" />
+    <Content Include="Views\Reports\Details5List.cshtml" />
     <None Include="Web.Internal.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
