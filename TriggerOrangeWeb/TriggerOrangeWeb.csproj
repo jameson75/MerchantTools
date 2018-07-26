@@ -4432,6 +4432,7 @@
     <Content Include="Views\Reports\Details5.cshtml" />
     <Content Include="Views\Reports\Details5Single.cshtml" />
     <Content Include="Views\Reports\Details5List.cshtml" />
+    <Content Include="Views\Reports\Index3.cshtml" />
     <None Include="Web.Internal.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -4475,6 +4476,7 @@
     <Compile Include="Services\ReportingServices.cs" />
     <Compile Include="Services\UserAuthServices.cs" />
     <Compile Include="Services\WebApiServices.cs" />
+    <Compile Include="Util\ControllerExtension.cs" />
     <Compile Include="Util\DerivedDataHelper.cs" />
     <Compile Include="Util\HtmlHelperExtension.cs" />
     <Compile Include="Models\AdminTaskManagerViewModel.cs" />
