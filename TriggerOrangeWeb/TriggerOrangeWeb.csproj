@@ -4433,6 +4433,7 @@
     <Content Include="Views\Reports\Details5Single.cshtml" />
     <Content Include="Views\Reports\Details5List.cshtml" />
     <Content Include="Views\Reports\Index3.cshtml" />
+    <Content Include="Views\Reports\Details5SingleEdit.cshtml" />
     <None Include="Web.Internal.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
