@@ -89,9 +89,9 @@
 
             <div class="c-margin-t-30"></div>
 
-            <!-- BEGIN: CONTENT/SHOPS/SHOP-RESULT-FILTER-1 -->            
-            <div class="c-shop-result-filter-1 clearfix form-inline"> 
-                
+            <!-- BEGIN: CONTENT/SHOPS/SHOP-RESULT-FILTER-1 -->
+            <div class="c-shop-result-filter-1 clearfix form-inline">
+
                 <div class="c-filter">
                     <label class="control-label c-font-16">Show:</label>
                     <select class="form-control c-square c-theme c-input" ng-model="tableState.pagination.pageSize">
@@ -104,22 +104,22 @@
                 <div class="c-filter">
                     <label class="control-label c-font-16" style="margin-left:50px">Sort&nbsp;By:</label>
                     @Html.DropDownList("sortKey", Model.SortKeys, new { @class = "form-control c-square c-theme c-input", @ng_model = "sortKey" })
-                </div>  
+                </div>
                 <div class="c-filter c-margin-t-5" ng-show="!isLoading && !isEmpty">
                     <h4 class="c-font-grey-4">Showing {{resultRangeText()}} of {{tableState.pagination.totalItemCount}} Results</h4>
-                </div>                      
+                </div>
             </div>
-            <!-- END: CONTENT/SHOPS/SHOP-RESULT-FILTER-1 -->           
+            <!-- END: CONTENT/SHOPS/SHOP-RESULT-FILTER-1 -->
 
             <div class="c-margin-t-40"></div>
             <div class="c-margin-t-20"></div>
 
             <!-- BEGIN: CONTENT/SHOPS/SHOP-2-8 -->
             <!-- BEGIN: CSS TABLE -->
-            
+
             <div ng-repeat="product in products" ng-show="!isLoading && !isEmpty">
                 <div class="row c-margin-b-40">
-                    <div class="c-content-product-2 c-bg-white" >
+                    <div class="c-content-product-2 c-bg-white">
                         <div class="col-md-4">
                             <div class="c-content-overlay">
                                 <div class="c-overlay-wrapper">
@@ -146,17 +146,17 @@
                                 <span class="c-desc c-font-16 c-font-bold">Seller Score: {{product.SellerScore}}</span>
                             </div>
                             <div class="c-margin-t-10">
-                                <button disabled ng-disabled="activeReportExits() == false" ng-click="onAddProductToActiveList(product.Id)" type="submit" ng-class="{'btn':true, 'c-btn':!isProductListed(product.Id), 'c-btn-red-2':isProductListed(product.Id), 'c-btn-border-2x':isProductListed(product.Id), 'btn-sm':true, 'c-font-bold':true, 'c-font-white':!isProductListed(product.Id), 'c-theme-btn':!isProductListed(product.Id), 'c-btn-square':true, 'c-font-uppercase':true, 'c-block-text':true}">
+                                <button ng-click="onBeginAddProductToReport(product.Id)" type="submit" ng-class="{'btn':true, 'c-btn':!isProductListed(product.Id), 'c-btn-red-2':isProductListed(product.Id), 'c-btn-border-2x':isProductListed(product.Id), 'btn-sm':true, 'c-font-bold':true, 'c-font-white':!isProductListed(product.Id), 'c-theme-btn':!isProductListed(product.Id), 'c-btn-square':true, 'c-font-uppercase':true, 'c-block-text':true}">
                                     <i class="fa fa-list"></i> {{ !isProductListed(product.Id)? "Add To Report" : "Remove From Report" }}
-                                </button>                                
+                                </button>
                             </div>
                         </div>
-                    </div>                    
+                    </div>
                 </div>
-            </div>           
+            </div>
             <div ng-show="!isLoading && isEmpty">
                 <div class="c-center">
-                    <span class="c-font-20 c-font-red-1"><i class="fa fa-meh-o fa-5x fa-red"></i></span><br /><br />                 
+                    <span class="c-font-20 c-font-red-1"><i class="fa fa-meh-o fa-5x fa-red"></i></span><br /><br />
                     <div class="c-desc c-font-20 c-font-bold c-font-grey-3"> NO RESULTS FOUND. TRY <span class="c-font-red-1">AGAIN</span>.</div>
                 </div>
             </div>
@@ -166,7 +166,7 @@
                     <div class="c-desc c-font-20 c-font-bold c-font-grey-3"> LOADING RESULTS. PLEASE <span class="c-font-red-1">WAIT</span>.</div>
                 </div>
             </div>
-            
+
             <!-- END CSS TABLE -->
             <!-- END: CONTENT/SHOPS/SHOP-2-8 -->
             <div class="c-margin-t-20"></div>
@@ -197,6 +197,43 @@
         <li ng-if="::directionLinks" ng-class="{disabled: noNext()||ngDisabled}"><a href="#" ng-click="selectPage(page + 1, $event)"><i class="fa fa-angle-right"></i></a></li>
         <li ng-if="::boundaryLinks" ng-class="{disabled: noNext()||ngDisabled}"><a href="#" ng-click="selectPage(totalPages, $event)"><i class="fa fa-angle-double-right"></i></a></li>
     </ul>
+</script>
+
+<script type="text/ng-template" id="AddProduct.html">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()">
+            <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title">Add Product To Report</h4>
+    </div>
+    <div class="modal-body" ng-cloak>
+        @*<div ng-show="!isLoading && !isEmpty">*@
+        <div ng-show="true">
+            <div class="row">
+                <select ng-model="selectedReport" ng-options="x.Name for x in reports" class="form-control c-square c-theme input-lg" placeholder="Enter Report Name"></select>
+            </div>
+            <div>
+            </div>
+        </div>
+        @*<div ng-show="!isLoading && isEmpty">*@
+        <div ng-show="false">
+            <div class="c-center">
+                <span class="c-font-20 c-font-red-1"><i class="fa fa-meh-o fa-5x fa-red"></i></span><br /><br />
+                <div class="c-desc c-font-20 c-font-bold c-font-grey-3"> NO RESULTS FOUND. TRY <span class="c-font-red-1">AGAIN</span>.</div>
+            </div>
+        </div>
+        @*<div ng-show="isLoading">*@
+        <div ng-show="false">
+            <div class="c-center">
+                <span class="c-font-20 c-font-red-1"><i class="fa fa-spinner fa-pulse fa-5x"></i></span><br /><br />
+                <div class="c-desc c-font-20 c-font-bold c-font-grey-3"> LOADING RESULTS. PLEASE <span class="c-font-red-1">WAIT</span>.</div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-lg c-theme-btn c-btn-square c-btn-uppercase c-btn-bold" ng-click="ok()">OK</button>
+        <button type="submit" class="btn btn-lg btn-default c-btn-square c-btn-uppercase c-btn-bold" ng-click="cancel()">Cancel</button>
+    </div>
 </script>
 
 @section ready{
@@ -234,6 +271,7 @@
                $scope.isInitializing = true;
                $scope.notifications = [];
                $scope.listedProductIds = [];
+               $scope.activeReportId = 0;
                $scope.getProductsPipe = function (tableState) {
                    if ($scope.isInitializing == true) {
                        $scope.selectedValues.site = "@Model.SelectedSite";
@@ -249,7 +287,7 @@
                        "root": $scope.selectedValues.rootCategory,
                        "keywords": $scope.keywords,
                        "sortKey": $scope.sortKey,
-                       "listId": @Model.UserActiveListId,
+                       "listId": $scope.activeReportId,
                        "filter": $scope.filter
                    };
                    $scope.isLoading = true;
@@ -259,7 +297,7 @@
                        tableState.pagination.currentPage = result.currentPage;
                        tableState.pagination.totalItemCount = result.totalItemCount;
                        $scope.products = result.products;
-                       $scope.listedProductIds = result.listedProductIds;
+                       //$scope.listedProductIds = result.listedProductIds;
                        $scope.isLoading = false;
                        $scope.isEmpty = result.products.length == 0;
                        ajaxHistory.Save({
@@ -287,66 +325,37 @@
                };
                *@
                $scope.isProductListed = function (productId) {
-                   return $scope.activeReportExists && $scope.listedProductIds.find(function (id) { return id == productId; });                   
+                   return $scope.listedProductIds.find(function (id) { return id == productId; });
                };
-               $scope.activeReportExists = function (productId) {
-                   return @Json.Encode(Model.UserActiveListId == 0); 
-               }
-               @*$scope.onAddRemoveListedProduct = function (productId) {
-                   if (!$scope.isProductListed(productId)) {
-                       var postData = {
-                           productId: productId,
-                           listId: @Model.UserActiveListId, //default user list.
-                       };
-                       $http.post('@Url.Action("AddProductToList", "Product")', postData).success(function (result) {
-                           var notificationType = null;
-                           if (result.isError)
-                               notificationType = "error";
-                           else {
-                               notificationType = "success";
-                               if(!$scope.listedProductIds.includes(productId))
-                                    $scope.listedProductIds.push(productId);
-                           }
-                           $scope.notifications.push({ type: notificationType, data: result.message, timeStamp: new Date().getTime() });
-                       }).error(function (result) {
-                           var errorMessage = "Request failed.";
-                           $scope.notifications.push({ type: "error", data: errorMessage, timeStamp: new Date().getTime() });
-                       });
-                   }
-                   else {
-                       var postData = {
-                           productId: productId,
-                           listId: @Model.UserActiveListId, //default user list.
-                       };
-                       $http.post('@Url.Action("RemoveProductFromList", "Product")', postData).success(function (result) {
-                           var notificationType = null;
-                           if (result.isError)
-                               notificationType = "error";
-                           else {
-                               notificationType = "success";
-                               if ($scope.listedProductIds.includes(productId))
-                                   $scope.listedProductIds.splice($scope.listedProductIds.indexOf(productId), 1);
-                           }
-                           $scope.notifications.push({ type: notificationType, data: result.message, timeStamp: new Date().getTime() });
-                       }).error(function (result) {
-                           var errorMessage = "Request failed.";
-                           $scope.notifications.push({ type: "error", data: errorMessage, timeStamp: new Date().getTime() });
-                       });
-                   }
-               };*@
-               $scope.onAddToActiveReport = function (productId) {
+
+               $scope.onBeginAddProductToReport = function (productId) {
+                   const modalInstance = $uibModal.open({
+                       "templateUrl": "AddProduct.html",
+                       "controller": "ModalInstanceCtrl",
+                       "size": "lg"
+                   });
+                   modalInstance.result.then(function (result) {
+                       if (result.id == 'ok') {
+                           //$scope.updateProductsListedStatus();
+                           $scope.AddProductToReport(productId, result.data);                          
+                       }
+                   });
+                   return modalInstance;
+               };
+                
+               $scope.AddProductToReport = function (productId, reportId) {
                    var postData = {
                            productId: productId,
-                           reportId: @Model.UserActiveListId, //default user list.
+                           reportId: reportId,
                    };
-                   $http.post('@Url.Action("AddProductToActiveReport", "Product")', postData).success(function (result) {
+                   $http.post('@Url.Action("AddProductToReport", "Product")', postData).success(function (result) {
                         var notificationType = null;
                         if (result.isError)
                             notificationType = "error";
                         else {
                             notificationType = "success";
-                            if(!$scope.listedProductIds.includes(productId))
-                                $scope.listedProductIds.push(productId);
+                            //if(!$scope.listedProductIds.includes(productId))
+                            //    $scope.listedProductIds.push(productId);
                         }
                         $scope.notifications.push({ type: notificationType, data: result.message, timeStamp: new Date().getTime() });
                     }).error(function (result) {
@@ -364,7 +373,39 @@
                    return firstItemOrdinal + " - " + lastItemOrdinal;
                };
                $scope.getProductsPipe($scope.tableState);
-    });
+                }).controller("ModalInstanceCtrl", function ($scope, $uibModalInstance, $http) {
+                    $scope.selectedReport = null;
+                    $scope.reports = null;
+                    $scope.isEmpty = null;
+                    $scope.isLoading = null;
+                    $scope.getReportsPipe = function () {
+                        var postData = {
+                            "pageSize": 50,
+                            "currentPage": 1,
+                        };
+                        $scope.isLoading = true;
+                        $scope.isEmpty = true;
+                        $http.post('@Url.Action("GetReports2", "Reports")', postData).success(function (result) {
+                            $scope.totalItemCount = result.totalItemCount;
+                            $scope.reports = result.reports;
+                            $scope.isLoading = false;
+                            $scope.isEmpty = result.reports.length == 0;
+                            $scope.selectedReport = $scope.reports[0];
+                        }).error(function (result) {
+                            $scope.isLoading = false;
+                            $scope.isEmpty = true;
+                        });
+                    };
+                    $scope.ok = function () {
+                        $uibModalInstance.close({ id: 'ok', data: $scope.selectedReport.Id });
+                    };
+                    $scope.cancel = function () {
+                        $uibModalInstance.dismiss({ id: 'cancel', data: null });
+                    };
+                    $scope.yes = $scope.ok;
+                    $scope.no = $scope.cancel;
+                    $scope.getReportsPipe();
+                });
     </script>
     <!-- END TRIGGER ORANGE APP ANGULAR CONTROLLER(S) -->
 }
