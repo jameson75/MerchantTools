@@ -13,6 +13,16 @@ namespace CipherPark.TriggerOrange.Core
         public const string Amazon = "Amazon";
         public static string[] All = new string[] { eBayMostWatched, Amazon, eBayHotStarters };
         public static string[] AllSupported = new string[] { eBayMostWatched, eBayHotStarters };
+        internal static byte GetId(string siteName)
+        {
+            switch(siteName)
+            {
+                case Amazon: return 1;
+                case eBayMostWatched: return 2;
+                case eBayHotStarters: return 3;
+                default: throw new InvalidOperationException($"Unexpected site name '{siteName}' was specified");
+            }          
+        }
     }
 
     public static class SourcingSiteNames

@@ -51,6 +51,7 @@ namespace CipherPark.TriggerOrange.Core
  
         private const long BestBuyCallThrottle = 200;
         private const long AmazonCallThrottle = 3000;
+        private const int EbayMaxThreads = 18;
 
         /// <summary>
         /// Pulls all the categories from the specified supplier's API and populates the database.
@@ -103,7 +104,8 @@ namespace CipherPark.TriggerOrange.Core
                                 Path = category.FindPath(categoriesResponse.CategoryArray),
                                 PathLevel = Convert.ToByte(category.CategoryLevel - 1),
                                 ParentReferenceId = category.CategoryLevel > 1 ? category.CategoryParentIDs.Last() : null,
-                                Site = siteName
+                                Site = siteName,
+                                SiteId = MarketPlaceSiteNames.GetId(siteName),
                             });
                         }
                         db.Categories.AddRange(dbCategories);
@@ -121,8 +123,28 @@ namespace CipherPark.TriggerOrange.Core
                     LogOperationInfo(OperationNames.UpdateEbayHotStartersCategories, "Deleting saved categories and dependencies");
                     BulkDeleteCategoriesForSite(MarketPlaceSiteNames.eBayHotStarters);
 
+                    tradingClient = new EbayTradingClient()
+                    {
+                        AppId = EbayProductionAppId,
+                        DevId = EbayProductionDevId,
+                        CertId = EbayProductionCertId
+                    };
+
+                    //Pull ALL categories from Ebay.
+                    OrangeCoreDiagnostics.LogPullingCategories(siteName);
+                    categoriesResponse = tradingClient.GetCategories(new GetCategoriesRequest()
+                    {
+                        RequesterCredentials = new RequesterCredentials()
+                        {
+                            EBayAuthToken = EbayUserTokenMeganova75
+                        },
+                        LevelLimit = 2,
+                        DetailLevel = new[] { DetailLevelCodeType.ReturnAll }
+                    });
+
                     using (var db = new OrangeEntities())
                     {
+                        /*
                         string[] categoryReferenceIds = new string[]
                         {                            
                             "15032",    //Cell phone accessories.
@@ -134,17 +156,21 @@ namespace CipherPark.TriggerOrange.Core
                             "14339",    //Crafts
                             "26395",    //Health and beauty.
                         };
+                        
                         //NOTE: The category update for ebay hot starters depends on the category update for Most Watched.
                         //That task must be performed first.
-                        var sourceCategories = db.Categories.Where(x => categoryReferenceIds.Contains(x.ReferenceId)).ToList();
-                        db.Categories.AddRange(sourceCategories.Select(x => new Data.Category()
+                        //var sourceCategories = db.Categories.Where(x => categoryReferenceIds.Contains(x.ReferenceId)).ToList();
+                        //db.Categories.AddRange(sourceCategories.Select(x => new Data.Category()
+                        */
+                        db.Categories.AddRange(categoriesResponse.CategoryArray.Select(x => new Data.Category()
                         {
-                            Name = x.Name,
-                            ParentReferenceId = x.ReferenceId, //For hot starter categories, we, purposely, make the parent equal self.
-                            ReferenceId = x.ReferenceId,
-                            Path = x.Path,
-                            PathLevel = x.PathLevel,
-                            Site = MarketPlaceSiteNames.eBayHotStarters
+                            Name = x.CategoryName,
+                            ReferenceId = x.CategoryID,
+                            Path = x.FindPath(categoriesResponse.CategoryArray),
+                            PathLevel = Convert.ToByte(x.CategoryLevel - 1),
+                            ParentReferenceId = x.CategoryLevel > 1 ? x.CategoryParentIDs.Last() : null,
+                            Site = siteName,
+                            SiteId = MarketPlaceSiteNames.GetId(siteName),
                         }));
                         db.SaveChanges();
                     }
@@ -171,7 +197,8 @@ namespace CipherPark.TriggerOrange.Core
                                 Name = l.Department,
                                 Path = l.Department,
                                 PathLevel = 0,
-                                Site = siteName
+                                Site = siteName,
+                                SiteId = MarketPlaceSiteNames.GetId(siteName),
                             }));
 
                         //Pull ALL categories from amazon.
@@ -201,6 +228,7 @@ namespace CipherPark.TriggerOrange.Core
                                         Path = $"{rootBrowseNode.Department}/{n.Name}",
                                         PathLevel = 1,
                                         Site = siteName,
+                                        SiteId = MarketPlaceSiteNames.GetId(siteName),
                                         ParentReferenceId = rootBrowseNode.BrowseNodeId
                                     }));
                                 }
@@ -376,7 +404,7 @@ namespace CipherPark.TriggerOrange.Core
                         var now = DateTime.UtcNow;
                         var beginningOfDay = new DateTime(now.Year, now.Month, now.Day);
                        
-                        Parallel.ForEach(categories, (category) =>
+                        Parallel.ForEach(categories, new ParallelOptions { MaxDegreeOfParallelism = EbayMaxThreads }, (category) =>
                         {
                             List<Ebay.Api.Shopping.SimpleItem> allItems = new List<Ebay.Api.Shopping.SimpleItem>();
                             for (int i = 0; i < HoursInADay; i++)
