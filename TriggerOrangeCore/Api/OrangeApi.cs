@@ -143,26 +143,27 @@ namespace CipherPark.TriggerOrange.Core
                     });
 
                     using (var db = new OrangeEntities())
-                    {
-                        /*
-                        string[] categoryReferenceIds = new string[]
-                        {                            
-                            "15032",    //Cell phone accessories.
+                    {                        
+                        string[] categoryFilterReferenceIds = new string[]
+                        { 
+                        //  "267",      //Books,
+                        //  "625",      //Cameras + Photo,
+                            "11450",    //Clothing, Shoes & Accessories
+                            "15032",    //Cell phone accessories.                           
                             "58058",    //Computers,
                             "293",      //Consumer Electronics
-                            "888",      //Sporting Goods,
-                            "220",      //Toys and Hobbies.
-                            "11450",    //Clothing, Shoes & Accessories
-                            "14339",    //Crafts
+                        //  "14339",    //Crafts
                             "26395",    //Health and beauty.
-                        };
-                        
-                        //NOTE: The category update for ebay hot starters depends on the category update for Most Watched.
-                        //That task must be performed first.
-                        //var sourceCategories = db.Categories.Where(x => categoryReferenceIds.Contains(x.ReferenceId)).ToList();
-                        //db.Categories.AddRange(sourceCategories.Select(x => new Data.Category()
-                        */
-                        db.Categories.AddRange(categoriesResponse.CategoryArray.Select(x => new Data.Category()
+                        //  "11700",    //Home & Garden.
+                        //  "281",      //Jewelry & Watches.
+                            "888",      //Sporting Goods,
+                            "220",      //Toys and Hobbies.     
+                        //  "1249",     //Video Games and Consoles.
+                        };                                              
+                       
+                        db.Categories.AddRange(categoriesResponse.CategoryArray
+                                                                 .Where(x => categoryFilterReferenceIds.Contains(x.CategoryID))
+                                                                 .Select(x => new Data.Category()
                         {
                             Name = x.CategoryName,
                             ReferenceId = x.CategoryID,

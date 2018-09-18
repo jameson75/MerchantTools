@@ -14,6 +14,12 @@ namespace CipherPark.TriggerOrange.Core.ApplicationServices
         public static bool VerboseApiOperations { get; set; }   
         public static bool VerboseTaskManagement { get; set; }
 
+        internal static void LogGenericError(string error)
+        {
+            if (Logger != null)
+                Logger.LogError(error);
+        }
+
         internal static void LogPullingCategories(string siteID)
         {
             if (Logger != null && VerboseApiOperations)

@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net;
 using System.Data.Entity.Infrastructure;
 using CipherPark.Amazon.Api;
 using CipherPark.Ebay.Api.Finding;
 using CipherPark.Ebay.Api.Trading;
 using CipherPark.Walmart.Api;
 using CipherPark.BestBuy.Api;
+using CipherPark.TriggerOrange.Core.ApplicationServices;
 
 namespace CipherPark.TriggerOrange.Core
 {
@@ -91,7 +93,7 @@ namespace CipherPark.TriggerOrange.Core
             foreach (var category in input)
             {
                 output.Add(category);
-                if(limit <= 0 || category.Level() < limit)
+                if (limit <= 0 || category.Level() < limit)
                     FlattenToList(category.Children, output, limit);
             }
         }
@@ -100,8 +102,8 @@ namespace CipherPark.TriggerOrange.Core
     public static class BestBuyApiExtension
     {
         public static string CategoryId(this BestBuy.Api.Product product)
-        {          
-            return product.CategoryPath?.Categories?.LastOrDefault().Id;          
+        {
+            return product.CategoryPath?.Categories?.LastOrDefault().Id;
         }
 
         public static int Level(this BestBuy.Api.Category category)
@@ -124,7 +126,7 @@ namespace CipherPark.TriggerOrange.Core
     {
         public static void Delete<TEntity>(this System.Data.Entity.DbSet<TEntity> dbSet, System.Linq.Expressions.Expression<Func<TEntity, bool>> predicate) where TEntity : class
         {
-            dbSet.RemoveRange(dbSet.Where(predicate));           
+            dbSet.RemoveRange(dbSet.Where(predicate));
         }
     }
 
@@ -183,10 +185,10 @@ namespace CipherPark.TriggerOrange.Core
     }
 
     public static class ProductLinqExtensions
-    { 
+    {
         public static IOrderedQueryable<Data.Product> OrderProductBy(this IQueryable<Data.Product> sqlQuery, string sortKey)
         {
-            switch(sortKey)
+            switch (sortKey)
             {
                 case SearchSortKey.UnitsSold:
                     return sqlQuery.OrderByDescending(p => p.UnitsSold);
@@ -211,12 +213,12 @@ namespace CipherPark.TriggerOrange.Core
                     return sqlQuery.OrderByDescending(p => p.Price);
                 case SearchSortKey.PriceLowToHigh:
                     return sqlQuery.OrderBy(p => p.Price);
-                case SearchSortKey.SellerScore:                   
+                case SearchSortKey.SellerScore:
                     return sqlQuery.OrderBy(p => p.SellerScore);
                 default:
                     return sqlQuery.OrderByDescending(p => p.WatchCount);
             }
-        }   
+        }
 
         public static IQueryable<Data.Product> FilterProductWhere(this IQueryable<Data.Product> sqlQuery, ProductSearchFilter filter)
         {
@@ -269,8 +271,8 @@ namespace CipherPark.TriggerOrange.Core
             }
             return eResult;
         }
-    }    
-   
+    }
+
 
     public static class NumericTypeExtension
     {
@@ -293,8 +295,8 @@ namespace CipherPark.TriggerOrange.Core
                 case TypeCode.UInt64:
                     return true;
                 case TypeCode.Object:
-                    if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))                    
-                        return Nullable.GetUnderlyingType(type).IsNumeric();                    
+                    if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+                        return Nullable.GetUnderlyingType(type).IsNumeric();
                     return false;
             }
             return false;
@@ -308,4 +310,6 @@ namespace CipherPark.TriggerOrange.Core
             return d.ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
         }
     }
+
+    
 }

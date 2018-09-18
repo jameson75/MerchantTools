@@ -124,14 +124,17 @@ namespace CipherPark.Ebay.Api
         public static WebResponse GetResponseWithRetry(this HttpWebRequest webRequest, uint nRetries = DefaultRetries)
         {
             uint nFails = 0;
-            while(true)
+            while (true)
             {
                 try { return webRequest.GetResponse(); }
                 catch (Exception ex)
                 {
                     nFails++;
                     if (nFails > nRetries)
-                        throw new InvalidOperationException($"Web request failed after {nRetries} retries.", ex);
+                    {
+                        //OrangeCoreDiagnostics.LogGenericError($"Web request failed after {nRetries} retries.");
+                        throw ex;
+                    }
                 }
             }
         }
