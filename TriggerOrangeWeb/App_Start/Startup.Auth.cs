@@ -32,7 +32,7 @@ namespace CipherPark.TriggerOrange.Web
             string systemAdminName = "meganova75";
             string password = "trigg3rBaby75";
             if (!UserAuthServices.UserExists(systemAdminName))
-                UserAuthServices.Register(systemAdminName, "meganova75@gmail.com", password, password,  TriggerOrangeRoles.Admin);
+                UserAuthServices.Register(systemAdminName, "meganova75@gmail.com", password, password, TriggerOrangeRoles.Admin);
         }
     }
 }
