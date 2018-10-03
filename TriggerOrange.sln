@@ -21,8 +21,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TriggerOrangeService", "Tri
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlibabaLib", "AlibabaLib\AlibabaLib.csproj", "{FCA6C6F2-C659-488B-83A9-850BE2D1F7A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TriggerRedWeb", "TriggerRedWeb\TriggerRedWeb.csproj", "{047E94AE-90F1-445C-9758-E7129CDDDB54}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -217,26 +215,6 @@ Global
 		{FCA6C6F2-C659-488B-83A9-850BE2D1F7A1}.Staging|Any CPU.Build.0 = Staging|Any CPU
 		{FCA6C6F2-C659-488B-83A9-850BE2D1F7A1}.Staging|x86.ActiveCfg = Staging|Any CPU
 		{FCA6C6F2-C659-488B-83A9-850BE2D1F7A1}.Staging|x86.Build.0 = Staging|Any CPU
-		{047E94AE-90F1-445C-9758-E7129CDDDB54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{047E94AE-90F1-445C-9758-E7129CDDDB54}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{047E94AE-90F1-445C-9758-E7129CDDDB54}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{047E94AE-90F1-445C-9758-E7129CDDDB54}.Debug|x86.Build.0 = Debug|Any CPU
-		{047E94AE-90F1-445C-9758-E7129CDDDB54}.Internal|Any CPU.ActiveCfg = Release|Any CPU
-		{047E94AE-90F1-445C-9758-E7129CDDDB54}.Internal|Any CPU.Build.0 = Release|Any CPU
-		{047E94AE-90F1-445C-9758-E7129CDDDB54}.Internal|x86.ActiveCfg = Release|Any CPU
-		{047E94AE-90F1-445C-9758-E7129CDDDB54}.Internal|x86.Build.0 = Release|Any CPU
-		{047E94AE-90F1-445C-9758-E7129CDDDB54}.Prod|Any CPU.ActiveCfg = Release|Any CPU
-		{047E94AE-90F1-445C-9758-E7129CDDDB54}.Prod|Any CPU.Build.0 = Release|Any CPU
-		{047E94AE-90F1-445C-9758-E7129CDDDB54}.Prod|x86.ActiveCfg = Release|Any CPU
-		{047E94AE-90F1-445C-9758-E7129CDDDB54}.Prod|x86.Build.0 = Release|Any CPU
-		{047E94AE-90F1-445C-9758-E7129CDDDB54}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{047E94AE-90F1-445C-9758-E7129CDDDB54}.Release|Any CPU.Build.0 = Release|Any CPU
-		{047E94AE-90F1-445C-9758-E7129CDDDB54}.Release|x86.ActiveCfg = Release|Any CPU
-		{047E94AE-90F1-445C-9758-E7129CDDDB54}.Release|x86.Build.0 = Release|Any CPU
-		{047E94AE-90F1-445C-9758-E7129CDDDB54}.Staging|Any CPU.ActiveCfg = Release|Any CPU
-		{047E94AE-90F1-445C-9758-E7129CDDDB54}.Staging|Any CPU.Build.0 = Release|Any CPU
-		{047E94AE-90F1-445C-9758-E7129CDDDB54}.Staging|x86.ActiveCfg = Release|Any CPU
-		{047E94AE-90F1-445C-9758-E7129CDDDB54}.Staging|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
