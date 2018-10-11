@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.IO;
 using CipherPark.TriggerOrange.Core;
 using CipherPark.TriggerOrange.Core.Data;
 using CipherPark.TriggerOrange.Core.ApplicationServices;
@@ -55,14 +57,13 @@ namespace CipherPark.TriggerOrange.Console
         {
             //ConnectivityTest();
             //BestSellingTest();
-            //EbayHotStarters();
-        }
+            //EbayHotStarters();         
+        }    
 
         private void ConsoleBackOffice()
         {
 
-        }        
-       
+        }              
 
         private static string QueryInput(string message)
         {
