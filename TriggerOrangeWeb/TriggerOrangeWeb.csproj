@@ -176,6 +176,8 @@
     <Content Include="Content\ajax-loader.gif" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\BusyRoomHeroSample.jpg" />
+    <Content Include="Content\BusyRoomHeroSample_v1.jpg" />
     <Content Include="Content\customized-bootstrap.css" />
     <Content Include="Content\gumbo\ng-notification-bar\bower_components\angular-mocks\angular-mocks.js" />
     <Content Include="Content\gumbo\ng-notification-bar\bower_components\angular-sanitize\angular-sanitize.js" />
@@ -4435,6 +4437,12 @@
     <Content Include="Views\Reports\Index.cshtml" />
     <Content Include="Views\Reports\DetailsSingleEdit.cshtml" />
     <Content Include="Views\Reports\Details.cshtml" />
+    <Content Include="Views\Home\AdminStart.cshtml" />
+    <Content Include="Views\EbayLife\Beginner.cshtml" />
+    <Content Include="Views\EbayLife\Expert.cshtml" />
+    <Content Include="Views\EbayLife\Intermediate.cshtml" />
+    <Content Include="Views\EbayLife\Latest.cshtml" />
+    <Content Include="Views\EbayLife\Strategy.cshtml" />
     <None Include="Web.Internal.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -4453,6 +4461,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\EbayLifeController.cs" />
     <Compile Include="Controllers\ListsController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
@@ -4464,6 +4473,7 @@
     </Compile>
     <Compile Include="Models\AllCategoriesViewModel.cs" />
     <Compile Include="Models\DetailsViewModel.cs" />
+    <Compile Include="Models\EbayLifeModel.cs" />
     <Compile Include="Models\ListModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\ProductListItemModel.cs" />
