@@ -4443,6 +4443,8 @@
     <Content Include="Views\EbayLife\Intermediate.cshtml" />
     <Content Include="Views\EbayLife\Latest.cshtml" />
     <Content Include="Views\EbayLife\Strategy.cshtml" />
+    <Content Include="Views\_Shared\_Public\_Layout.cshtml" />
+    <Content Include="Views\_Shared\_Public\_LandingLayout.cshtml" />
     <None Include="Web.Internal.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -4461,6 +4463,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\EbayLifeController.cs" />
     <Compile Include="Controllers\ListsController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
@@ -4472,6 +4475,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AllCategoriesViewModel.cs" />
+    <Compile Include="Models\BlogPostViewModel.cs" />
     <Compile Include="Models\DetailsViewModel.cs" />
     <Compile Include="Models\EbayLifeModel.cs" />
     <Compile Include="Models\ListModel.cs" />
