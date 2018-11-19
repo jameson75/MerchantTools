@@ -4427,7 +4427,6 @@
     <Content Include="Views\Search\_PartialSortByButton.cshtml" />
     <Content Include="Views\Lists\Index.cshtml" />
     <Content Include="Views\Lists\Details.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Admin\Dashboard.cshtml" />
     <Content Include="Views\Search\HotStarters.cshtml" />
     <Content Include="Views\Product\Update2.cshtml" />
@@ -4438,13 +4437,10 @@
     <Content Include="Views\Reports\DetailsSingleEdit.cshtml" />
     <Content Include="Views\Reports\Details.cshtml" />
     <Content Include="Views\Home\AdminStart.cshtml" />
-    <Content Include="Views\EbayLife\Beginner.cshtml" />
-    <Content Include="Views\EbayLife\Expert.cshtml" />
-    <Content Include="Views\EbayLife\Intermediate.cshtml" />
-    <Content Include="Views\EbayLife\Latest.cshtml" />
-    <Content Include="Views\EbayLife\Strategy.cshtml" />
     <Content Include="Views\_Shared\_Public\_Layout.cshtml" />
     <Content Include="Views\_Shared\_Public\_LandingLayout.cshtml" />
+    <Content Include="Views\Blog\SearchPosts.cshtml" />
+    <Content Include="Views\Blog\ViewPost.cshtml" />
     <None Include="Web.Internal.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
