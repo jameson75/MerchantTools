@@ -97,6 +97,9 @@
     <Compile Include="Data\Category.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\HostedImage.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\LongRunningTask.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
