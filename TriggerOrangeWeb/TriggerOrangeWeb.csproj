@@ -4442,6 +4442,8 @@
     <Content Include="Views\Blog\SearchPosts.cshtml" />
     <Content Include="Views\Blog\ViewPost.cshtml" />
     <Content Include="Views\Blog\EditPost.cshtml" />
+    <Content Include="Views\Insights\ViewPost.cshtml" />
+    <Content Include="Views\Insights\SearchPosts.cshtml" />
     <None Include="Web.Internal.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
