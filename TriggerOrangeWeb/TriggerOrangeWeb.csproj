@@ -4508,6 +4508,7 @@
     <Compile Include="Services\CoreDataServices.cs" />
     <Compile Include="Services\ReferenceDataServices.cs" />
     <Compile Include="Services\WCFClientServices.cs" />
+    <Compile Include="Util\SellerLevels.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
