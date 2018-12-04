@@ -3012,6 +3012,7 @@
     <Content Include="Content\orange\custom-checkbox.css" />
     <Content Include="Content\orange\images\tr-logo3-i.png" />
     <Content Include="Content\orange\images\tr-logo3.png" />
+    <Content Include="Content\orange\images\tr-logo4-i.png" />
     <Content Include="Content\orange\images\trigger_red_footer_color.png" />
     <Content Include="Content\orange\images\trigger_red_footer_color2.jpg" />
     <Content Include="Content\orange\images\trigger_red_header_color.png" />
@@ -3025,6 +3026,8 @@
     <Content Include="Content\trigger_red_header_color.png" />
     <Content Include="Content\trigger_red_hero.jpg" />
     <Content Include="Content\trigger_red_hero_2.jpg" />
+    <Content Include="Content\trigger_red_hero_3_preview.jpg" />
+    <Content Include="Content\trigger_red_hero_4_preview.jpg" />
     <Content Include="Content\ui-bootstrap-csp.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -4444,6 +4447,7 @@
     <Content Include="Views\Blog\EditPost.cshtml" />
     <Content Include="Views\Insights\ViewPost.cshtml" />
     <Content Include="Views\Insights\SearchPosts.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
     <None Include="Web.Internal.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -4464,6 +4468,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\EbayLifeController.cs" />
+    <Compile Include="Controllers\InsightsController.cs" />
     <Compile Include="Controllers\ListsController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
@@ -4476,7 +4481,7 @@
     <Compile Include="Models\AllCategoriesViewModel.cs" />
     <Compile Include="Models\BlogPostViewModel.cs" />
     <Compile Include="Models\DetailsViewModel.cs" />
-    <Compile Include="Models\EbayLifeModel.cs" />
+    <Compile Include="Models\InsightsViewModel.cs" />
     <Compile Include="Models\ListModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\ProductListItemModel.cs" />
