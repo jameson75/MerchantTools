@@ -4443,9 +4443,7 @@
     <Content Include="Views\_Shared\_Public\_Layout.cshtml" />
     <Content Include="Views\_Shared\_Public\_LandingLayout.cshtml" />
     <Content Include="Views\Blog\SearchPosts.cshtml" />
-    <Content Include="Views\Blog\ViewPost.cshtml" />
     <Content Include="Views\Blog\EditPost.cshtml" />
-    <Content Include="Views\Insights\ViewPost.cshtml" />
     <Content Include="Views\Insights\SearchPosts.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <None Include="Web.Internal.config">
@@ -4493,7 +4491,6 @@
     <Compile Include="Models\SimilarProductViewModel.cs" />
     <Compile Include="Models\SourceProductViewModel.cs" />
     <Compile Include="Models\SourcesViewModel.cs" />
-    <Compile Include="Services\ReportingServices.cs" />
     <Compile Include="Services\UserAuthServices.cs" />
     <Compile Include="Services\WebApiServices.cs" />
     <Compile Include="Util\ControllerExtension.cs" />

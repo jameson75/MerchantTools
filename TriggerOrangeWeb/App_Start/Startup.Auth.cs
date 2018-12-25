@@ -24,15 +24,36 @@ namespace CipherPark.TriggerOrange.Web
                 LoginPath = new PathString("/Account/Login"),                                           
             });
 
-            CreateAdmin();                        
+            CreateAdmin();
+            CreateBlogs();
         }
 
         private void CreateAdmin()
         {
+            //TODO:
+            //Store this information in the config files
             string systemAdminName = "meganova75";
             string password = "trigg3rBaby75";
             if (!UserAuthServices.UserExists(systemAdminName))
                 UserAuthServices.Register(systemAdminName, "meganova75@gmail.com", password, password, TriggerOrangeRoles.Admin);
+        }
+
+        private void CreateBlogs()
+        {
+            using (var db = new TriggerOrange.Core.Data.OrangeEntities())
+            {
+                foreach (var blogPage in BlogPages.All)
+                {
+                    if (db.Blogs.All(x => x.Id != blogPage.Id))
+                        db.Blogs.Add(new Core.Data.Blog()
+                        {
+                            Id = blogPage.Id,
+                            Name = blogPage.Name,
+                            Title = blogPage.Caption
+                        });
+                }
+                db.SaveChanges();                
+            }
         }
     }
 }
