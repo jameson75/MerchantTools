@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using CipherPark.TriggerOrange.Web.MvcHelpers;
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -87,10 +88,7 @@
                                 </button>
                                 <button class="c-topbar-toggler" type="button">
                                     <i class="fa fa-ellipsis-v"></i>
-                                </button>
-                                <button class="c-search-toggler" type="button">
-                                    <i class="fa fa-search"></i>
-                                </button>
+                                </button>                                
                             </div>
                             <!-- END: BRAND -->
                             <!-- BEGIN: QUICK SEARCH -->
@@ -109,26 +107,19 @@
                                         <a href="~/Home/Index" class="c-link dropdown-toggle">Home<span class="c-arrow c-toggler"></span></a>
                                     </li>
                                     <li class="c-menu-type-classic">
-                                        <a href="~/Search/HotStarters" class="c-link dropdown-toggle">Search<span class="c-arrow c-toggler"></span></a>
+                                        <a href="~/Search/HotStarters" class="c-link dropdown-toggle">Products<span class="c-arrow c-toggler"></span></a>
                                     </li>
                                     <li>
-                                        <a href="~/Reports/Index" class="c-link dropdown-toggle">Publish<span class="c-arrow c-toggler"></span></a>                                        
+                                        <a href="~/Reports/Index" class="c-link dropdown-toggle">Lists<span class="c-arrow c-toggler"></span></a>                                        
                                     </li>                              
                                     <li>
-                                        <a href="~/Admin/Dashboard" class="c-link dropdown-toggle">Admin<span class="c-arrow c-toggler"></span></a>
-                                    </li>
+                                        <a href="~/Admin/Dashboard" class="c-link dropdown-toggle">Dashboard<span class="c-arrow c-toggler"></span></a>
+                                    </li>                                                                                               
                                     <li>
-                                        <a href="~/Home/About" class="c-link dropdown-toggle">About<span class="c-arrow c-toggler"></span></a>
+                                        <!--<a href="javascript:;" data-toggle="modal" data-target="#login-form" class="c-btn-border-opacity-04 c-btn btn-no-focus c-btn-header btn btn-sm c-btn-border-1x c-btn-dark c-btn-circle c-btn-uppercase c-btn-sbold"><i class="icon-user"></i> Sign In</a>-->
+                                        @Html.SignInButton("login-form", "LogOutSubmit", "Account", true)
                                     </li>
-                                    
-                                    <li class="c-search-toggler-wrapper">
-                                        <a href="#" class="c-btn-icon c-search-toggler"><i class="fa fa-search"></i></a>
-                                    </li>    
-                                    
-                                    <li>
-                                        <a href="javascript:;" data-toggle="modal" data-target="#login-form" class="c-btn-border-opacity-04 c-btn btn-no-focus c-btn-header btn btn-sm c-btn-border-1x c-btn-dark c-btn-circle c-btn-uppercase c-btn-sbold"><i class="icon-user"></i> Sign In</a>
-                                    </li>
-
+                                    <!--
                                     <li class="c-quick-sidebar-toggler-wrapper">
                                         <a href="#" class="c-quick-sidebar-toggler">
                                             <span class="c-line"></span>
@@ -136,6 +127,7 @@
                                             <span class="c-line"></span>
                                         </a>
                                     </li>
+                                    -->
                                 </ul>
                             </nav>
                             <!-- END: MEGA MENU --><!-- END: LAYOUT/HEADERS/MEGA-MENU -->

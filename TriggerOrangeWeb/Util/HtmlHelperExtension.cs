@@ -22,7 +22,7 @@ namespace CipherPark.TriggerOrange.Web.MvcHelpers
             return new MvcHtmlString($"<a href=\"{href}\" class=\"btn btn-default\">{caption}</a>");
         }
 
-        public static MvcHtmlString SignInButton(this HtmlHelper html, string modalFormId, string logoutAction, string logOutControllerName, string loginCaption = DefaultLoginCatpion, string logoutCaption = DefaultLogoutCaption)
+        public static MvcHtmlString SignInButton(this HtmlHelper html, string modalFormId, string logoutAction, string logOutControllerName, bool isDark = false, string loginCaption = DefaultLoginCatpion, string logoutCaption = DefaultLogoutCaption)
         {
             var urlHelper = new UrlHelper(html.ViewContext.RequestContext);
             var isUserAuthenticated = html.ViewContext.HttpContext.Request.IsAuthenticated;
@@ -32,7 +32,8 @@ namespace CipherPark.TriggerOrange.Web.MvcHelpers
             string data_target = isUserAuthenticated ? null : $"#{modalFormId}";
             //return new MvcHtmlString($"<a href=\"{href}\" class=\"btn btn-default\">{caption}</a>");
             string toolTip = isUserAuthenticated ? $"Sign Out {html.ViewContext.HttpContext.User.Identity.Name}" : null;
-            return new MvcHtmlString($"<a href=\"{href}\" data-toggle=\"{data_toggle}\" data-target=\"{data_target}\" class=\"c-btn-border-opacity-04 c-btn btn-no-focus c-btn-header btn btn-sm c-btn-border-1x c-btn-white c-btn-circle c-btn-uppercase c-btn-sbold\" uib-tooltip=\"{toolTip}\"><i class=\"icon-user\"></i> {caption}</a>");
+            string c_btn_Color = isDark ? "c-btn-dark" : "c-btn-white";
+            return new MvcHtmlString($"<a href=\"{href}\" data-toggle=\"{data_toggle}\" data-target=\"{data_target}\" class=\"c-btn-border-opacity-04 c-btn btn-no-focus c-btn-header btn btn-sm c-btn-border-1x {c_btn_Color} c-btn-circle c-btn-uppercase c-btn-sbold\" uib-tooltip=\"{toolTip}\"><i class=\"icon-user\"></i> {caption}</a>");
         }
 
         public static MvcHtmlString UnorderedList(this HtmlHelper html, IEnumerable<string> list, object liHtmlElements = null, object ulHtmlElements = null)

@@ -367,6 +367,7 @@ namespace CipherPark.TriggerOrange.Core
                                                                                      SellerId = item.Seller?.UserID,
                                                                                      SellerScore = item.Seller?.FeedbackScore,
                                                                                      Location = item.Location,
+                                                                                     DateListed = item.StartTime,
                                                                                  }).ToList();
                                         dbAllCategoryProducts.AddRange(products);
                                     }
@@ -804,7 +805,8 @@ namespace CipherPark.TriggerOrange.Core
                                                                      DateModified = DateTime.Now,
                                                                      Keywords = item.Title,
                                                                      StartTime = item.StartTime,
-                                                                     SellerScore = item.Seller?.FeedbackScore                                                                     
+                                                                     SellerScore = item.Seller?.FeedbackScore,
+                                                                     DateListed = item.StartTime,
                                                                  }).ToList();
                         results.AddRange(products);
                     }
@@ -822,6 +824,7 @@ namespace CipherPark.TriggerOrange.Core
         {            
             return _FullTextProductSearch(pageSize, firstItemIndex, true, categoryId, searchTerms, sortKey, filter, enableInflectionalSearch, out totalMatches);
         }
+     
 
         private IEnumerable<Data.Product> _FullTextProductSearch(int pageSize, int firstItemIndex, bool searchByCategoryId, object p0, string[] searchTerms, string sortKey, ProductSearchFilter filter, bool enableInflectionalSearch, out int totalMatches)
         {

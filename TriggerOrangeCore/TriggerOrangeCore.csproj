@@ -130,9 +130,6 @@
     <Compile Include="Data\ProductStaging.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\PublishedList.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Data\Report.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

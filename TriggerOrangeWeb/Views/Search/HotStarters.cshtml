@@ -116,50 +116,73 @@
 
             <!-- BEGIN: CONTENT/SHOPS/SHOP-2-8 -->
             <!-- BEGIN: CSS TABLE -->
-
-            <div ng-repeat="product in products" ng-show="!isLoading && !isEmpty">
-                <div class="row c-margin-b-40">
-                    <div class="c-content-product-2 c-bg-white">
+            
+            <div class="c-content">
+                <div class="c-content-blog-post-1 c-margin-b-40" ng-repeat="product in products" ng-show="!isLoading && !isEmpty">
+                    <div class="row c-margin-b-10">
                         <div class="col-md-4">
-                            <div class="c-content-overlay">
+                            <div class="c-content-overlay c-margin-b-15">
                                 <div class="c-overlay-wrapper">
                                     <div class="c-overlay-content">
-                                        <a href="{{product.ProductUrl}}" target="_blank" class="btn btn-md c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">Explore</a>
+                                        <a href="{{product.ProductUrl}}" target="_blank" class="btn btn-md c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">View Listing</a>
                                     </div>
                                 </div>
                                 <div class="c-bg-img-center c-overlay-object" data-height="height" style="height: 230px;" ng-style="{'background-image': 'url(' + product.SmallImageUrl + ')'}"></div>
                             </div>
                         </div>
-                        <div class="col-md-8">
-                            <div class="c-info-list">
-                                <h3 class="c-title c-font-bold c-font-22 c-font-dark">
-                                    <a class="c-theme-link" href='@Url.Action("Update2", "Product")/{{product.Id}}' target="_blank">{{product.Name}}</a>
-                                </h3>
+                        <div class="col-md-8">                                
+                            <div class="row">
+                                <div class="col-sm-12" style="min-height:50px;">
+                                    <a class="c-theme-link" href='@Url.Action("Update2", "Product")/{{product.Id}}' target="_blank">
+                                        <span class="c-font-18 c-font-bold">{{product.Name}}</span>
+                                    </a>
+                                </div>
                             </div>
-                            <div>
-                                <span class="c-desc c-font-20 c-font-bold">{{product.Price | currency}}</span>
+                            <div class="row">
+                                <div class="col-sm-4 c-margin-t-5">
+                                    <div class="c-bg-grey-1 c-center c-padding-10">
+                                        <div class="c-font-16 c-font-bold">Selling Price</div>
+                                        <div class="c-font-38 c-font-bold c-font-red">{{product.Price | currency}}</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 c-margin-t-5">
+                                    <div class="c-bg-grey-1 c-center c-padding-10">
+                                        <div class="c-font-16 c-font-bold">Units Sold</div>
+                                        <div class="c-font-16 c-font-bold">in first <span class="c-font-red">7</span> days</div>
+                                        <div class="c-font-22 c-font-bold c-font-red">{{product.UnitsSold}}</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 c-margin-t-5">
+                                    <div class="c-bg-grey-1 c-center c-padding-10">
+                                        <div class="c-font-16 c-font-bold">Seller Score</div>
+                                        <div class="c-font-26 c-font-bold c-font-red">{{product.SellerScore}}</div>
+                                        <div class="c-font-10 c-font-bold">&nbsp;</div>
+                                    </div>
+                                </div>
                             </div>
-                            <div>
-                                <span class="c-desc c-font-16 c-font-bold">Units Sold: {{product.UnitsSold}}</span>
+                            <div class="row c-margin-t-5">
+                                <div class="col-md-6">
+                                    <span class="c-font-14 c-font-bold">Listed On: </span><span class="c-font-16 c-font-bold c-font-red">{{product.DateListed|date:'longDate'}} </span>
+                                </div>                                    
                             </div>
-                            <div>
-                                <span class="c-desc c-font-16 c-font-bold">Seller Score: {{product.SellerScore}}</span>
-                            </div>
-                            <div class="c-margin-t-10">
-                                <button ng-click="onBeginAddProductToReport(product.Id)" type="submit" ng-class="{'btn':true, 'c-btn':!isProductListed(product.Id), 'c-btn-red-2':isProductListed(product.Id), 'c-btn-border-2x':isProductListed(product.Id), 'btn-sm':true, 'c-font-bold':true, 'c-font-white':!isProductListed(product.Id), 'c-theme-btn':!isProductListed(product.Id), 'c-btn-square':true, 'c-font-uppercase':true, 'c-block-text':true}">
-                                    <i class="fa fa-list"></i> {{ !isProductListed(product.Id)? "Add To Report" : "Remove From Report" }}
-                                </button>
+                            <div class="row c-margin-t-5">
+                                <div class="col-md-12">
+                                <a href="/Blog/EditPost?source=product&id={{product.Id}}" target="_blank" style="width:125px" class="btn btn-lg btn-default c-btn-square c-btn-uppercase c-btn-bold">Blog This</a>
+                                <button type="submit" class="btn btn-lg btn-default c-btn-square c-btn-uppercase c-btn-bold" ng-click="onSaveThis()">Save This</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </div>                        
                 </div>
-            </div>
+            </div>               
+
             <div ng-show="!isLoading && isEmpty">
                 <div class="c-center">
                     <span class="c-font-20 c-font-red-1"><i class="fa fa-meh-o fa-5x fa-red"></i></span><br /><br />
                     <div class="c-desc c-font-20 c-font-bold c-font-grey-3"> NO RESULTS FOUND. TRY <span class="c-font-red-1">AGAIN</span>.</div>
                 </div>
             </div>
+
             <div ng-show="isLoading">
                 <div class="c-center">
                     <span class="c-font-20 c-font-red-1"><i class="fa fa-spinner fa-pulse fa-5x"></i></span><br /><br />

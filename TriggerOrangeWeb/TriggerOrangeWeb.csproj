@@ -4425,11 +4425,8 @@
     </Content>
     <Content Include="Views\Shared\_LandingLayout.cshtml" />
     <Content Include="Views\Shared\_PartialNavHeader.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Search\_PartialQuickGuide.cshtml" />
     <Content Include="Views\Search\_PartialSortByButton.cshtml" />
-    <Content Include="Views\Lists\Index.cshtml" />
-    <Content Include="Views\Lists\Details.cshtml" />
     <Content Include="Views\Admin\Dashboard.cshtml" />
     <Content Include="Views\Search\HotStarters.cshtml" />
     <Content Include="Views\Product\Update2.cshtml" />
@@ -4440,12 +4437,11 @@
     <Content Include="Views\Reports\DetailsSingleEdit.cshtml" />
     <Content Include="Views\Reports\Details.cshtml" />
     <Content Include="Views\Home\AdminStart.cshtml" />
-    <Content Include="Views\_Shared\_Public\_Layout.cshtml" />
-    <Content Include="Views\_Shared\_Public\_LandingLayout.cshtml" />
-    <Content Include="Views\Blog\SearchPosts.cshtml" />
     <Content Include="Views\Blog\EditPost.cshtml" />
     <Content Include="Views\Insights\SearchPosts.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Insights\Post.cshtml" />
+    <Content Include="Views\Insights\Subscribe.cshtml" />
+    <Content Include="Views\Insights\Strategy.cshtml" />
     <None Include="Web.Internal.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -4466,6 +4462,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\EbayLifeController.cs" />
+    <Compile Include="Controllers\HostedImageController.cs" />
     <Compile Include="Controllers\InsightsController.cs" />
     <Compile Include="Controllers\ListsController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
@@ -4473,6 +4470,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\WebHooksController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -4488,6 +4486,7 @@
     <Compile Include="Models\ReportItemModel.cs" />
     <Compile Include="Models\ReportModel.cs" />
     <Compile Include="Models\SearchViewModel.cs" />
+    <Compile Include="Models\SendGridEventModel.cs" />
     <Compile Include="Models\SimilarProductViewModel.cs" />
     <Compile Include="Models\SourceProductViewModel.cs" />
     <Compile Include="Models\SourcesViewModel.cs" />
@@ -4563,6 +4562,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\jango\assets\base\templates\" />
     <Folder Include="Scripts\App\" />
+    <Folder Include="Views\HostedImage\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TriggerOrangeCore\TriggerOrangeCore.csproj">
@@ -4609,7 +4609,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>41866</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:41866/</IISUrl>
+          <IISUrl>http://localhost:41864/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost:41864/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

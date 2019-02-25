@@ -26,6 +26,7 @@ namespace CipherPark.TriggerOrange.Web
 
             CreateAdmin();
             CreateBlogs();
+            CreateSystemProductLists();
         }
 
         private void CreateAdmin()
@@ -53,6 +54,25 @@ namespace CipherPark.TriggerOrange.Web
                         });
                 }
                 db.SaveChanges();                
+            }
+        }
+
+        private void CreateSystemProductLists()
+        {
+            using (var db = new TriggerOrange.Core.Data.OrangeEntities())
+            {
+                foreach (var listName in SystemProductLists.Names)
+                {
+                    if (db.Reports.All(x => x.Name != listName))
+                        db.Reports.Add(new Core.Data.Report()
+                        {
+                            Comments = $"System {listName} list",
+                            RunDate = DateTime.Now,
+                            IsPublic = false,
+                            Name = listName,                          
+                        });
+                    db.SaveChanges();
+                }
             }
         }
     }

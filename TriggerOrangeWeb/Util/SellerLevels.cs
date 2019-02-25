@@ -36,5 +36,10 @@ namespace CipherPark.TriggerOrange.Web.Util
                 };
             }
         }
+
+        public static string ScoreToLevel(long score)
+        {
+            return All.OrderBy(x => x.Item2).First(x => score <= x.Item2).Item1;
+        }
     }    
 }
