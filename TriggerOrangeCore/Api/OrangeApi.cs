@@ -523,6 +523,7 @@ namespace CipherPark.TriggerOrange.Core
                                                                         SellerId = x.Seller?.UserID,
                                                                         SellerScore = x.Seller?.FeedbackScore,
                                                                         Location = x.Location,
+                                                                        DateListed = x.StartTime.Date,
                                                                     }).ToList();                              
                             db.BulkInsert(dbProducts);
                             LogOperationInfo(operationName, $"Finished populating database for category, {category.Name}");
@@ -1044,7 +1045,8 @@ namespace CipherPark.TriggerOrange.Core
                                                                   ,[StartTime]
                                                                   ,[SellerId]
                                                                   ,[SellerScore]
-                                                                  ,[Location])
+                                                                  ,[Location]
+                                                                  ,[DateListed])
                                                     SELECT  [Id]
                                                                   ,[ReferenceId]
                                                                   ,[Name]
@@ -1067,7 +1069,8 @@ namespace CipherPark.TriggerOrange.Core
                                                                   ,[StartTime]
                                                                   ,[SellerId]
                                                                   ,[SellerScore]
-                                                                  ,[Location] 
+                                                                  ,[Location]
+                                                                  ,[DateListed]
                                                                     FROM ProductStaging
                                                                     WHERE CategoryId IN 
                                                                         (SELECT Id 

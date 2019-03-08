@@ -85,9 +85,6 @@
     <Compile Include="Api\ProductSearchFilter.cs" />
     <Compile Include="Api\SalesHistory.cs" />
     <Compile Include="Api\SourcingResult.cs" />
-    <Compile Include="Data\ActiveUserReport.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Data\Blog.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -143,9 +140,6 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\ShortRunningTask.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\Sourcing.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\VerifiedSimilarProduct.cs">

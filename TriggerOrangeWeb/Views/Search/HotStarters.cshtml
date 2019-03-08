@@ -167,8 +167,8 @@
                             </div>
                             <div class="row c-margin-t-5">
                                 <div class="col-md-12">
-                                <a href="/Blog/EditPost?source=product&id={{product.Id}}" target="_blank" style="width:125px" class="btn btn-lg btn-default c-btn-square c-btn-uppercase c-btn-bold">Blog This</a>
-                                <button type="submit" class="btn btn-lg btn-default c-btn-square c-btn-uppercase c-btn-bold" ng-click="onSaveThis()">Save This</button>
+                                <a href="/Blog/NewPost?sourceId={{product.Id}}&sourceType=product" target="_blank" style="width:125px" class="btn btn-lg btn-default c-btn-square c-btn-uppercase c-btn-bold">Blog This</a>
+                                <button class="btn btn-lg btn-default c-btn-square c-btn-uppercase c-btn-bold" ng-click="onBeginAddProductToReport(product.Id)">Save This</button>
                                 </div>
                             </div>
                         </div>
@@ -227,31 +227,16 @@
         <button type="button" class="close" ng-click="cancel()">
             <span aria-hidden="true">×</span>
         </button>
-        <h4 class="modal-title">Add Product To Report</h4>
+        <h4 class="modal-title">Add Product To List</h4>
     </div>
-    <div class="modal-body" ng-cloak>
-        @*<div ng-show="!isLoading && !isEmpty">*@
+    <div class="modal-body" ng-cloak>       
         <div ng-show="true">
             <div class="row">
                 <select ng-model="selectedReport" ng-options="x.Name for x in reports" class="form-control c-square c-theme input-lg" placeholder="Enter Report Name"></select>
             </div>
             <div>
             </div>
-        </div>
-        @*<div ng-show="!isLoading && isEmpty">*@
-        <div ng-show="false">
-            <div class="c-center">
-                <span class="c-font-20 c-font-red-1"><i class="fa fa-meh-o fa-5x fa-red"></i></span><br /><br />
-                <div class="c-desc c-font-20 c-font-bold c-font-grey-3"> NO RESULTS FOUND. TRY <span class="c-font-red-1">AGAIN</span>.</div>
-            </div>
-        </div>
-        @*<div ng-show="isLoading">*@
-        <div ng-show="false">
-            <div class="c-center">
-                <span class="c-font-20 c-font-red-1"><i class="fa fa-spinner fa-pulse fa-5x"></i></span><br /><br />
-                <div class="c-desc c-font-20 c-font-bold c-font-grey-3"> LOADING RESULTS. PLEASE <span class="c-font-red-1">WAIT</span>.</div>
-            </div>
-        </div>
+        </div>       
     </div>
     <div class="modal-footer">
         <button type="submit" class="btn btn-lg c-theme-btn c-btn-square c-btn-uppercase c-btn-bold" ng-click="ok()">OK</button>
@@ -355,7 +340,7 @@
                    const modalInstance = $uibModal.open({
                        "templateUrl": "AddProduct.html",
                        "controller": "ModalInstanceCtrl",
-                       "size": "lg"
+                       "size": "md"
                    });
                    modalInstance.result.then(function (result) {
                        if (result.id == 'ok') {
@@ -408,7 +393,7 @@
                         };
                         $scope.isLoading = true;
                         $scope.isEmpty = true;
-                        $http.post('@Url.Action("GetReports2", "Reports")', postData).success(function (result) {
+                        $http.post('@Url.Action("GetReports", "Reports")', postData).success(function (result) {
                             $scope.totalItemCount = result.totalItemCount;
                             $scope.reports = result.reports;
                             $scope.isLoading = false;
