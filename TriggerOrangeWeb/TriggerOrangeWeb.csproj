@@ -4435,10 +4435,7 @@
     <Content Include="Views\_Shared\_LandingLayout.cshtml" />
     <Content Include="Views\Home\AdminStart.cshtml" />
     <Content Include="Views\Blog\EditPost.cshtml" />
-    <Content Include="Views\Insights\SearchPosts.cshtml" />
-    <Content Include="Views\Insights\Post.cshtml" />
-    <Content Include="Views\Insights\Subscribe.cshtml" />
-    <Content Include="Views\Insights\Strategy.cshtml" />
+    <Content Include="Views\Blog\EditPost2.cshtml" />
     <None Include="Web.Internal.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -4460,7 +4457,6 @@
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\EbayLifeController.cs" />
     <Compile Include="Controllers\HostedImageController.cs" />
-    <Compile Include="Controllers\InsightsController.cs" />
     <Compile Include="Controllers\ListsController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
