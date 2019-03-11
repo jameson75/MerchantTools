@@ -1,0 +1,75 @@
+http://www.trapratz.com/
+
+Registered Domains
+1. razor jacket 
+2.(angel jacket)
+
+Project ideas.
+
+Financial Dashboard
+	-Javascript:
+		-Support for JQuery, AngularJS, Angular2+, ReactJS, Vue
+	-Cross Platform:
+		-Cross platform 
+			->.NET Core / GL / Vulkan / DirectX/3D
+			
+-- CipherPark --
+Liquid Real Estate Portfolio Manager
+	- Microservice/Cloud 
+	- REITs, ETF, Funds, Contracts, Notes, Crowd Fund
+	- Valuation/Modeling
+	- IP's
+		www.liquidfort.com		
+		
+Crowd Video
+
+Tokenization Service.
+	- Talk to Gilette about partnership.
+
+BarberQueue
+	- Models
+	- Free / Client Booking Fee
+		
+KillScript/WorldPsycho
+	www.killscript.com
+	[Entire game is controlled with a CLI].
+	[CLI modes ranges from simple to complex]
+		- Simple: Widget : 
+				  IM-like popup.
+		- Sci Fi Hacker-like display
+	[Runs natively on any platform]
+		.net core
+		ios
+	[Runs in a browser]
+		javascript	
+	[Integration with Discord]
+	[Integration with Telegram]
+	[ATARI 2600 THEME]my 
+	[MMO Heist games]
+	[Symbolic - Social Political]
+	
+Social Network:
+	Think about
+	soulchess
+	knowfull
+	speakbelly
+	speakevery
+	speakety
+	speakata
+	**peekata** (ekata?)
+Social Collab
+Moderated Chat:
+- Round Robin discussion
+
+Leverage approval process in smart contract??
+
+	
+
+
+	
+		
+	
+	
+
+
+

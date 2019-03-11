@@ -1,0 +1,136 @@
+﻿@using CipherPark.TriggerOrange.Web.Models
+@model InsightsViewModel
+@{
+    ViewBag.Title = "Subscribe";   
+}
+
+<!-- BEGIN: PAGE CONTAINER -->
+<div class="c-layout-page">
+    <!-- BEGIN: LAYOUT/BREADCRUMBS/BREADCRUMBS-1 -->
+    <div class="c-layout-breadcrumbs-1 c-fonts-uppercase c-fonts-bold c-bordered c-bordered-both">
+        <div class="container">
+            <div class="c-page-title c-pull-left">
+                <h3 class="c-font-uppercase c-font-sbold">Subscribe</h3>
+            </div>           
+        </div>
+    </div><!-- END: LAYOUT/BREADCRUMBS/BREADCRUMBS-1 -->   
+    <div class="c-content-box c-size-md">       
+        <div class="container">
+            <div class="c-content-pricing-1">
+                <div class="c-content-title-1">
+                    <h3 class="c-center c-font-uppercase c-font-bold">SUBSCRIBE TO BI-WEEKLY REPORTS</h3>
+                    <div class="c-line-center c-bg-red-2"></div>
+                </div>
+                <div class="c-tile-container">
+                    <div class="c-tile c-tile-small wow animate fadeInLeft c-bg-grey-1 " style="margin:5px; visibility: visible; animation-name: fadeInLeft; opacity: 1;">
+                        <div class="c-label c-theme-bg">Standard</div>
+                        <p class="c-price">59<sup>$</sup></p>
+                        <p class="c-font-uppercase">1000 Copies</p>
+                        <p class="c-font-uppercase">Unlimited Data</p>
+                        <p class="c-font-uppercase">Unlimited Users</p>
+                        <p class="c-font-uppercase">For 7 days</p>
+                        <a href="#" class="btn btn-md c-btn-square c-btn-border-2x c-btn-regular c-btn-uppercase c-btn-bold">Purchase</a>
+                    </div>
+                    <div class="c-tile c-tile-small wow animate fadeInUp c-bg-grey-1" style="margin:5px; visibility: visible; animation-name: fadeInUp; opacity: 1;">
+                        <div class="c-label c-theme-bg">Business</div>
+                        <p class="c-price">99<sup>$</sup></p>
+                        <p class="c-font-uppercase">10,000 Copies</p>
+                        <p class="c-font-uppercase">Unlimited Data</p>
+                        <p class="c-font-uppercase">Unlimited Users</p>
+                        <p class="c-font-uppercase">For 30 days</p>
+                        <button type="button" class="btn btn-md c-btn-square c-btn-border-2x c-btn-regular c-btn-uppercase c-btn-bold">Purchase</button>
+                    </div>
+                    <div class="c-tile c-tile-small wow animate fadeInRight c-bg-grey-1" style="margin:5px; visibility: visible; animation-name: fadeInRight; opacity: 1;">
+                        <div class="c-label c-theme-bg">Expert</div>
+                        <p class="c-price">199<sup>$</sup></p>
+                        <p class="c-font-uppercase">Unlimited Copies</p>
+                        <p class="c-font-uppercase">Unlimited Data</p>
+                        <p class="c-font-uppercase">Unlimited Users</p>
+                        <p class="c-font-uppercase">For 1 Year</p>
+                        <button type="button" class="btn btn-md c-btn-square c-btn-border-2x c-btn-regular c-btn-uppercase c-btn-bold">Purchase</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END: PAGE CONTAINER -->
+
+<script id="template/pagination/orangepagination.html" type="text/ng-template">
+    <ul class="c-content-pagination c-square c-theme">
+        <li ng-if="::boundaryLinks" ng-class="{disabled: noPrevious()||ngDisabled}"><a href="#" ng-click="selectPage(1, $event)"><i class="fa fa-angle-double-left"></i></a></li>
+        <li ng-if="::directionLinks" ng-class="{disabled: noPrevious()||ngDisabled}"><a href="#" ng-click="selectPage(page - 1, $event)"><i class="fa fa-angle-left"></i></a></li>
+        <li ng-repeat="page in pages track by $index" ng-class="{'c-active': page.active}"><a href="#" ng-click="selectPage(page.number, $event)">{{page.text}}</a></li>
+        <li ng-if="::directionLinks" ng-class="{disabled: noNext()||ngDisabled}"><a href="#" ng-click="selectPage(page + 1, $event)"><i class="fa fa-angle-right"></i></a></li>
+        <li ng-if="::boundaryLinks" ng-class="{disabled: noNext()||ngDisabled}"><a href="#" ng-click="selectPage(totalPages, $event)"><i class="fa fa-angle-double-right"></i></a></li>
+    </ul>
+</script>
+
+<script type="text/ng-template" id="CreateEditReport.html">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()">
+            <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title">Update Report</h4>
+    </div>
+    <div class="modal-body">
+        <label class="control-label">Name:</label>
+        <input type="text" class="form-control c-square c-theme input-lg" placeholder="Enter Report Name" ng-model="reportName">
+        <div class="c-margin-t-5">
+            <textarea ng-model="comments" class="form-control c-square c-theme input-lg" style="min-height: 250px;" placeholder="Enter Description Here"></textarea>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-lg c-theme-btn c-btn-square c-btn-uppercase c-btn-bold" ng-click="ok()">OK</button>
+        <button type="submit" class="btn btn-lg btn-default c-btn-square c-btn-uppercase c-btn-bold" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+
+<script type="text/ng-template" id="ConfirmDelete.html">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()">
+            <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title">Confirm Delete</h4>
+    </div>
+    <div class="modal-body">
+        <label class="control-label">Delete this report?</label>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-lg c-theme-btn c-btn-square c-btn-uppercase c-btn-bold" ng-click="ok()">YES</button>
+        <button type="submit" class="btn btn-lg btn-default c-btn-square c-btn-uppercase c-btn-bold" ng-click="cancel()">NO</button>
+    </div>
+</script>
+
+@section ready{
+    <!-- BEGIN TRIGGER ORANGE APP ANGULAR CONTROLLER(S) -->
+    <script>
+            angular.module('triggerOrangeApp', ['orange', 'ngAnimate', 'ui.bootstrap', 'ngSanitize'])
+                //*** Main Controller ***
+            .controller('triggerOrangeCtlr', function ($scope, $http, $window, $uibModal) {
+                $scope.tableState = {
+                    pagination: {
+                        currentPage: 1,
+                        pageSize: 5,
+                        totalItemCount: 0
+                    },
+                };              
+               $scope.isEmpty = false;
+               $scope.isLoading = false;
+               $scope.isInitializing = true;
+               $scope.notifications = [];
+              
+               $scope.onPageChanged = function () {
+                   $window.scrollTo(0, 0);
+                   $scope.getPostsPipe($scope.tableState);
+               };
+               $scope.resultRangeText = function () {
+                   var firstItemOrdinal = ($scope.tableState.pagination.currentPage - 1) * $scope.tableState.pagination.pageSize + 1;
+                   var lastItemOrdinal = Math.min($scope.tableState.pagination.currentPage * $scope.tableState.pagination.pageSize, $scope.tableState.pagination.totalItemCount);
+                   return firstItemOrdinal + " - " + lastItemOrdinal;
+               };               
+            });
+    </script>
+    <!-- END TRIGGER ORANGE APP ANGULAR CONTROLLER(S) -->
+}
+

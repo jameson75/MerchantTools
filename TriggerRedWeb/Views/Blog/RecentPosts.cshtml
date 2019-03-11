@@ -1,0 +1,286 @@
+﻿@using CipherPark.TriggerOrange.Web.Models
+@{
+    ViewBag.Title = "Search Posts";   
+}
+
+<!-- BEGIN: PAGE CONTAINER -->
+<div class="c-layout-page">
+    <!-- BEGIN: LAYOUT/BREADCRUMBS/BREADCRUMBS-1 -->
+    <div class="c-layout-breadcrumbs-1 c-fonts-uppercase c-fonts-bold c-bordered c-bordered-both">
+        <div class="container">
+            <div class="c-page-title c-pull-left">
+                <h3 class="c-font-uppercase c-font-sbold">Insights</h3>
+            </div>
+        </div>
+    </div><!-- END: LAYOUT/BREADCRUMBS/BREADCRUMBS-1 -->
+    <!-- BEGIN: PAGE CONTENT -->
+    <!-- BEGIN: BLOG LISTING -->
+    <div class="c-content-box c-size-md">
+        <div ng-cloak class="container">
+            <div class="row">
+                <!-- BEGIN: CONTENT/BLOG/BLOG-SIDEBAR-1 -->
+                <div class="col-md-3 col-md-push-9 c-margin-b-30">
+                    <!-- BEGIN SEARCH BAR-->
+                    <form action="#" method="post">
+                        <div class="input-group">
+                            <input name="email" type="text" ng-model="keywords" class="form-control c-square c-theme-border" placeholder="Search posts...">
+                            <span class="input-group-btn">
+                                <button class="btn c-theme-btn c-theme-border c-btn-square" type="button" ng-click="onSearchClick()">Go!</button>
+                            </span>
+                        </div>
+                    </form>
+                    <!-- END SEARCH BAR -->
+                    <!-- BEGIN QUICK NAV -->
+                    <div class="c-content-ver-nav">
+                        <div class="c-content-title-1 c-theme c-title-md c-margin-t-40">
+                            <h3 class="c-font-bold c-font-uppercase">SELLER LEVEL</h3>
+                            <div class="c-line-left c-theme-bg"></div>
+                        </div>
+                        <ul class="c-menu c-arrow-dot c-theme">
+                            <li>                             <a ng-class="{'c-font-red-2' : isActiveBlog(''), 'c-font-bold' : isActiveBlog('')}" href="@Url.Action("SearchPosts")">All</a></li>
+                            <li ng-repeat="cat in categories"><a ng-class="{'c-font-red-2' : isActiveBlog(cat.Caption), 'c-font-bold' : isActiveBlog(cat.Caption)}" href="@Url.Action("SearchPosts", "Insights")?id={{cat.Id}}">{{cat.Caption}}</a></li>
+                        </ul>
+                    </div>
+                    <div class="c-margin-t-50 hidden-sm hidden-xs">
+                        <!-- BEGIN SUBSCRIPTION BAR-->
+                        <form action="@Url.Action("Subscribe")" method="post">
+                            <div><span class="c-font-bold c-font-grey-3 c-font-14 c-font-uppercase">Subscribe to BI-WEEKLY report</span></div>
+                            <div class="input-group">
+                                <input type="text" ng-model="keywords" class="form-control c-square c-theme-border" placeholder="Enter email...">
+                                <span class="input-group-btn">
+                                    <button class="btn c-theme-btn c-theme-border c-btn-square" type="submit">Subscribe</button>
+                                </span>
+                            </div>
+                        </form>
+                        <!-- END SUBSCRIPTION BAR -->
+                    </div>
+                </div>
+                <!-- END: CONTENT/BLOG/BLOG-SIDEBAR-1 -->
+                <!-- BEGIN MAIN CONTENT AREA -->
+                <div class="col-md-9 col-md-pull-3">                   
+                    <div class="c-content-title-1 c-theme c-title-md">
+                        <h3 class="c-font-bold c-font-uppercase"><span class="c-font-grey-3">@(Model.BlogName ?? "All") </span>Posts</h3>
+                        <div class="c-line-left c-theme-bg"></div>
+                    </div>
+                    <!-- BEGIN POSTS -->
+                    <div class="c-content-blog-post-1-list">
+                        <div class="c-content-blog-post-1" ng-repeat="post in posts" ng-show="!isLoading && !isEmpty">
+                            <div class="row c-margin-b-10">
+                                <div class="col-md-4">
+                                    <div class="c-content-overlay c-margin-b-15">
+                                        <div class="c-overlay-wrapper">
+                                            <div class="c-overlay-content">
+                                                <a href="~/Insights/ViewPost/{{post.Id}}" target="_blank" class="btn btn-md c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">Read More</a>
+                                            </div>
+                                        </div>
+                                        <div class="c-bg-img-center c-overlay-object" data-height="height" style="height: 230px;" ng-style="{'background-image': 'url(' + post.CoverImageUrl + ')'}"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <span>{{post.DateCreated|date:'longDate'}} </span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <span class="c-title c-font-bold c-font-22 c-font-dark">{{post.Title}}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-4 c-margin-t-5">
+                                            <div class="c-bg-grey-1 c-center c-padding-10">
+                                                <div class="c-font-16 c-font-bold">Selling Price</div>
+                                                <div class="c-font-38 c-font-bold c-font-red">{{post.ProductPrice | currency}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 c-margin-t-5">
+                                            <div class="c-bg-grey-1 c-center c-padding-10">
+                                                <div class="c-font-16 c-font-bold">Units Sold</div>
+                                                <div class="c-font-16 c-font-bold">in first <span class="c-font-red">7</span> days</div>
+                                                <div class="c-font-22 c-font-bold c-font-red">{{post.ProductUnitsSold}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 c-margin-t-5">
+                                            <div class="c-bg-grey-1 c-center c-padding-10">
+                                                <div class="c-font-16 c-font-bold">Seller Level</div>
+                                                <div class="c-font-24 c-font-bold c-font-red">{{post.ProductSellerLevel}}</div>
+                                                <div class="c-font-12 c-font-bold">&nbsp;</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row c-margin-t-10">
+                                        <div class="col-md-6">
+                                            <span class="c-font-14 c-font-bold">Listed On: </span><span class="c-font-16 c-font-bold c-font-red">{{post.ProductListingDate|date:'longDate'}} </span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span class="c-font-14 c-font-bold">Category: </span><span class="c-font-16 c-font-bold c-font-red">{{post.ProductCategory}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row c-margin-b-40">
+                                <div class="col-sm-12">
+                                    <p class="c-font-black c-font-16" style="white-space:pre" ng-bind-html="post.Content"></p>
+                                </div>
+                            </div>                         
+                        </div>
+                    </div>
+                    <!-- END POSTS -->
+                   
+                    <!-- BEGIN BOTTOM AD -->
+                    <div>
+
+                    </div>
+                    <!-- END BOTTOM AD -->
+                </div>
+                
+                
+                <div class="c-center c-margin-t20">
+                    <ul uib-pagination
+                        template-url="template/pagination/orangepagination.html"
+                        ng-model="tableState.pagination.currentPage"
+                        ng-change="onPageChanged()"
+                        max-size="10"
+                        total-items="tableState.pagination.totalItemCount"
+                        boundary-link-numbers="true"
+                        items-per-page="tableState.pagination.pageSize"
+                        class="pagination-sm"
+                        rotate="false"
+                        ng-show="!isLoading && !isEmpty"></ul>
+                </div>
+            </div>
+            <!-- END MAIN CONTENT AREA -->
+        </div>
+    </div>
+</div>
+<!-- END: BLOG LISTING  -->
+<!-- END: PAGE CONTENT -->
+
+<!-- END: PAGE CONTAINER -->
+
+<script id="template/pagination/orangepagination.html" type="text/ng-template">
+    <ul class="c-content-pagination c-square c-theme">
+        <li ng-if="::boundaryLinks" ng-class="{disabled: noPrevious()||ngDisabled}"><a href="#" ng-click="selectPage(1, $event)"><i class="fa fa-angle-double-left"></i></a></li>
+        <li ng-if="::directionLinks" ng-class="{disabled: noPrevious()||ngDisabled}"><a href="#" ng-click="selectPage(page - 1, $event)"><i class="fa fa-angle-left"></i></a></li>
+        <li ng-repeat="page in pages track by $index" ng-class="{'c-active': page.active}"><a href="#" ng-click="selectPage(page.number, $event)">{{page.text}}</a></li>
+        <li ng-if="::directionLinks" ng-class="{disabled: noNext()||ngDisabled}"><a href="#" ng-click="selectPage(page + 1, $event)"><i class="fa fa-angle-right"></i></a></li>
+        <li ng-if="::boundaryLinks" ng-class="{disabled: noNext()||ngDisabled}"><a href="#" ng-click="selectPage(totalPages, $event)"><i class="fa fa-angle-double-right"></i></a></li>
+    </ul>
+</script>
+
+<script type="text/ng-template" id="CreateEditReport.html">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()">
+            <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title">Update Report</h4>
+    </div>
+    <div class="modal-body">
+        <label class="control-label">Name:</label>
+        <input type="text" class="form-control c-square c-theme input-lg" placeholder="Enter Report Name" ng-model="reportName">
+        <div class="c-margin-t-5">
+            <textarea ng-model="comments" class="form-control c-square c-theme input-lg" style="min-height: 250px;" placeholder="Enter Description Here"></textarea>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-lg c-theme-btn c-btn-square c-btn-uppercase c-btn-bold" ng-click="ok()">OK</button>
+        <button type="submit" class="btn btn-lg btn-default c-btn-square c-btn-uppercase c-btn-bold" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+
+<script type="text/ng-template" id="ConfirmDelete.html">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()">
+            <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title">Confirm Delete</h4>
+    </div>
+    <div class="modal-body">
+        <label class="control-label">Delete this report?</label>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-lg c-theme-btn c-btn-square c-btn-uppercase c-btn-bold" ng-click="ok()">YES</button>
+        <button type="submit" class="btn btn-lg btn-default c-btn-square c-btn-uppercase c-btn-bold" ng-click="cancel()">NO</button>
+    </div>
+</script>
+
+@section ready{
+    <!-- BEGIN TRIGGER ORANGE APP ANGULAR CONTROLLER(S) -->
+    <script>
+            angular.module('triggerOrangeApp', ['orange', 'ngAnimate', 'ui.bootstrap', 'ngSanitize'])
+                //*** Main Controller ***
+            .controller('triggerOrangeCtlr', function ($scope, $http, $window, $uibModal) {
+                $scope.tableState = {
+                    pagination: {
+                        currentPage: 1,
+                        pageSize: 1,
+                        totalItemCount: 0
+                    },
+                };
+               $scope.keywords = null,
+               $scope.sortKey = null;
+               $scope.blogId = "@Model.BlogId";
+               $scope.blogName = "@Model.BlogName";
+               $scope.isEmpty = false;
+               $scope.isLoading = false;
+               $scope.isInitializing = true;
+               $scope.notifications = [];
+               $scope.getPostsPipe = function (tableState) {
+                   if ($scope.isInitializing == true) {
+                       $scope.isInitializing = false;
+                   }
+                   $scope.tableState = tableState;
+                   var postData = {
+                       "pageSize": tableState.pagination.pageSize,
+                       "currentPage": tableState.pagination.currentPage,
+                       "sortKey": $scope.sortKey,
+                       "blogId": $scope.blogId,
+                       "keywords": $scope.keywords,
+                   };
+                   $scope.isLoading = true;
+                   $scope.isEmpty = true;
+                   $http.post('@Url.Action("GetPosts", "Blog")', postData).success(function (result) {
+                       tableState.pagination.currentPage = result.currentPage;
+                       tableState.pagination.totalItemCount = result.nTotalItemCount;
+                       $scope.posts = result.posts;
+                       $scope.isLoading = false;
+                       $scope.isEmpty = result.posts.length == 0;
+                       ajaxHistory.Save({
+                       });
+                   }).error(function (result) {
+                       $scope.isLoading = false;
+                       $scope.isEmpty = true;
+                   });
+               };
+               $scope.getCategories = function () {
+                   var postData = null;
+                   $http.post('@Url.Action("GetCategories", "Blog")', postData).success(function (result) {
+                       $scope.categories = result.categories;
+                   });
+               };
+               $scope.onSearchClick = function () {
+                   $window.scrollTo(0, 0);
+                   $scope.tableState.pagination.currentPage = 1;
+                   $scope.getPostsPipe($scope.tableState);
+               };
+               $scope.onPageChanged = function () {
+                   $window.scrollTo(0, 0);
+                   $scope.getPostsPipe($scope.tableState);
+               };
+               $scope.resultRangeText = function () {
+                   var firstItemOrdinal = ($scope.tableState.pagination.currentPage - 1) * $scope.tableState.pagination.pageSize + 1;
+                   var lastItemOrdinal = Math.min($scope.tableState.pagination.currentPage * $scope.tableState.pagination.pageSize, $scope.tableState.pagination.totalItemCount);
+                   return firstItemOrdinal + " - " + lastItemOrdinal;
+               };
+               $scope.isActiveBlog = function (caption) {
+                   return $scope.blogName == caption;
+               }
+               $scope.getPostsPipe($scope.tableState);
+               $scope.getCategories();
+            });
+    </script>
+    <!-- END TRIGGER ORANGE APP ANGULAR CONTROLLER(S) -->
+}
+

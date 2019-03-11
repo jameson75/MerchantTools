@@ -1,0 +1,99 @@
+﻿@using CipherPark.TriggerOrange.Web.Models
+@{
+    ViewBag.Title = "About Us";
+}
+
+<!-- BEGIN: PAGE CONTAINER -->
+<div class="c-layout-page">
+    <!-- BEGIN: LAYOUT/BREADCRUMBS/BREADCRUMBS-1 -->
+    <div class="c-layout-breadcrumbs-1 c-fonts-uppercase c-fonts-bold c-bordered c-bordered-both">
+        <div class="container">
+            <div class="c-page-title c-pull-left">
+                <h3 class="c-font-uppercase c-font-sbold">About Us</h3>
+            </div>
+        </div>
+    </div><!-- END: LAYOUT/BREADCRUMBS/BREADCRUMBS-1 -->
+    <div class="c-content-box c-size-md">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-sm-6 wow animate fadeInLeft" style="visibility: visible; animation-name: fadeInLeft; opacity: 1;">
+                    <div class="c-content-step-1 c-opt-1">
+                        <div class="c-icon"><span class="c-hr c-hr-first"><span class="c-content-line-icon c-icon-14 c-theme"></span></span></div>
+                        <div class="c-title c-font-20 c-font-bold c-font-uppercase">1. First Important STEP</div>
+                        <div class="c-description c-font-17">
+                            Lorem ipsum dolor sit consectetuer
+                            adipiscing elit et diam nonummy.
+                        </div>
+                        <button class="btn c-btn-square c-theme-btn c-btn-border1-2x c-btn-uppercase c-btn-bold">EXPLORE</button>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 wow animate fadeInLeft" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInLeft; opacity: 1;">
+                    <div class="c-content-step-1 c-opt-1">
+                        <div class="c-icon"><span class="c-hr"><span class="c-content-line-icon c-icon-21 c-theme"></span></span></div>
+                        <div class="c-title c-font-20 c-font-bold c-font-uppercase">2. Second Phase</div>
+                        <div class="c-description c-font-17">
+                            Lorem ipsum dolor sit consectetuer
+                            adipiscing elit et diam nonummy.
+                        </div>
+                        <button class="btn c-btn-square c-theme-btn c-btn-uppercase c-btn-bold">EXPLORE</button>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-12 wow animate fadeInLeft" data-wow-delay="0.4s" style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInLeft; opacity: 1;">
+                    <div class="c-content-step-1 c-opt-1">
+                        <div class="c-icon"><span class="c-hr c-hr-last"><span class="c-content-line-icon c-icon-32 c-theme"></span></span></div>
+                        <div class="c-title c-font-20 c-font-bold c-font-uppercase">3. Final Action</div>
+                        <div class="c-description c-font-17">
+                            Lorem ipsum dolor sit consectetuer
+                            adipiscing elit et diam nonummy.
+                        </div>
+                        <button class="btn c-btn-square c-theme-btn c-btn-uppercase c-btn-bold">EXPLORE</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END: PAGE CONTAINER -->
+
+<script id="template/pagination/orangepagination.html" type="text/ng-template">
+    <ul class="c-content-pagination c-square c-theme">
+        <li ng-if="::boundaryLinks" ng-class="{disabled: noPrevious()||ngDisabled}"><a href="#" ng-click="selectPage(1, $event)"><i class="fa fa-angle-double-left"></i></a></li>
+        <li ng-if="::directionLinks" ng-class="{disabled: noPrevious()||ngDisabled}"><a href="#" ng-click="selectPage(page - 1, $event)"><i class="fa fa-angle-left"></i></a></li>
+        <li ng-repeat="page in pages track by $index" ng-class="{'c-active': page.active}"><a href="#" ng-click="selectPage(page.number, $event)">{{page.text}}</a></li>
+        <li ng-if="::directionLinks" ng-class="{disabled: noNext()||ngDisabled}"><a href="#" ng-click="selectPage(page + 1, $event)"><i class="fa fa-angle-right"></i></a></li>
+        <li ng-if="::boundaryLinks" ng-class="{disabled: noNext()||ngDisabled}"><a href="#" ng-click="selectPage(totalPages, $event)"><i class="fa fa-angle-double-right"></i></a></li>
+    </ul>
+</script>
+
+@section ready{
+    <!-- BEGIN TRIGGER ORANGE APP ANGULAR CONTROLLER(S) -->
+    <script>
+        angular.module('triggerOrangeApp', ['orange', 'ngAnimate', 'ui.bootstrap', 'ngSanitize'])
+            //*** Main Controller ***
+            .controller('triggerOrangeCtlr', function ($scope, $http, $window, $uibModal) {
+                $scope.tableState = {
+                    pagination: {
+                        currentPage: 1,
+                        pageSize: 5,
+                        totalItemCount: 0
+                    },
+                };
+                $scope.isEmpty = false;
+                $scope.isLoading = false;
+                $scope.isInitializing = true;
+                $scope.notifications = [];
+
+                $scope.onPageChanged = function () {
+                    $window.scrollTo(0, 0);
+                    $scope.getPostsPipe($scope.tableState);
+                };
+                $scope.resultRangeText = function () {
+                    var firstItemOrdinal = ($scope.tableState.pagination.currentPage - 1) * $scope.tableState.pagination.pageSize + 1;
+                    var lastItemOrdinal = Math.min($scope.tableState.pagination.currentPage * $scope.tableState.pagination.pageSize, $scope.tableState.pagination.totalItemCount);
+                    return firstItemOrdinal + " - " + lastItemOrdinal;
+                };
+            });
+    </script>
+    <!-- END TRIGGER ORANGE APP ANGULAR CONTROLLER(S) -->
+}
+

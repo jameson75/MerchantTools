@@ -1,0 +1,120 @@
+Portfolio { Assets[?], Portfolio[*] }
+
+	Asset { Underlying[?] }
+		-> Crowd Funded Property
+		-> REITs
+		-> Liens
+		-> Tokens
+		-> ETFs
+		-> Mutal Funds
+		-> Other Collateral Notes??
+		
+	FinModel
+		Valuation:
+			Property
+			REIT
+			Liens
+			Tokens
+		Portfolio Analysis:
+			Risk
+			
+Accounting
+	
+	-> Element
+		-> Asset
+		-> Liability
+		-> Equity { +Investment By Owner,
+					+-Distribution To Owners,
+					+Comprehensive Income,
+					+Revenue,
+					+Expenses,
+					+Gains,
+					+Losses					
+				}
+	-> Entity
+		-> AccountingEvent/Trigger (ie: Sale, Purchase, ie).
+		
+		-> Transaction (an event with another party or parties).
+			 
+		-> Posting
+			-> {*Transaction}
+		
+		-> Account (Record of account events and/or transactions)
+			->{ Postings[] }
+			->Real Account (Accounts that appear on balance sheet) -Assets, Liabilities, Some Equity (Investments, Comprehensive Income)
+			->Nominal Account (Temp account) (appear on income statement). Other Equity (Distributions, Revenue, Expenses, Gains, Losses)
+				(Note: Nominal Accounts must be closed).
+					Post(); (updates account).
+			->{ Balance } new { Credits and Debits }
+			
+		//NOTE? Accounts and Transactions have a many to many relationship. (AccountTransactions)
+		
+		-> Ledger
+			-> All Accounts
+			{ SubLedger } (Subsidiary Ledger) (Accounts for each company??)
+			{ TrialBalance } 
+		
+		-> Adjusting Entries
+		
+		-> Closing Entries
+		
+		-> Report/Documents
+			-> Journal (Record of account postings)
+			-> Income Statement
+			-> Balance Sheet
+			-> Statement of Cash Flow
+			-> Statement Of Owners or Stock Holders
+			-> Note Disclosures
+			-> Statement Of Retained Earnings
+			
+	Work Flow
+		-> Record TRANSACTIONS -> JOURNALIZATION -> POSTING -> TRIAL BALANCE -> ADJUSTMENTS -> ADJUSTED TRIAL BALANCE
+		-> STATEMENT PREP -> CLOSING -> POST CLOSING TRIAL BALANCE -> REVERSING ENTRIES
+				
+Smart Contract
+	- Asset Tokenization may be out of scope of this project. 
+	- May be out of my league. See Trust Token.
+	(https://blog.trusttoken.com/introducing-the-trusttoken-platform-tokenization-you-can-trust-67f1998b77ec)
+
+https://www.youtube.com/watch?v=EA30kuol5H4
+https://cdn.ymaws.com/www.realpac.ca/resource/resmgr/professional_development/financial_analysis.pdf
+https://www.theblockcrypto.com/2018/11/15/mapping-out-the-security-token-ecosystem/
+https://www.forbes.com/sites/forbesrealestatecouncil/2018/05/03/how-smaller-private-real-estate-funds-can-generate-bigger-returns/#33a0e4ba51fd
+https://www.investopedia.com/articles/mortgages-real-estate/11/valuing-real-estate.asp
+
+/*
+Passive Investment!!!
+---------------------
+REITS...
+Mutual Funds...
+ETFS...
+Deal Flips...
+Asset Tokens...
+FREE API!
+*/
+
+KYC/AML Regulations:
+Bank Secrecy Act
+USA PATRIOT Act
+Office of Foreign Assets Control (OFAC) Regulations
+FinCEN and FFIEC Guidance
+FATF and Wolfsberg Group Guidance
+
+The final big question is how to deal with KYC/AML compliance. 
+After all, if the token is to represent actual real estate, the 
+investors may have legal rights to dividends and to the real estate itself. 
+Therefore, we need to have a way to vet ICO investors. Also, the ability to 
+invest and transfer the tokens needs to be limited to identified parties. The 
+easiest way to solve the compliance aspects of security tokens is to whitelist 
+the identified real estate ICO investors and use exchanges that only allow identified 
+investors to trade. If you’re considering a dedicated blockchain, these control 
+mechanisms need to be implemented at the protocol level.
+
+HyperLedger | Ethereum
+HL: GoLang
+Ethereum: Solidity
+
+
+
+
+https://learn.g2crowd.com/2019-fintech-trends

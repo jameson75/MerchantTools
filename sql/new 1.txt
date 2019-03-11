@@ -1,0 +1,6 @@
+Jamoolah
+- Create Charting
+	1. Render axis and levels.
+	2. Respond properly to zooming.
+	3. Render mountain view
+	4. Render candle stick.
