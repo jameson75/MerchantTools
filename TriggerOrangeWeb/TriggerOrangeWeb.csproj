@@ -4435,7 +4435,8 @@
     <Content Include="Views\_Shared\_LandingLayout.cshtml" />
     <Content Include="Views\Home\AdminStart.cshtml" />
     <Content Include="Views\Blog\EditPost.cshtml" />
-    <Content Include="Views\Blog\EditPost2.cshtml" />
+    <Content Include="Views\Blog\PostVoided.cshtml" />
+    <Content Include="Views\Blog\SearchPosts.cshtml" />
     <None Include="Web.Internal.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -4479,6 +4480,7 @@
     <Compile Include="Models\ReportItemModel.cs" />
     <Compile Include="Models\ReportModel.cs" />
     <Compile Include="Models\SearchViewModel.cs" />
+    <Compile Include="Models\SearchBlogPostsViewModel.cs" />
     <Compile Include="Models\SendGridEventModel.cs" />
     <Compile Include="Models\SimilarProductViewModel.cs" />
     <Compile Include="Models\SourceProductViewModel.cs" />

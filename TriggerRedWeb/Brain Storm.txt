@@ -14,6 +14,8 @@ Financial Dashboard
 			->.NET Core / GL / Vulkan / DirectX/3D
 			
 -- CipherPark --
+-----------------
+
 Liquid Real Estate Portfolio Manager
 	- Microservice/Cloud 
 	- REITs, ETF, Funds, Contracts, Notes, Crowd Fund
@@ -30,7 +32,7 @@ BarberQueue
 	- Models
 	- Free / Client Booking Fee
 		
-KillScript/WorldPsycho
+Kill Script/World Psycho
 	www.killscript.com
 	[Entire game is controlled with a CLI].
 	[CLI modes ranges from simple to complex]
