@@ -101,5 +101,11 @@ namespace CipherPark.Ebay.Util
             if (nextbatch.Count > 0)
                 yield return nextbatch;
         }
+
+        public static IEnumerable<T> WhereDistinct<T, TKey>(this IEnumerable<T> source, Func<T, TKey> keySelector)
+        {
+            return source.GroupBy(keySelector)
+                         .Select(x => x.FirstOrDefault());
+        }        
     }
 }

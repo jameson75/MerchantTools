@@ -503,6 +503,7 @@ namespace CipherPark.TriggerOrange.Core
 
                             LogOperationInfo(operationName, $"Finished getting full details for all items for category {category.Name}. Populating database with {allItems.Count} items");
                             List<Data.ProductStaging> dbProducts = allItems.Where(x => x.QuantitySold >= MinSales)
+                                                                    .WhereDistinct(x => x.ItemID)
                                                                     .Select(x => new Data.ProductStaging
                                                                     {
                                                                         CategoryId = category.Id,
@@ -840,7 +841,7 @@ namespace CipherPark.TriggerOrange.Core
                     for (int i = 0; i < searchTerms.Length; i++)
                     {
                         if (!string.IsNullOrWhiteSpace(searchTerms[i]) &&
-                            !FullTextTSQLReservedWords.Contains(searchTerms[i].ToUpper()))
+                            !FullTextTSQLStopWords.Contains(searchTerms[i].ToUpper()))
                         {
                             //Join each search term with AND - (Meaning any record returned must contain all expressions).
                             if (containsParamBuilder.Length > 0)
@@ -1146,9 +1147,10 @@ namespace CipherPark.TriggerOrange.Core
      
         #endregion
 
-        private static readonly string[] FullTextTSQLReservedWords = new[]
+        private static readonly string[] FullTextTSQLStopWords = new[]
         {
-            "AND", "&", "AND NOT", "&!", "OR", "|"
+            "AND", "&", "AND NOT", "&!", "OR", "|",
+            "FOR", "MY", "A", "AS", "THE", "IT", "I"
         };
     }     
 }
