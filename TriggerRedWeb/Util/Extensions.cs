@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Reflection;
 
-namespace CipherPark.TriggerOrange.Web.Models
+namespace CipherPark.TriggerRed.Web.Models
 {
     public static class LinqExtension
     {
@@ -171,4 +171,13 @@ namespace CipherPark.TriggerOrange.Web.Models
 
     public class SafeHtmlIgnoreAttribute : Attribute
     { }
+
+    public static class TextExtensions
+    {
+        public static string Ellipse(this string value, int maxChars)
+        {
+            const string ellipses = "...";
+            return value.Length <= maxChars ? value : value.Substring(0, maxChars - ellipses.Length) + ellipses;
+        }
+    }
 }

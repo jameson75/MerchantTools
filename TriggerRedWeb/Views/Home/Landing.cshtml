@@ -1,8 +1,10 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Trigger Red | Home";
     Layout = "~/Views/Shared/LandingLayout.cshtml";
 }
+
+@model CipherPark.TriggerRed.Web.Models.LandingViewModel
+@using CipherPark.TriggerRed.Web.Models;
 
 <!-- BEGIN PAGE CONTAINER -->
     <div class="c-layout-page">
@@ -56,7 +58,7 @@
                     <div class="col-md-12">
                         <div class="c-content-title-1 c-margin-b-60">
                             <h3 class="c-center c-font-uppercase c-font-bold">
-                                Our Keep It Simple Strategy
+                                Simple And Effective Approach
                             </h3>
                             <div class="c-line-center"></div>
                             <p class="c-center c-font-uppercase c-font-17">
@@ -72,7 +74,7 @@
                             <div class="c-icon"><span class="c-hr c-hr-first"><span class="c-content-line-icon c-icon-13 c-theme"></span></span></div>
                             <div class="c-title c-font-20 c-font-bold c-font-uppercase">1. Search Ebay</div>
                             <div class="c-description c-font-17">
-                                Each day, we discover all products listed on Ebay 7, 14 and 28 days ago.
+                                We begin each day by discovering all products listed on Ebay 7 days ago.
                                 <br />&nbsp;
                                 <br />&nbsp;
                                 <br />&nbsp;
@@ -85,8 +87,7 @@
                             <div class="c-icon"><span class="c-hr"><span class="c-content-line-icon c-icon-11 c-theme"></span></span></div>
                             <div class="c-title c-font-20 c-font-bold c-font-uppercase">2. Filter Products</div>
                             <div class="c-description c-font-17">
-                                We filter the discovered products for those listed as <span class="c-font-bold">Buy It Now</span>. We apply second filter
-                                for products having minimum sell rate of <br /><span class="c-font-bold">one sale per day</span>.
+                                We filter the discovered products for those having minimum sell rate of <br /><span class="c-font-bold">one sale per day</span>.
                                 <br />&nbsp;
                             </div>
                             <a href="#" class="btn c-btn-square c-theme-btn c-btn-border1-2x c-btn-uppercase c-btn-bold">READ MORE</a>
@@ -97,9 +98,7 @@
                             <div class="c-icon"><span class="c-hr c-hr-last"><span class="c-content-line-icon c-icon-1 c-theme"></span></span></div>
                             <div class="c-title c-font-20 c-font-bold c-font-uppercase">3. WAREHOUSE</div>
                             <div class="c-description c-font-17">
-                                We store discovered products in databases supporting contextual searching. 
-                                Search our most recent discoveries online.
-                                Download historical data in spread sheet format for offline processing.
+                                We store discovered products in our contextual database for easy searching.                                
                             </div>
                             <a href="#" class="btn c-btn-square c-theme-btn c-btn-border1-2x c-btn-uppercase c-btn-bold">READ MORE</a>
                         </div>
@@ -124,36 +123,26 @@
                 </div>
                 <div class="c-content-events-1">
                     <div class="row">
+                        @foreach (var post in Model.BlogPosts.Take(2))
+                        {
                         <div class="col-md-4">
                             <div class="c-content-events-1-item wow fadeInLeft" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInLeft; opacity: 1;">
                                 <div class="c-content-events-1-img-container">
-                                    <img class="c-content-events-1-img" src="../../assets/base/img/content/stock3/44.jpg">
+                                    <img class="c-content-events-1-img c-border c-border-grey-" src="@post.CoverImageUrl" style="height:250px">
                                 </div>
                                 <div class="c-content-events-1-content-container">
-                                    <div class="c-content-events-1-cat">News</div>
-                                    <h3 class="c-content-events-1-title">We are growing!</h3>
-                                    <p class="c-content-events-1-desc">Lorem ipsum dolor amet adipicing et noummy eit seat dias estudiat elit dolore et isum siady et dolor amet adipicing noummy set dias set estudat eliat dolore noummy</p>
-                                    <a href="https://themeforest.net/item/jango-highly-flexible-component-based-html5-template/11987314?ref=themehats" class="c-content-events-1-link">Learn More</a>
+                                    <div class="c-content-events-1-cat">@post.Category</div>
+                                    <h3 class="c-content-events-1-title">@post.Title</h3>
+                                    <p class="c-content-events-1-desc">@post.Content.Ellipse(200)</p>
+                                    <a href="@Url.Action("RecentPosts", "Blog")" class="c-content-events-1-link">View All</a>
                                 </div>
                             </div>
                         </div>
+                        }                        
                         <div class="col-md-4">
-                            <div class="c-content-events-1-item wow fadeInLeft" style="visibility: visible; animation-name: fadeInLeft; opacity: 1;">
-                                <div class="c-content-events-1-img-container">
-                                    <img class="c-content-events-1-img" src="../../assets/base/img/content/stock3/36.jpg">
-                                </div>
+                            <div class="c-content-events-1-item c-events-1-featured wow fadeIn" style="border-radius:0px" data-wow-delay="0.5s" data-wow-duration="1s" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeIn; opacity: 1;">
                                 <div class="c-content-events-1-content-container">
-                                    <div class="c-content-events-1-cat">Announcements</div>
-                                    <h3 class="c-content-events-1-title">JANGO v2.0 is here!</h3>
-                                    <p class="c-content-events-1-desc">Lorem ipsum dolor amet adipicing et noummy eit seat dias estudiat elit dolore et isum siady et dolor amet adipicing noummy set dias set estudat eliat dolore noummy</p>
-                                    <a href="https://themeforest.net/item/jango-highly-flexible-component-based-html5-template/11987314?ref=themehats" class="c-content-events-1-link">Purchase Now</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="c-content-events-1-item c-events-1-featured wow fadeIn" data-wow-delay="0.5s" data-wow-duration="1s" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeIn; opacity: 1;">
-                                <div class="c-content-events-1-content-container">
-                                    <div class="c-content-events-1-cat">SUBSCRIBE</div>
+                                    <div class="c-content-events-1-cat">Featured Event</div>
                                     <h3 class="c-content-events-1-title">Awesome New Features!</h3>
                                     <p class="c-content-events-1-desc">Lorem ipsum dolor amet adipicing et noummy eit seat dias estudiat elit dolore et isum siady et dolor amet adipicing noummy set dias set estudat eliat dolore noummy</p>
                                     <ul class="c-content-events-1-list">
@@ -170,7 +159,7 @@
                                             <span>Neverending Support</span>
                                         </li>
                                     </ul>
-                                    <a href="https://themeforest.net/item/jango-highly-flexible-component-based-html5-template/11987314?ref=themehats" class="c-content-events-1-link btn c-btn c-theme-btn c-btn-square c-font-uppercase">Subscribe Now</a>
+                                    <a href="https://themeforest.net/item/jango-highly-flexible-component-based-html5-template/11987314?ref=themehats" class="c-content-events-1-link btn c-btn c-theme-btn c-btn-square c-font-uppercase">Subscribe</a>
                                 </div>
                             </div>
                         </div>
@@ -194,349 +183,110 @@
                 <div class="c-bs-grid-small-space">
 
                     <div class="row">
-                        <div class="col-md-3 col-sm-6 c-margin-b-20">
-                            <div class="c-content-product-2 c-bg-white c-border">
-                                <div class="c-content-overlay">
-                                    <div class="c-label c-bg-red c-font-uppercase c-font-white c-font-13 c-font-bold">Sale</div>
-                                    <div class="c-overlay-wrapper">
-                                        <div class="c-overlay-content">
-                                            <a href="shop-product-details-2.html" class="btn btn-md c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">Explore</a>
+                        @foreach (var product in Model.Products.Take(4))
+                        { 
+                            <div class="col-md-3 col-sm-6 c-margin-b-20">
+                                <div class="c-content-product-2 c-bg-white c-border">
+                                    <div class="c-content-overlay">
+                                        <div class="c-label c-bg-red c-font-uppercase c-font-white c-font-13 c-font-bold">@product.SellerLevel</div>
+                                        <div class="c-overlay-wrapper">
+                                            <div class="c-overlay-content">
+                                                <a href="@Url.Action("Explore", "Insights")" class="btn btn-md c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">Explore</a>
+                                            </div>
                                         </div>
+                                        <div class="c-bg-img-center c-overlay-object" data-height="height" style="height: 230px; background-image: url(@product.LargeImageUrl);"></div>
                                     </div>
-                                    <div class="c-bg-img-center c-overlay-object" data-height="height" style="height: 230px; background-image: url(../../assets/base/img/content/shop2/100.jpg);"></div>
-                                </div>
-                                <div class="c-info">
-                                    <p class="c-title c-font-16 c-font-slim">Smartphone &amp; Handset</p>
-                                    <p class="c-price c-font-14 c-font-slim">
-                                        $548 &nbsp;
-                                        <span class="c-font-14 c-font-line-through c-font-red">$600</span>
-                                    </p>
-                                </div>
-                                <div class="btn-group btn-group-justified" role="group">
-                                    <div class="btn-group c-border-top" role="group">
-                                        <a href="shop-product-wishlist.html" class="btn btn-sm c-btn-white c-btn-uppercase c-btn-square c-font-grey-3 c-font-white-hover c-bg-red-2-hover c-btn-product">Wishlist</a>
+                                    <div class="row c-info">
+                                        <p class="c-title c-font-16 c-font-slim">@product.CategoryName</p>
+                                        <div class="col-xs-4 c-price c-font-14 c-font-slim">
+                                            <span class="c-font-14 c-font-red">@product.Price.ToString("C")</span>
+                                        </div>
+                                        <div class="col-xs-8 c-price c-font-14 c-font-slim">
+                                            Sold <span class="c-font-14 c-font-red">@product.UnitsSold</span> units in 7 days
+                                        </div>                                        
                                     </div>
-                                    <div class="btn-group c-border-left c-border-top" role="group">
-                                        <a href="shop-cart.html" class="btn btn-sm c-btn-white c-btn-uppercase c-btn-square c-font-grey-3 c-font-white-hover c-bg-red-2-hover c-btn-product">Cart</a>
+                                    <div class="btn-group btn-group-justified" role="group">
+                                        <div class="btn-group c-border-top" role="group">
+                                            <a href="@Url.Action("Explore", "Insights")" class="btn btn-sm c-btn-white c-btn-uppercase c-btn-square c-font-grey-3 c-font-white-hover c-bg-red-2-hover c-btn-product">Explore</a>
+                                        </div>                                        
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6 c-margin-b-20">
-                            <div class="c-content-product-2 c-bg-white c-border">
-                                <div class="c-content-overlay">
-                                    <div class="c-overlay-wrapper">
-                                        <div class="c-overlay-content">
-                                            <a href="shop-product-details.html" class="btn btn-md c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">Explore</a>
-                                        </div>
-                                    </div>
-                                    <div class="c-bg-img-center c-overlay-object" data-height="height" style="height: 230px; background-image: url(../../assets/base/img/content/shop2/83.jpg);"></div>
-                                </div>
-                                <div class="c-info">
-                                    <p class="c-title c-font-16 c-font-slim">Camera Lens</p>
-                                    <p class="c-price c-font-14 c-font-slim">
-                                        $548 &nbsp;
-                                        <span class="c-font-14 c-font-line-through c-font-red">$600</span>
-                                    </p>
-                                </div>
-                                <div class="btn-group btn-group-justified" role="group">
-                                    <div class="btn-group c-border-top" role="group">
-                                        <a href="shop-product-wishlist.html" class="btn btn-sm c-btn-white c-btn-uppercase c-btn-square c-font-grey-3 c-font-white-hover c-bg-red-2-hover c-btn-product">Wishlist</a>
-                                    </div>
-                                    <div class="btn-group c-border-left c-border-top" role="group">
-                                        <a href="shop-cart.html" class="btn btn-sm c-btn-white c-btn-uppercase c-btn-square c-font-grey-3 c-font-white-hover c-bg-red-2-hover c-btn-product">Cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6 c-margin-b-20">
-                            <div class="c-content-product-2 c-bg-white c-border">
-                                <div class="c-content-overlay">
-                                    <div class="c-label c-bg-red c-font-uppercase c-font-white c-font-13 c-font-bold">Sale</div>
-                                    <div class="c-label c-label-right c-theme-bg c-font-uppercase c-font-white c-font-13 c-font-bold">New</div>
-                                    <div class="c-overlay-wrapper">
-                                        <div class="c-overlay-content">
-                                            <a href="shop-product-details-2.html" class="btn btn-md c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">Explore</a>
-                                        </div>
-                                    </div>
-                                    <div class="c-bg-img-center c-overlay-object" data-height="height" style="height: 230px; background-image: url(../../assets/base/img/content/shop2/95.jpg);"></div>
-                                </div>
-                                <div class="c-info">
-                                    <p class="c-title c-font-16 c-font-slim">Shoes &amp; Tie</p>
-                                    <p class="c-price c-font-14 c-font-slim">
-                                        $548 &nbsp;
-                                        <span class="c-font-14 c-font-line-through c-font-red">$600</span>
-                                    </p>
-                                </div>
-                                <div class="btn-group btn-group-justified" role="group">
-                                    <div class="btn-group c-border-top" role="group">
-                                        <a href="shop-product-wishlist.html" class="btn btn-sm c-btn-white c-btn-uppercase c-btn-square c-font-grey-3 c-font-white-hover c-bg-red-2-hover c-btn-product">Wishlist</a>
-                                    </div>
-                                    <div class="btn-group c-border-left c-border-top" role="group">
-                                        <a href="shop-cart.html" class="btn btn-sm c-btn-white c-btn-uppercase c-btn-square c-font-grey-3 c-font-white-hover c-bg-red-2-hover c-btn-product">Cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6 c-margin-b-20">
-                            <div class="c-content-product-2 c-bg-white c-border">
-                                <div class="c-content-overlay">
-                                    <div class="c-overlay-wrapper">
-                                        <div class="c-overlay-content">
-                                            <a href="shop-product-details.html" class="btn btn-md c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">Explore</a>
-                                        </div>
-                                    </div>
-                                    <div class="c-bg-img-center c-overlay-object" data-height="height" style="height: 230px; background-image: url(../../assets/base/img/content/shop2/98.jpg);"></div>
-                                </div>
-                                <div class="c-info">
-                                    <p class="c-title c-font-16 c-font-slim">Smartphone &amp; Handset</p>
-                                    <p class="c-price c-font-14 c-font-slim">
-                                        $548 &nbsp;
-                                        <span class="c-font-14 c-font-line-through c-font-red">$600</span>
-                                    </p>
-                                </div>
-                                <div class="btn-group btn-group-justified" role="group">
-                                    <div class="btn-group c-border-top" role="group">
-                                        <a href="shop-product-wishlist.html" class="btn btn-sm c-btn-white c-btn-uppercase c-btn-square c-font-grey-3 c-font-white-hover c-bg-red-2-hover c-btn-product">Wishlist</a>
-                                    </div>
-                                    <div class="btn-group c-border-left c-border-top" role="group">
-                                        <a href="shop-cart.html" class="btn btn-sm c-btn-white c-btn-uppercase c-btn-square c-font-grey-3 c-font-white-hover c-bg-red-2-hover c-btn-product">Cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        }                   
                     </div>
 
                     <div class="row">
-                        <div class="col-md-3 col-sm-6 c-margin-b-20">
-                            <div class="c-content-product-2 c-bg-white c-border">
-                                <div class="c-content-overlay">
-                                    <div class="c-label c-bg-red c-font-uppercase c-font-white c-font-13 c-font-bold">Sale</div>
-                                    <div class="c-label c-label-right c-theme-bg c-font-uppercase c-font-white c-font-13 c-font-bold">New</div>
-                                    <div class="c-overlay-wrapper">
-                                        <div class="c-overlay-content">
-                                            <a href="shop-product-details-2.html" class="btn btn-md c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">Explore</a>
+                        @foreach (var product in Model.Products.Skip(4).Take(4))
+                        {
+                            <div class="col-md-3 col-sm-6 c-margin-b-20">
+                                <div class="c-content-product-2 c-bg-white c-border">
+                                    <div class="c-content-overlay">
+                                        <div class="c-label c-bg-red c-font-uppercase c-font-white c-font-13 c-font-bold">@product.SellerLevel</div>
+                                        <div class="c-overlay-wrapper">
+                                            <div class="c-overlay-content">
+                                                <a href="@Url.Action("Explore", "Insights")" class="btn btn-md c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">Explore</a>
+                                            </div>
+                                        </div>
+                                        <div class="c-bg-img-center c-overlay-object" data-height="height" style="height: 230px; background-image: url(@product.LargeImageUrl);"></div>
+                                    </div>
+                                    <div class="row c-info">
+                                        <p class="c-title c-font-16 c-font-slim">@product.CategoryName</p>
+                                        <div class="col-xs-4 c-price c-font-14 c-font-slim">
+                                            <span class="c-font-14 c-font-red">@product.Price.ToString("C")</span>
+                                        </div>
+                                        <div class="col-xs-8 c-price c-font-14 c-font-slim">
+                                            Sold <span class="c-font-14 c-font-red">@product.UnitsSold</span> units in 7 days
                                         </div>
                                     </div>
-                                    <div class="c-bg-img-center c-overlay-object" data-height="height" style="height: 230px; background-image: url(../../assets/base/img/content/shop2/101.jpg);"></div>
-                                </div>
-                                <div class="c-info">
-                                    <p class="c-title c-font-16 c-font-slim">Watches</p>
-                                    <p class="c-price c-font-14 c-font-slim">
-                                        $548 &nbsp;
-                                        <span class="c-font-14 c-font-line-through c-font-red">$600</span>
-                                    </p>
-                                </div>
-                                <div class="btn-group btn-group-justified" role="group">
-                                    <div class="btn-group c-border-top" role="group">
-                                        <a href="shop-product-wishlist.html" class="btn btn-sm c-btn-white c-btn-uppercase c-btn-square c-font-grey-3 c-font-white-hover c-bg-red-2-hover c-btn-product">Wishlist</a>
-                                    </div>
-                                    <div class="btn-group c-border-left c-border-top" role="group">
-                                        <a href="shop-cart.html" class="btn btn-sm c-btn-white c-btn-uppercase c-btn-square c-font-grey-3 c-font-white-hover c-bg-red-2-hover c-btn-product">Cart</a>
+                                    <div class="btn-group btn-group-justified" role="group">
+                                        <div class="btn-group c-border-top" role="group">
+                                            <a href="@Url.Action("Explore", "Insights")" class="btn btn-sm c-btn-white c-btn-uppercase c-btn-square c-font-grey-3 c-font-white-hover c-bg-red-2-hover c-btn-product">Explore</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6 c-margin-b-20">
-                            <div class="c-content-product-2 c-bg-white c-border">
-                                <div class="c-content-overlay">
-                                    <div class="c-label c-theme-bg c-font-uppercase c-font-white c-font-13 c-font-bold">New</div>
-                                    <div class="c-overlay-wrapper">
-                                        <div class="c-overlay-content">
-                                            <a href="shop-product-details.html" class="btn btn-md c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">Explore</a>
-                                        </div>
-                                    </div>
-                                    <div class="c-bg-img-center c-overlay-object" data-height="height" style="height: 230px; background-image: url(../../assets/base/img/content/shop2/93.jpg);"></div>
-                                </div>
-                                <div class="c-info">
-                                    <p class="c-title c-font-16 c-font-slim">Exclusive Watches</p>
-                                    <p class="c-price c-font-14 c-font-slim">
-                                        $548 &nbsp;
-                                        <span class="c-font-14 c-font-line-through c-font-red">$600</span>
-                                    </p>
-                                </div>
-                                <div class="btn-group btn-group-justified" role="group">
-                                    <div class="btn-group c-border-top" role="group">
-                                        <a href="shop-product-wishlist.html" class="btn btn-sm c-btn-white c-btn-uppercase c-btn-square c-font-grey-3 c-font-white-hover c-bg-red-2-hover c-btn-product">Wishlist</a>
-                                    </div>
-                                    <div class="btn-group c-border-left c-border-top" role="group">
-                                        <a href="shop-cart.html" class="btn btn-sm c-btn-white c-btn-uppercase c-btn-square c-font-grey-3 c-font-white-hover c-bg-red-2-hover c-btn-product">Cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6 c-margin-b-20">
-                            <div class="c-content-product-2 c-bg-white c-border">
-                                <div class="c-content-overlay">
-                                    <div class="c-overlay-wrapper">
-                                        <div class="c-overlay-content">
-                                            <a href="shop-product-details-2.html" class="btn btn-md c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">Explore</a>
-                                        </div>
-                                    </div>
-                                    <div class="c-bg-img-center c-overlay-object" data-height="height" style="height: 230px; background-image: url(../../assets/base/img/content/shop2/96.jpg);"></div>
-                                </div>
-                                <div class="c-info">
-                                    <p class="c-title c-font-16 c-font-slim">Watches</p>
-                                    <p class="c-price c-font-14 c-font-slim">
-                                        $548 &nbsp;
-                                        <span class="c-font-14 c-font-line-through c-font-red">$600</span>
-                                    </p>
-                                </div>
-                                <div class="btn-group btn-group-justified" role="group">
-                                    <div class="btn-group c-border-top" role="group">
-                                        <a href="shop-product-wishlist.html" class="btn btn-sm c-btn-white c-btn-uppercase c-btn-square c-font-grey-3 c-font-white-hover c-bg-red-2-hover c-btn-product">Wishlist</a>
-                                    </div>
-                                    <div class="btn-group c-border-left c-border-top" role="group">
-                                        <a href="shop-cart.html" class="btn btn-sm c-btn-white c-btn-uppercase c-btn-square c-font-grey-3 c-font-white-hover c-bg-red-2-hover c-btn-product">Cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6 c-margin-b-20">
-                            <div class="c-content-product-2 c-bg-white c-border">
-                                <div class="c-content-overlay">
-                                    <div class="c-overlay-wrapper">
-                                        <div class="c-overlay-content">
-                                            <a href="shop-product-details.html" class="btn btn-md c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">Explore</a>
-                                        </div>
-                                    </div>
-                                    <div class="c-bg-img-center c-overlay-object" data-height="height" style="height: 230px; background-image: url(../../assets/base/img/content/shop2/53.jpg);"></div>
-                                </div>
-                                <div class="c-info">
-                                    <p class="c-title c-font-16 c-font-slim">iMac, iPad &amp; iPhone</p>
-                                    <p class="c-price c-font-14 c-font-slim">
-                                        $548 &nbsp;
-                                        <span class="c-font-14 c-font-line-through c-font-red">$600</span>
-                                    </p>
-                                </div>
-                                <div class="btn-group btn-group-justified" role="group">
-                                    <div class="btn-group c-border-top" role="group">
-                                        <a href="shop-product-wishlist.html" class="btn btn-sm c-btn-white c-btn-uppercase c-btn-square c-font-grey-3 c-font-white-hover c-bg-red-2-hover c-btn-product">Wishlist</a>
-                                    </div>
-                                    <div class="btn-group c-border-left c-border-top" role="group">
-                                        <a href="shop-cart.html" class="btn btn-sm c-btn-white c-btn-uppercase c-btn-square c-font-grey-3 c-font-white-hover c-bg-red-2-hover c-btn-product">Cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
+                        }
                     </div>
 
                     <div class="row">
-                        <div class="col-md-3 col-sm-6 c-margin-b-20">
-                            <div class="c-content-product-2 c-bg-white c-border">
-                                <div class="c-content-overlay">
-                                    <div class="c-label c-bg-red c-font-uppercase c-font-white c-font-13 c-font-bold">Sale</div>
-                                    <div class="c-overlay-wrapper">
-                                        <div class="c-overlay-content">
-                                            <a href="shop-product-details-2.html" class="btn btn-md c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">Explore</a>
+                        @foreach (var product in Model.Products.Skip(8).Take(4))
+                        {
+                            <div class="col-md-3 col-sm-6 c-margin-b-20">
+                                <div class="c-content-product-2 c-bg-white c-border">
+                                    <div class="c-content-overlay">
+                                        <div class="c-label c-bg-red c-font-uppercase c-font-white c-font-13 c-font-bold">@product.SellerLevel</div>
+                                        <div class="c-overlay-wrapper">
+                                            <div class="c-overlay-content">
+                                                <a href="@Url.Action("Explore", "Insights")" class="btn btn-md c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">Explore</a>
+                                            </div>
+                                        </div>
+                                        <div class="c-bg-img-center c-overlay-object" data-height="height" style="height: 230px; background-image: url(@product.LargeImageUrl);"></div>
+                                    </div>
+                                    <div class="row c-info">
+                                        <p class="c-title c-font-16 c-font-slim">@product.CategoryName</p>
+                                        <div class="col-xs-4 c-price c-font-14 c-font-slim">
+                                            <span class="c-font-14 c-font-red">@product.Price.ToString("C")</span>
+                                        </div>
+                                        <div class="col-xs-8 c-price c-font-14 c-font-slim">
+                                            Sold <span class="c-font-14 c-font-red">@product.UnitsSold</span> units in 7 days
                                         </div>
                                     </div>
-                                    <div class="c-bg-img-center c-overlay-object" data-height="height" style="height: 230px; background-image: url(../../assets/base/img/content/shop2/93.jpg);"></div>
-                                </div>
-                                <div class="c-info">
-                                    <p class="c-title c-font-16 c-font-slim">Watches</p>
-                                    <p class="c-price c-font-14 c-font-slim">
-                                        $548 &nbsp;
-                                        <span class="c-font-14 c-font-line-through c-font-red">$600</span>
-                                    </p>
-                                </div>
-                                <div class="btn-group btn-group-justified" role="group">
-                                    <div class="btn-group c-border-top" role="group">
-                                        <a href="shop-product-wishlist.html" class="btn btn-sm c-btn-white c-btn-uppercase c-btn-square c-font-grey-3 c-font-white-hover c-bg-red-2-hover c-btn-product">Wishlist</a>
-                                    </div>
-                                    <div class="btn-group c-border-left c-border-top" role="group">
-                                        <a href="shop-cart.html" class="btn btn-sm c-btn-white c-btn-uppercase c-btn-square c-font-grey-3 c-font-white-hover c-bg-red-2-hover c-btn-product">Cart</a>
+                                    <div class="btn-group btn-group-justified" role="group">
+                                        <div class="btn-group c-border-top" role="group">
+                                            <a href="@Url.Action("Explore", "Insights")" class="btn btn-sm c-btn-white c-btn-uppercase c-btn-square c-font-grey-3 c-font-white-hover c-bg-red-2-hover c-btn-product">Explore</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6 c-margin-b-20">
-                            <div class="c-content-product-2 c-bg-white c-border">
-                                <div class="c-content-overlay">
-                                    <div class="c-overlay-wrapper">
-                                        <div class="c-overlay-content">
-                                            <a href="shop-product-details.html" class="btn btn-md c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">Explore</a>
-                                        </div>
-                                    </div>
-                                    <div class="c-bg-img-center c-overlay-object" data-height="height" style="height: 230px; background-image: url(../../assets/base/img/content/shop2/101.jpg);"></div>
-                                </div>
-                                <div class="c-info">
-                                    <p class="c-title c-font-16 c-font-slim">Exclusive Watches</p>
-                                    <p class="c-price c-font-14 c-font-slim">
-                                        $548 &nbsp;
-                                        <span class="c-font-14 c-font-line-through c-font-red">$600</span>
-                                    </p>
-                                </div>
-                                <div class="btn-group btn-group-justified" role="group">
-                                    <div class="btn-group c-border-top" role="group">
-                                        <a href="shop-product-wishlist.html" class="btn btn-sm c-btn-white c-btn-uppercase c-btn-square c-font-grey-3 c-font-white-hover c-bg-red-2-hover c-btn-product">Wishlist</a>
-                                    </div>
-                                    <div class="btn-group c-border-left c-border-top" role="group">
-                                        <a href="shop-cart.html" class="btn btn-sm c-btn-white c-btn-uppercase c-btn-square c-font-grey-3 c-font-white-hover c-bg-red-2-hover c-btn-product">Cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6 c-margin-b-20">
-                            <div class="c-content-product-2 c-bg-white c-border">
-                                <div class="c-content-overlay">
-                                    <div class="c-overlay-wrapper">
-                                        <div class="c-overlay-content">
-                                            <a href="shop-product-details-2.html" class="btn btn-md c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">Explore</a>
-                                        </div>
-                                    </div>
-                                    <div class="c-bg-img-center c-overlay-object" data-height="height" style="height: 230px; background-image: url(../../assets/base/img/content/shop2/100.jpg);"></div>
-                                </div>
-                                <div class="c-info">
-                                    <p class="c-title c-font-16 c-font-slim">Watches</p>
-                                    <p class="c-price c-font-14 c-font-slim">
-                                        $548 &nbsp;
-                                        <span class="c-font-14 c-font-line-through c-font-red">$600</span>
-                                    </p>
-                                </div>
-                                <div class="btn-group btn-group-justified" role="group">
-                                    <div class="btn-group c-border-top" role="group">
-                                        <a href="shop-product-wishlist.html" class="btn btn-sm c-btn-white c-btn-uppercase c-btn-square c-font-grey-3 c-font-white-hover c-bg-red-2-hover c-btn-product">Wishlist</a>
-                                    </div>
-                                    <div class="btn-group c-border-left c-border-top" role="group">
-                                        <a href="shop-cart.html" class="btn btn-sm c-btn-white c-btn-uppercase c-btn-square c-font-grey-3 c-font-white-hover c-bg-red-2-hover c-btn-product">Cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6 c-margin-b-20">
-                            <div class="c-content-product-2 c-bg-white c-border">
-                                <div class="c-content-overlay">
-                                    <div class="c-overlay-wrapper">
-                                        <div class="c-overlay-content">
-                                            <a href="shop-product-details.html" class="btn btn-md c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">Explore</a>
-                                        </div>
-                                    </div>
-                                    <div class="c-bg-img-center c-overlay-object" data-height="height" style="height: 230px; background-image: url(../../assets/base/img/content/shop2/102.jpg);"></div>
-                                </div>
-                                <div class="c-info">
-                                    <p class="c-title c-font-16 c-font-slim">iMac, iPad &amp; iPhone</p>
-                                    <p class="c-price c-font-14 c-font-slim">
-                                        $548 &nbsp;
-                                        <span class="c-font-14 c-font-line-through c-font-red">$600</span>
-                                    </p>
-                                </div>
-                                <div class="btn-group btn-group-justified" role="group">
-                                    <div class="btn-group c-border-top" role="group">
-                                        <a href="shop-product-wishlist.html" class="btn btn-sm c-btn-white c-btn-uppercase c-btn-square c-font-grey-3 c-font-white-hover c-bg-red-2-hover c-btn-product">Wishlist</a>
-                                    </div>
-                                    <div class="btn-group c-border-left c-border-top" role="group">
-                                        <a href="shop-cart.html" class="btn btn-sm c-btn-white c-btn-uppercase c-btn-square c-font-grey-3 c-font-white-hover c-bg-red-2-hover c-btn-product">Cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
+                        }
                     </div>
 
                 </div><!-- END: CONTENT/SHOPS/SHOP-2-7 -->
                 <div class="row c-margin-t-20">
                     <div class="col-xs-12 c-center">
-                        <a href="#" class="btn c-btn-square c-theme-btn c-btn-uppercase c-btn-bold">EXPLORE MORE</a>
+                        <a href="@Url.Action("Explore", "Insights")" class="btn c-btn-square c-theme-btn c-btn-uppercase c-btn-bold">EXPLORE ALL</a>
                     </div>
                 </div>
                
@@ -552,8 +302,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-sm-6">
-                    <p class="c-copyright c-font-oswald c-font-14">
-                        Copyright © JANGO Inc.
+                    <p class="c-copyright c-font-grey">
+                        2018 &copy; Trigger<span class="c-font-red">Red</span>
+                        <span class="c-font-grey-3">All Rights Reserved.</span>
                     </p>
                 </div>
                 <div class="col-md-6 col-sm-6">
@@ -641,29 +392,6 @@
         }); //ready
 </script>
 
-<!--
-<script>
-    $(document).ready(function () {
-        @if (Model != null)
-        {
-        //***************************************************
-        //TODO: ANGULARIZE THE LOGIN MODAL.
-        //RIGHT NOW: MANIPULATE DOM DIRECTLY VIA JQUERY
-        //***************************************************
-            if (Model.UserAuthenticated) {
-                <text>
-        $("#login-form").modal();
-                </text>
-            }
-            <text>
-        $("#login-username").val("@Model.UserName");
-        $('#login-errormessage').text("@Model.Error");
-        $('#login-returnurl').val("@Model.ReturnUrl");
-            </text>
-        }
-        });
-</script> 
--->
 <script>
         //Add a new method to arrays which
         Array.prototype.find = function (predicate) {

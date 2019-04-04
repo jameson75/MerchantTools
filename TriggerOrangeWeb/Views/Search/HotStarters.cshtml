@@ -133,29 +133,29 @@
                         <div class="col-md-8">                                
                             <div class="row">
                                 <div class="col-sm-12" style="min-height:50px;">
-                                    <a class="c-theme-link" href='@Url.Action("Update2", "Product")/{{product.Id}}' target="_blank">
+                                    <a class="c-theme-link" href="{{product.ProductUrl}}" target="_blank">
                                         <span class="c-font-18 c-font-bold">{{product.Name}}</span>
                                     </a>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-4 c-margin-t-5">
-                                    <div class="c-bg-grey-1 c-center c-padding-10">
-                                        <div class="c-font-16 c-font-bold">Selling Price</div>
-                                        <div class="c-font-38 c-font-bold c-font-red">{{product.Price | currency}}</div>
+                                    <div class="c-border c-border-grey-1 c-center c-padding-10">
+                                        <div class="c-font-16 c-font-bold c-font-grey-3">Selling Price</div>
+                                        <div class="c-font-38 c-font-bold">{{product.Price | currency}}</div>
                                     </div>
                                 </div>
                                 <div class="col-sm-4 c-margin-t-5">
-                                    <div class="c-bg-grey-1 c-center c-padding-10">
-                                        <div class="c-font-16 c-font-bold">Units Sold</div>
-                                        <div class="c-font-16 c-font-bold">in first <span class="c-font-red">7</span> days</div>
-                                        <div class="c-font-22 c-font-bold c-font-red">{{product.UnitsSold}}</div>
+                                    <div class="c-border c-border-grey-1 c-center c-padding-10">
+                                        <div class="c-font-16 c-font-bold c-font-grey-3">Units Sold</div>
+                                        <div class="c-font-16 c-font-bold c-font-grey-3">in first <span class="c-font-red">7</span> days</div>
+                                        <div class="c-font-22 c-font-bold ">{{product.UnitsSold}}</div>
                                     </div>
                                 </div>
                                 <div class="col-sm-4 c-margin-t-5">
-                                    <div class="c-bg-grey-1 c-center c-padding-10">
-                                        <div class="c-font-16 c-font-bold">Seller Score</div>
-                                        <div class="c-font-26 c-font-bold c-font-red">{{product.SellerScore}}</div>
+                                    <div class="c-border c-border-grey-1 c-center c-padding-10">
+                                        <div class="c-font-16 c-font-bold c-font-grey-3">Seller Score</div>
+                                        <div class="c-font-26 c-font-bold">{{product.SellerScore}}</div>
                                         <div class="c-font-10 c-font-bold">&nbsp;</div>
                                     </div>
                                 </div>

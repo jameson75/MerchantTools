@@ -4,21 +4,117 @@ using System.Data.Entity;
 using System;
 using System.Web;
 using System.IO;
-using CipherPark.TriggerOrange.Web.Models;
-using CipherPark.TriggerOrange.Web.Util;
 using CipherPark.TriggerOrange.Core.Data;
 using CipherPark.TriggerOrange.Core;
+using CipherPark.TriggerRed.Web.Models;
+using CipherPark.TriggerRed.Web.Util;
 
-namespace CipherPark.TriggerOrange.Web.CoreServices
+namespace CipherPark.TriggerRed.Web.CoreServices
 {
     public static class CoreDataServices
-    {               
-       
-        internal static List<BlogPostJsonModel> GetBlogPostsForPage(int pageSize, int firstItemIndex, string sortKey, Guid? blogId, string keywords, out int nTotalItems)
+    {
+        internal static List<ProductModel> GetProductsByChildCategoryForPage(int pageSize, int firstItemIndex, long categoryId, string sortKey, ProductSearchFilter filter, out int nTotalItems)
+        {
+            List<ProductModel> products = new List<ProductModel>();
+            nTotalItems = 0;
+            int nPageSize = pageSize;
+            using (OrangeEntities db = new OrangeEntities())
+            {
+                var dbProductsFull = db.Products.Where(p => p.CategoryId == categoryId)
+                                                .FilterProductWhere(filter);
+                var dbProducts = dbProductsFull
+                                            .OrderProductBy(sortKey)
+                                            .Skip(firstItemIndex)
+                                            .Take(pageSize)
+                                            .ToList();
+                products.AddRange(dbProducts.Select(p => EntityToModel.Convert<ProductModel>(p)));
+                nTotalItems = dbProductsFull.Count();
+            }
+            return products;
+        }
+
+        internal static List<ProductModel> GetProductsByParentCategoryForPage(int pageSize, int firstItemIndex, long rootCategoryId, string sortKey, ProductSearchFilter filter, out int nTotalItems)
+        {
+            List<ProductModel> products = new List<ProductModel>();
+            nTotalItems = 0;
+            int nPageSize = pageSize;
+            using (OrangeEntities db = new OrangeEntities())
+            {
+                var rootCategory = db.Categories.First(c => c.Id == rootCategoryId);
+                var dbProductsFull = db.Products.Where(p => p.Category.ParentReferenceId == rootCategory.ReferenceId &&
+                                                            p.Category.Site == rootCategory.Site)
+                                                .FilterProductWhere(filter);
+                var dbProducts = dbProductsFull.OrderProductBy(sortKey)
+                                            .Skip(firstItemIndex)
+                                            .Take(pageSize)
+                                            .ToList();
+                products.AddRange(dbProducts.Select(p => EntityToModel.Convert<ProductModel>(p)));
+                nTotalItems = dbProductsFull.Count();
+            }
+            return products;
+        }
+
+        internal static List<ProductModel> GetProductsBySiteForPage(int pageSize, int firstItemIndex, string site, string sortKey, ProductSearchFilter filter, out int nTotalItems)
+        {
+            List<ProductModel> products = new List<ProductModel>();
+            nTotalItems = 0;
+            int nPageSize = pageSize;
+            using (OrangeEntities db = new OrangeEntities())
+            {
+                var dbProductsFull = db.Products.Where(p => p.Category.Site == site)
+                                                .FilterProductWhere(filter);
+                var dbProducts = dbProductsFull.OrderProductBy(sortKey)
+                                               .Skip(firstItemIndex)
+                                               .Take(pageSize)
+                                               .ToList();
+                products.AddRange(dbProducts.Select(p => EntityToModel.Convert<ProductModel>(p)));
+                nTotalItems = dbProductsFull.Count();
+            }
+            return products;
+        }
+        internal static List<ProductModel> GetProductsByKeywordsForPage(int pageSize, int firstItemIndex, string site, string[] keywords, string sortKey, ProductSearchFilter filter, out int nTotalItems)
+        {
+            if (keywords != null && keywords.Length > 0)
+            {
+                List<ProductModel> products = new List<ProductModel>();
+                nTotalItems = 0;
+                int nPageSize = pageSize;
+                OrangeApi api = new OrangeApi();
+                int totalMatches = 0;
+                var dbProducts = api.FullTextProductSearch(pageSize, firstItemIndex, site, keywords, sortKey, filter, true, out totalMatches);
+                products.AddRange(dbProducts.Select(p => EntityToModel.Convert<ProductModel>(p)));
+                nTotalItems = totalMatches;
+                return products;
+            }
+            else
+                return GetProductsBySiteForPage(pageSize, firstItemIndex, site, sortKey, filter, out nTotalItems);
+        }
+
+        internal static List<ProductModel> GetProductsByKeywordsForPage(int pageSize, int firstItemIndex, long categoryId, bool isParentCategory, string[] keywords, string sortKey, ProductSearchFilter filter, out int nTotalItems)
+        {
+            if (keywords != null && keywords.Length > 0)
+            {
+                List<ProductModel> products = new List<ProductModel>();
+                nTotalItems = 0;
+                int nPageSize = pageSize;
+                OrangeApi api = new OrangeApi();
+                int totalMatches = 0;
+                var dbProducts = api.FullTextProductSearch(pageSize, firstItemIndex, categoryId, keywords, sortKey, filter, true, out totalMatches);
+                products.AddRange(dbProducts.Select(p => EntityToModel.Convert<ProductModel>(p)));
+                nTotalItems = totalMatches;
+                return products;
+            }
+            else if (isParentCategory)
+                return GetProductsByParentCategoryForPage(pageSize, firstItemIndex, categoryId, sortKey, filter, out nTotalItems);
+            else
+                return GetProductsByChildCategoryForPage(pageSize, firstItemIndex, categoryId, sortKey, filter, out nTotalItems);
+        }
+
+        internal static List<BlogPostModel> GetBlogPostsForPage(int pageSize, int firstItemIndex, string sortKey, Guid? blogId, string keywords, out int nTotalItems)
         {
             if (!string.IsNullOrWhiteSpace(keywords))
                 return GetBlogPostsByKeywords(pageSize, firstItemIndex, blogId, keywords.Split(' '), sortKey, true, out nTotalItems)
-                        .Select(p => new BlogPostJsonModel()
+                        .Select(p => new BlogPostModel()
                         {
                             Id = p.Id,
                             Content = "<h1>Test Content</h1> <img src='https://www.w3schools.com/images/colorpicker.gif'/> " +  p.BlogContent,
@@ -38,7 +134,7 @@ namespace CipherPark.TriggerOrange.Web.CoreServices
                         .ToList();
             else
             {
-                List<BlogPostJsonModel> blogPosts = new List<BlogPostJsonModel>();
+                List<BlogPostModel> blogPosts = new List<BlogPostModel>();
                 nTotalItems = 0;
                 int nPageSize = pageSize;
                 using (OrangeEntities db = new OrangeEntities())
@@ -48,7 +144,7 @@ namespace CipherPark.TriggerOrange.Web.CoreServices
                                                    .Skip(firstItemIndex)
                                                    .Take(pageSize)
                                                    .ToList();
-                    blogPosts.AddRange(dbPosts.Select(p => new BlogPostJsonModel()
+                    blogPosts.AddRange(dbPosts.Select(p => new BlogPostModel()
                     {
                         Id = p.Id,
                         Content = p.BlogContent,
@@ -69,8 +165,7 @@ namespace CipherPark.TriggerOrange.Web.CoreServices
                 }
                 return blogPosts;
             }
-        }
-       
+        }       
 
         internal static void UpdateTaskSchedule(string taskName, string siteName, bool enabled, bool Sunday, bool Monday, bool Tuesday, bool Wednesday, bool Thursday, bool Friday, bool Saturday, DateTime startTime)
         {

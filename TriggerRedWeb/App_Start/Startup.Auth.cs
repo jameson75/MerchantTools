@@ -8,7 +8,7 @@ using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using CipherPark.TriggerOrange.Web.Services;
+using CipherPark.TriggerRed.Web.CoreServices;
 
 [assembly: OwinStartup(typeof(CipherPark.TriggerOrange.Web.Startup))]
 

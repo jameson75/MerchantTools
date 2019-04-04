@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace CipherPark.TriggerOrange.Web.CoreServices
+namespace CipherPark.TriggerRed.Web.CoreServices
 {
     public static class ReferenceDataServices
     {

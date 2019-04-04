@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
-using CipherPark.TriggerOrange.Web.Models;
 using CipherPark.TriggerOrange.Core.Data;
-using CipherPark.TriggerOrange.Web.CoreServices;
+using CipherPark.TriggerRed.Web.CoreServices;
+using CipherPark.TriggerRed.Web.Models;
 
 namespace CipherPark.TriggerOrange.Web.Controllers
 {

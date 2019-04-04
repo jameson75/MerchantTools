@@ -4426,13 +4426,12 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Landing.cshtml" />
     <Content Include="Views\Blog\RecentPosts.cshtml" />
-    <Content Include="Views\Accounts\Subscribe.cshtml" />
-    <Content Include="Views\Insights\Strategy.cshtml" />
+    <Content Include="Views\Home\Subscribe.cshtml" />
+    <Content Include="Views\Home\Strategy.cshtml" />
     <Content Include="Views\Shared\Layout.cshtml" />
     <Content Include="Views\Shared\LandingLayout.cshtml" />
     <Content Include="Views\Insights\Explore.cshtml" />
     <Content Include="Views\Home\ContactUs.cshtml" />
-    <Content Include="Views\Insights\Preview.cshtml" />
     <None Include="Web.Internal.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -4450,7 +4449,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\HostedImageController.cs" />
     <Compile Include="Controllers\InsightsController.cs" />
@@ -4460,6 +4458,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BlogPostViewModel.cs" />
+    <Compile Include="Models\LandingViewModel.cs" />
+    <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\RecentBlogPosts.cs" />
     <Compile Include="Models\SearchViewModel.cs" />
     <Compile Include="Models\SendGridEventModel.cs" />

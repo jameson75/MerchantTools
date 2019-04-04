@@ -6,7 +6,7 @@ using System.Net;
 using CipherPark.TriggerOrange.Core;
 using CipherPark.TriggerOrange.Web.Models;
 
-namespace CipherPark.TriggerOrange.Web.CoreServices
+namespace CipherPark.TriggerRed.Web.CoreServices
 {
     public static class WebApiServices
     {

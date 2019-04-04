@@ -5,7 +5,7 @@ using System.Web;
 using System.ServiceModel;
 using System.Web.Configuration;
 
-namespace CipherPark.TriggerOrange.Web.CoreServices
+namespace CipherPark.TriggerRed.Web.CoreServices
 {
     [ServiceContract(Namespace = "CipherPark.TriggerOrange.WCF")]
     public interface IOrangeWCFService

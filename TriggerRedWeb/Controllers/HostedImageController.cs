@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CipherPark.TriggerOrange.Core.Data;
+using CipherPark.TriggerRed.Web.CoreServices;
+
 namespace CipherPark.TriggerOrange.Web.Controllers
 {
     public class HostedImageController : Controller
@@ -19,16 +21,18 @@ namespace CipherPark.TriggerOrange.Web.Controllers
             }
         }
 
+        /*
         public ActionResult ResolveAll()
         {
             using (var db = new OrangeEntities())
             {
                 db.ReportItems.Where(x => x.HostedImageId == null)
                               .ToList()
-                              .ForEach(x => x.HostedImageId = CoreServices.CoreDataServices.DownloadImageToLocalHost(x.OriginalImageUrl));
+                              .ForEach(x => x.HostedImageId = CoreDataServices.DownloadImageToLocalHost(x.OriginalImageUrl));
                 db.SaveChanges();
             }
             return Content("<html>Resolved Images</html>");
         }
+        */
     }
 }

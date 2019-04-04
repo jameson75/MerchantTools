@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Reflection;
 
-namespace CipherPark.TriggerOrange.Web.Models
+namespace CipherPark.TriggerRed.Web.Models
 {
     public static class EntityToModel
     {       
@@ -30,7 +30,8 @@ namespace CipherPark.TriggerOrange.Web.Models
                     }
                     else                    
                         modelPropertyName = modelProperty.Name;
-                    object value = entityType.GetProperty(modelPropertyName).GetValue(entity);                   
+                    //object value = entityType.GetProperty(modelPropertyName).GetValue(entity);                   
+                    object value = entityType.GetDeepPropertyValue(modelPropertyName, entity);
                     modelProperty.SetValue(model, SmartCast(modelProperty.PropertyType, value, options));
                 }
             }
@@ -97,5 +98,25 @@ namespace CipherPark.TriggerOrange.Web.Models
     {
         None = 0,
         JavascriptDate = 1,
+    }
+
+    public static class TypeExtension2
+    {
+        public static object GetDeepPropertyValue(this Type entityType, string propName, object entity)
+        {
+            object container = entity;
+            Type containerType = entityType;
+            string[] nestedProperties = propName.Split('.');
+            object value = null;
+            for (int i = 0; i < nestedProperties.Length; i++)
+            {
+                value = containerType.GetProperty(nestedProperties[i]).GetValue(container);
+                if (value == null)
+                    break;
+                container = value;
+                containerType = value.GetType();
+            }
+            return value;
+        }
     }
 }

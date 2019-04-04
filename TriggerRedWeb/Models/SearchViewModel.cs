@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
-namespace CipherPark.TriggerOrange.Web.Models
+namespace CipherPark.TriggerRed.Web.Models
 {
-    public class SearchHotStartersViewModel 
+    public class ExploreProductsViewModel 
     {
         public const int MaxPageSize = 100;
         public string SelectedRootCategory { get; set; }

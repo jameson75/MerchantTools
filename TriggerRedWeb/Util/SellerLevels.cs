@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace CipherPark.TriggerOrange.Web.Util
+namespace CipherPark.TriggerRed.Web.Util
 {
     public static class SellerLevels
     {

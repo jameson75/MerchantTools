@@ -9,7 +9,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using CipherPark.TriggerOrange.Web.Models;
 
-namespace CipherPark.TriggerOrange.Web.Services
+namespace CipherPark.TriggerRed.Web.CoreServices
 {
     public static class UserAuthServices
     {

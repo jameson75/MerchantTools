@@ -1,4 +1,4 @@
-﻿@model CipherPark.TriggerOrange.Web.Models.SearchHotStartersViewModel
+﻿@model CipherPark.TriggerRed.Web.Models.ExploreProductsViewModel
 
 @{
     ViewBag.Title = "Hot Starters";
@@ -114,11 +114,12 @@
             <!-- BEGIN: CONTENT/SHOPS/SHOP-2-8 -->
             <!-- BEGIN: CSS TABLE -->
 
-            <div class="c-content-blog-post-1-list">
-                <div class="c-content-blog-post-1" ng-repeat="product in products" ng-show="!isLoading && !isEmpty">
+            <div class="c-content">
+                <div class="c-content-product-2 c-margin-b-40" ng-repeat="product in products" ng-show="!isLoading && !isEmpty">
                     <div class="row c-margin-b-10">
                         <div class="col-md-4">
-                            <div class="c-content-overlay c-margin-b-15">
+                            <div class="c-content-overlay c-margin-b-15"> 
+                                <div class="c-label c-bg-red c-font-uppercase c-font-white c-font-13 c-font-bold">{{product.SellerLevel}}</div>
                                 <div class="c-overlay-wrapper">
                                     <div class="c-overlay-content">
                                         <a href="{{product.ProductUrl}}" target="_blank" class="btn btn-md c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">View Listing</a>
@@ -130,36 +131,44 @@
                         <div class="col-md-8">
                             <div class="row">
                                 <div class="col-sm-12" style="min-height:50px;">
-                                    <a class="c-theme-link" href='@Url.Action("Update2", "Product")/{{product.Id}}' target="_blank">
+                                    <a class="c-theme-link" href="{{product.ProductUrl}}" target="_blank">
                                         <span class="c-font-18 c-font-bold">{{product.Name}}</span>
                                     </a>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-4 c-margin-t-5">
-                                    <div class="c-bg-grey-1 c-center c-padding-10">
-                                        <div class="c-font-16 c-font-bold">Selling Price</div>
-                                        <div class="c-font-38 c-font-bold c-font-red">{{product.Price | currency}}</div>
+                                    <div class="c-border c-border-grey-1 c-center c-padding-10">
+                                        <div class="c-font-16 c-font-bold c-font-grey-3">Selling Price</div>
+                                        <div class="c-font-38 c-font-bold">{{product.Price | currency}}</div>
                                     </div>
                                 </div>
                                 <div class="col-sm-4 c-margin-t-5">
-                                    <div class="c-bg-grey-1 c-center c-padding-10">
-                                        <div class="c-font-16 c-font-bold">Units Sold</div>
-                                        <div class="c-font-16 c-font-bold">in first <span class="c-font-red">7</span> days</div>
-                                        <div class="c-font-22 c-font-bold c-font-red">{{product.UnitsSold}}</div>
+                                    <div class="c-border c-border-grey-1 c-center c-padding-10">
+                                        <div class="c-font-16 c-font-bold c-font-grey-3">Units Sold</div>
+                                        <div class="c-font-16 c-font-bold c-font-grey-3">in first <span class="c-font-red">7</span> days</div>
+                                        <div class="c-font-22 c-font-bold ">{{product.UnitsSold}}</div>
                                     </div>
                                 </div>
                                 <div class="col-sm-4 c-margin-t-5">
-                                    <div class="c-bg-grey-1 c-center c-padding-10">
-                                        <div class="c-font-16 c-font-bold">Seller Score</div>
-                                        <div class="c-font-26 c-font-bold c-font-red">{{product.SellerScore}}</div>
-                                        <div class="c-font-10 c-font-bold">&nbsp;</div>
+                                    <div class="c-border c-border-grey-1 c-center c-padding-10">
+                                        <div class="c-font-16 c-font-bold c-font-grey-3">Seller Score</div>
+                                        <div class="c-font-26 c-font-bold">{{product.SellerScore}}</div>
+                                        <div class="c-font-10 c-font-bold c-font-grey-3">&nbsp;</div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row c-margin-t-10">
-                                <div class="col-md-6">
+                            <div class="row c-margin-t-5">
+                                <div class="col-sm-6">
                                     <span class="c-font-14 c-font-bold">Listed On: </span><span class="c-font-16 c-font-bold c-font-red">{{product.DateListed|date:'longDate'}} </span>
+                                </div>
+                                <div class="col-sm-6">
+                                   
+                                </div>
+                            </div>
+                            <div class="row c-margin-t-5">
+                                <div class="col-md-12">                                    
+                                    <a href="{{product.ProductUrl}}" target="_blank" class="btn btn-lg btn-default c-btn-square c-btn-uppercase c-btn-bold" ng-click="onBeginAddProductToReport(product.Id)">Visit Listing</a>
                                 </div>
                             </div>
                         </div>
