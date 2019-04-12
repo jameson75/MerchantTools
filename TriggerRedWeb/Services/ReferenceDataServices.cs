@@ -11,11 +11,11 @@ namespace CipherPark.TriggerRed.Web.CoreServices
         {
             return TriggerOrange.Core.MarketPlaceSiteNames.AllSupported.ToArray();
         }
-        
+
         public static string[] GetSourcingSiteNames()
         {
             return TriggerOrange.Core.SourcingSiteNames.AllSupported.ToArray();
-        }       
+        }
 
         public static string[] GetTaskNames()
         {
@@ -31,9 +31,9 @@ namespace CipherPark.TriggerRed.Web.CoreServices
             for (int i = 0; i < minutesPerDay; i += intervalLength)
                 javascriptTimeIntervals.Add(d.AddMinutes(i).ToString(SchedulerStartTimeFormat));
             return javascriptTimeIntervals;
-        } 
+        }
 
-        public const string SchedulerStartTimeFormat = "hh:mm tt";     
+        public const string SchedulerStartTimeFormat = "hh:mm tt";
 
         public static string ImageStorePhysicalPath
         {
@@ -53,30 +53,31 @@ namespace CipherPark.TriggerRed.Web.CoreServices
         {
             return $"/HostedImage?id={hostImageId}";
         }
-    } 
-}
-
-public class BlogPages
-{
-    public class BlogPage
-    {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string Caption { get; set; }
     }
 
-    public static BlogPage[] All
+
+    public class BlogPages
     {
-        get
+        public class BlogPage
         {
-            //TODO: Store this information in config file.
-            return new BlogPage[]
+            public Guid Id { get; set; }
+            public string Name { get; set; }
+            public string Caption { get; set; }
+        }
+
+        public static BlogPage[] All
+        {
+            get
             {
-                new BlogPage { Id = new Guid("{C98361A5-1295-4D49-A861-0E979F1790BB}"), Name="EbayLifeBeginner", Caption="Beginner" },
-                new BlogPage { Id = new Guid("{2D33B3F4-3A4E-4ED1-9042-38117E07CBB7}"), Name="EbayLifeIntermediate", Caption="Intermediate" },
-                new BlogPage { Id = new Guid("{065EE618-957C-45C4-A573-B70201ED0B4E}"), Name="EbayLifeAdvanced", Caption="Advanced" },
-                new BlogPage { Id = new Guid("{2B43F3B5-50F3-40A2-8392-30C5F17ED0C2}"), Name="EbayLifeExpert", Caption="Expert" },
-            };
+                //TODO: Store this information in config file.
+                return new BlogPage[]
+                {
+                new BlogPage { Id = new Guid("{C98361A5-1295-4D49-A861-0E979F1790BB}"), Name="Technology", Caption="Technology" },
+                new BlogPage { Id = new Guid("{2D33B3F4-3A4E-4ED1-9042-38117E07CBB7}"), Name="HealthAndBeauty", Caption="Health & Beauty" },
+                new BlogPage { Id = new Guid("{065EE618-957C-45C4-A573-B70201ED0B4E}"), Name="Toys", Caption="Toys" },
+                new BlogPage { Id = new Guid("{2B43F3B5-50F3-40A2-8392-30C5F17ED0C2}"), Name="Sporting", Caption="Sporting" },
+                };
+            }
         }
     }
 }

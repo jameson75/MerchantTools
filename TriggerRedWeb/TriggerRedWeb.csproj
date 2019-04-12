@@ -3028,6 +3028,8 @@
     <Content Include="Content\trigger_red_hero_2.jpg" />
     <Content Include="Content\trigger_red_hero_3_preview.jpg" />
     <Content Include="Content\trigger_red_hero_4_preview.jpg" />
+    <Content Include="Content\trigger_red_hero_5.jpg" />
+    <Content Include="Content\trigger_red_hero_6.jpg" />
     <Content Include="Content\ui-bootstrap-csp.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -4432,6 +4434,7 @@
     <Content Include="Views\Shared\LandingLayout.cshtml" />
     <Content Include="Views\Insights\Explore.cshtml" />
     <Content Include="Views\Home\ContactUs.cshtml" />
+    <Content Include="Views\Shared\AboutLayout.cshtml" />
     <None Include="Web.Internal.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

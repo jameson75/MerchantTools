@@ -18,5 +18,12 @@ namespace CipherPark.TriggerRed.Web.Models
         public List<SelectListItem> SortKeys { get; set; }
         public string SelectedSortKey { get; set; }
         public long UserActiveListId { get; set; }
-    }    
+    }
+
+    public class CategorySelectViewModel
+    {
+        [SafeHtmlIgnore]
+        public string Name { get; set; }
+        public string Value { get; set; }
+    }
 }

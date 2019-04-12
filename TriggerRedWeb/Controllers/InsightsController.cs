@@ -59,6 +59,30 @@ namespace CipherPark.TriggerOrange.Web.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+
+        public JsonResult GetRootCategories(string site)
+        {
+            var categories = CoreDataServices.GetRootCategories(site);
+            var result = new
+            {
+                categories = PrependUniversalCategory(categories)
+            };
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        private static List<CategorySelectViewModel> PrependUniversalCategory(List<CategorySelectViewModel> categories)
+        {
+            List<CategorySelectViewModel> newList = new List<CategorySelectViewModel>();
+            newList.Add(new CategorySelectViewModel()
+            {
+                Name = "All",
+                Value = CategoryId_All.ToString()
+            });
+            if (categories != null)
+                newList.AddRange(categories);
+            return newList;
+        }
+
         private static long LongOrDefault(string s, long defaultValue = default(long))
         {
             long result = 0;

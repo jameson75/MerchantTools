@@ -118,7 +118,7 @@
                 <div class="c-content-product-2 c-margin-b-40" ng-repeat="product in products" ng-show="!isLoading && !isEmpty">
                     <div class="row c-margin-b-10">
                         <div class="col-md-4">
-                            <div class="c-content-overlay c-margin-b-15"> 
+                            <div class="c-content-overlay c-margin-b-15">
                                 <div class="c-label c-bg-red c-font-uppercase c-font-white c-font-13 c-font-bold">{{product.SellerLevel}}</div>
                                 <div class="c-overlay-wrapper">
                                     <div class="c-overlay-content">
@@ -163,11 +163,11 @@
                                     <span class="c-font-14 c-font-bold">Listed On: </span><span class="c-font-16 c-font-bold c-font-red">{{product.DateListed|date:'longDate'}} </span>
                                 </div>
                                 <div class="col-sm-6">
-                                   
+
                                 </div>
                             </div>
                             <div class="row c-margin-t-5">
-                                <div class="col-md-12">                                    
+                                <div class="col-md-12">
                                     <a href="{{product.ProductUrl}}" target="_blank" class="btn btn-lg btn-default c-btn-square c-btn-uppercase c-btn-bold" ng-click="onBeginAddProductToReport(product.Id)">Visit Listing</a>
                                 </div>
                             </div>
@@ -261,9 +261,9 @@
 @section ready{
     <!-- BEGIN TRIGGER ORANGE APP ANGULAR CONTROLLER(S) -->
     <script>
-            angular.module('triggerOrangeApp', ['orange', 'ngAnimate', 'ui.bootstrap'])
-                //*** Main Controller ***
-            .controller('triggerOrangeCtlr', function ($scope, $http, $window, $uibModal) {
+        angular.module('triggerOrangeApp', ['orange', 'ngAnimate', 'ui.bootstrap', 'ngCookies'])
+            //*** Main Controller ***
+            .controller('triggerOrangeCtlr', function ($scope, $http, $window, $uibModal, $cookies) {
                 $scope.tableState = {
                     pagination: {
                         currentPage: 1,
@@ -271,106 +271,109 @@
                         totalItemCount: 0
                     },
                 };
-               $scope.selectedValues = {
-                   site: null,
-                   rootCategory: null
+                $scope.selectedValues = {
+                    site: null,
+                    rootCategory: null
                 };
-               $scope.keywords = "@Html.Raw(Model.Keywords)";
-               $scope.allRootCategories = null;
-               $scope.allChildCategories = null;
-               $scope.sortKey = "@Model.SelectedSortKey";
-               $scope.filter = {
-                   priceLow: null,
-                   priceHigh: null,
-                   unitsLow: null,
-                   unitsHigh: null,
-                   sellerRankLow: null,
-                   sellerRankHigh: null
-               };
-               $scope.isGuideCollapsed = true;
-               $scope.isEmpty = false;
-               $scope.isLoading = false;
-               $scope.isInitializing = true;
-               $scope.notifications = [];
-               $scope.listedProductIds = [];
-               $scope.activeReportId = 0;
-               $scope.getProductsPipe = function (tableState) {
-                   if ($scope.isInitializing == true) {
-                       $scope.selectedValues.site = "@Model.SelectedSite";
-                       $scope.initCategories();
-                       $scope.selectedValues.rootCategory = "@Model.SelectedRootCategory";
-                       $scope.isInitializing = false;
-                   }
-                   $scope.tableState = tableState;
-                   var postData = {
-                       "pageSize": tableState.pagination.pageSize,
-                       "currentPage": tableState.pagination.currentPage,
-                       "site": $scope.selectedValues.site,
-                       "root": $scope.selectedValues.rootCategory,
-                       "keywords": $scope.keywords,
-                       "sortKey": $scope.sortKey,
-                       "listId": $scope.activeReportId,
-                       "filter": $scope.filter
-                   };
-                   $scope.isLoading = true;
-                   $scope.isEmpty = true;
-                   $http.post('@Url.Action("GetHotStarterProducts")', postData).success(function (result) {
-                       tableState.pagination.numberOfPages = result.numberOfPages;
-                       tableState.pagination.currentPage = result.currentPage;
-                       tableState.pagination.totalItemCount = result.totalItemCount;
-                       $scope.products = result.products;
-                       //$scope.listedProductIds = result.listedProductIds;
-                       $scope.isLoading = false;
-                       $scope.isEmpty = result.products.length == 0;
-                       ajaxHistory.Save({
-                       });
-                   }).error(function (result) {
-                       $scope.isLoading = false;
-                       $scope.isEmpty = true;
-                   });
-               };
-               $scope.onSearchClick = function () {
-                   $scope.tableState.pagination.currentPage = 1;
-                   $scope.getProductsPipe($scope.tableState);
+                $scope.keywords = "@Html.Raw(Model.Keywords)";
+                $scope.allRootCategories = null;
+                $scope.allChildCategories = null;
+                $scope.sortKey = "@Model.SelectedSortKey";
+                $scope.filter = {
+                    priceLow: null,
+                    priceHigh: null,
+                    unitsLow: null,
+                    unitsHigh: null,
+                    sellerRankLow: null,
+                    sellerRankHigh: null
                 };
-               $scope.initCategories = function () {
-                   var postData = {
-                       "site": $scope.selectedValues.site
-                   };
-                   $http.post('@Url.Action("GetRootCategories")', postData).success(function (result) {
-                       $scope.allRootCategories = result.categories;
-                   });
-               };
-               @*
-               $scope.isProductListed = function (productId) {
-                   return $scope.listedProductIds.find(function (id) { return id == productId; });
-               };
-               *@
-               $scope.isProductListed = function (productId) {
-                   return $scope.listedProductIds.find(function (id) { return id == productId; });
-               };
+                $scope.isGuideCollapsed = true;
+                $scope.isEmpty = false;
+                $scope.isLoading = false;
+                $scope.isInitializing = true;
+                $scope.notifications = [];
+                $scope.listedProductIds = [];
+                $scope.activeReportId = 0;
+                $scope.getProductsPipe = function (tableState) {
+                    if ($scope.isInitializing == true) {
+                        $scope.selectedValues.site = "@Model.SelectedSite";
+                        $scope.initCategories();
+                        $scope.selectedValues.rootCategory = "@Model.SelectedRootCategory";
+                        $scope.isInitializing = false;
+                    }
+                    $scope.tableState = tableState;
+                    var postData = {
+                        "pageSize": tableState.pagination.pageSize,
+                        "currentPage": tableState.pagination.currentPage,
+                        "site": $scope.selectedValues.site,
+                        "root": $scope.selectedValues.rootCategory,
+                        "keywords": $scope.keywords,
+                        "sortKey": $scope.sortKey,
+                        "listId": $scope.activeReportId,
+                        "filter": $scope.filter
+                    };
+                    $scope.isLoading = true;
+                    $scope.isEmpty = true;
+                    $http.post('@Url.Action("GetHotStarterProducts")', postData).success(function (result) {
+                        tableState.pagination.numberOfPages = result.numberOfPages;
+                        tableState.pagination.currentPage = result.currentPage;
+                        tableState.pagination.totalItemCount = result.totalItemCount;
+                        $scope.products = result.products;
+                        //$scope.listedProductIds = result.listedProductIds;
+                        $scope.isLoading = false;
+                        $scope.isEmpty = result.products.length == 0;
+                        $scope.saveCache();
+                    }).error(function (result) {
+                        $scope.isLoading = false;
+                        $scope.isEmpty = true;
+                    });
+                };
 
-               $scope.onBeginAddProductToReport = function (productId) {
-                   const modalInstance = $uibModal.open({
-                       "templateUrl": "AddProduct.html",
-                       "controller": "ModalInstanceCtrl",
-                       "size": "lg"
-                   });
-                   modalInstance.result.then(function (result) {
-                       if (result.id == 'ok') {
-                           //$scope.updateProductsListedStatus();
-                           $scope.AddProductToReport(productId, result.data);
-                       }
-                   });
-                   return modalInstance;
-               };
+                $scope.onSearchClick = function () {
+                    $scope.tableState.pagination.currentPage = 1;
+                    $scope.getProductsPipe($scope.tableState);
+                };
 
-               $scope.AddProductToReport = function (productId, reportId) {
-                   var postData = {
-                           productId: productId,
-                           reportId: reportId,
-                   };
-                   $http.post('@Url.Action("AddProductToReport", "Product")', postData).success(function (result) {
+                $scope.initCategories = function () {
+                    var postData = {
+                        "site": $scope.selectedValues.site
+                    };
+                    $http.post('@Url.Action("GetRootCategories")', postData).success(function (result) {
+                        $scope.allRootCategories = result.categories;
+                    });
+                };
+
+                @*
+                $scope.isProductListed = function (productId) {
+                    return $scope.listedProductIds.find(function (id) { return id == productId; });
+                };
+                *@
+
+                $scope.isProductListed = function (productId) {
+                    return $scope.listedProductIds.find(function (id) { return id == productId; });
+                };
+
+                $scope.onBeginAddProductToReport = function (productId) {
+                    const modalInstance = $uibModal.open({
+                        "templateUrl": "AddProduct.html",
+                        "controller": "ModalInstanceCtrl",
+                        "size": "lg"
+                    });
+                    modalInstance.result.then(function (result) {
+                        if (result.id == 'ok') {
+                            //$scope.updateProductsListedStatus();
+                            $scope.AddProductToReport(productId, result.data);
+                        }
+                    });
+                    return modalInstance;
+                };
+
+                $scope.AddProductToReport = function (productId, reportId) {
+                    var postData = {
+                        productId: productId,
+                        reportId: reportId,
+                    };
+                    $http.post('@Url.Action("AddProductToReport", "Product")', postData).success(function (result) {
                         var notificationType = null;
                         if (result.isError)
                             notificationType = "error";
@@ -384,50 +387,79 @@
                         var errorMessage = "Request failed.";
                         $scope.notifications.push({ type: "error", data: errorMessage, timeStamp: new Date().getTime() });
                     });
-               };
-               $scope.onPageChanged = function () {
-                   $window.scrollTo(0, 0);
-                   $scope.getProductsPipe($scope.tableState);
-               };
-               $scope.resultRangeText = function () {
-                   var firstItemOrdinal = ($scope.tableState.pagination.currentPage - 1) * $scope.tableState.pagination.pageSize + 1;
-                   var lastItemOrdinal = Math.min($scope.tableState.pagination.currentPage * $scope.tableState.pagination.pageSize, $scope.tableState.pagination.totalItemCount);
-                   return firstItemOrdinal + " - " + lastItemOrdinal;
-               };
-               $scope.getProductsPipe($scope.tableState);
-                }).controller("ModalInstanceCtrl", function ($scope, $uibModalInstance, $http) {
-                    $scope.selectedReport = null;
-                    $scope.reports = null;
-                    $scope.isEmpty = null;
-                    $scope.isLoading = null;
-                    $scope.getReportsPipe = function () {
-                        var postData = {
-                            "pageSize": 50,
-                            "currentPage": 1,
-                        };
-                        $scope.isLoading = true;
-                        $scope.isEmpty = true;
-                        $http.post('@Url.Action("GetReports2", "Reports")', postData).success(function (result) {
-                            $scope.totalItemCount = result.totalItemCount;
-                            $scope.reports = result.reports;
-                            $scope.isLoading = false;
-                            $scope.isEmpty = result.reports.length == 0;
-                            $scope.selectedReport = $scope.reports[0];
-                        }).error(function (result) {
-                            $scope.isLoading = false;
-                            $scope.isEmpty = true;
+                };
+
+                $scope.onPageChanged = function () {
+                    $window.scrollTo(0, 0);
+                    $scope.getProductsPipe($scope.tableState);
+                };
+
+                $scope.resultRangeText = function () {
+                    var firstItemOrdinal = ($scope.tableState.pagination.currentPage - 1) * $scope.tableState.pagination.pageSize + 1;
+                    var lastItemOrdinal = Math.min($scope.tableState.pagination.currentPage * $scope.tableState.pagination.pageSize, $scope.tableState.pagination.totalItemCount);
+                    return firstItemOrdinal + " - " + lastItemOrdinal;
+                };
+
+                $scope.saveCache = function () {
+                    var cacheString = JSON.stringify(
+                        {
+                            category: $scope.selectedValues.rootCategory,
+                            keywords: $scope.keywords,
+                            tableState : $scope.tableState
                         });
+                    $cookies.put('explore-cache', cacheString);
+                };
+
+                $scope.restoreCache = function () {                    
+                    var cacheString = $cookies.get('explore-cache');
+                    if (cacheString != null) {
+                        var cacheObj = JSON.parse(cacheString);
+                        $scope.selectedValues.rootCategory = cacheObj.category;
+                        $scope.keywords = cacheObj.keywords;
+                        $scope.tableState = cacheObj.tableState;
+                    }
+                };
+
+                $scope.Init = function () {
+                    //$scope.restoreCache();
+                    $scope.getProductsPipe($scope.tableState);
+                };
+
+                $scope.Init();
+
+            }).controller("ModalInstanceCtrl", function ($scope, $uibModalInstance, $http) {
+                $scope.selectedReport = null;
+                $scope.reports = null;
+                $scope.isEmpty = null;
+                $scope.isLoading = null;
+                $scope.getReportsPipe = function () {
+                    var postData = {
+                        "pageSize": 50,
+                        "currentPage": 1,
                     };
-                    $scope.ok = function () {
-                        $uibModalInstance.close({ id: 'ok', data: $scope.selectedReport.Id });
-                    };
-                    $scope.cancel = function () {
-                        $uibModalInstance.dismiss({ id: 'cancel', data: null });
-                    };
-                    $scope.yes = $scope.ok;
-                    $scope.no = $scope.cancel;
-                    $scope.getReportsPipe();
-                });
+                    $scope.isLoading = true;
+                    $scope.isEmpty = true;
+                    $http.post('@Url.Action("GetReports2", "Reports")', postData).success(function (result) {
+                        $scope.totalItemCount = result.totalItemCount;
+                        $scope.reports = result.reports;
+                        $scope.isLoading = false;
+                        $scope.isEmpty = result.reports.length == 0;
+                        $scope.selectedReport = $scope.reports[0];
+                    }).error(function (result) {
+                        $scope.isLoading = false;
+                        $scope.isEmpty = true;
+                    });
+                };
+                $scope.ok = function () {
+                    $uibModalInstance.close({ id: 'ok', data: $scope.selectedReport.Id });
+                };
+                $scope.cancel = function () {
+                    $uibModalInstance.dismiss({ id: 'cancel', data: null });
+                };
+                $scope.yes = $scope.ok;
+                $scope.no = $scope.cancel;
+                $scope.getReportsPipe();
+            });
     </script>
     <!-- END TRIGGER ORANGE APP ANGULAR CONTROLLER(S) -->
 }

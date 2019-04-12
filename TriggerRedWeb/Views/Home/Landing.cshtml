@@ -75,9 +75,7 @@
                             <div class="c-title c-font-20 c-font-bold c-font-uppercase">1. Search Ebay</div>
                             <div class="c-description c-font-17">
                                 We begin each day by discovering all products listed on Ebay 7 days ago.
-                                <br />&nbsp;
-                                <br />&nbsp;
-                                <br />&nbsp;
+                                <br />&nbsp;                               
                             </div>
                             <a href="#" class="btn c-btn-square c-theme-btn c-btn-border1-2x c-btn-uppercase c-btn-bold">READ MORE</a>
                         </div>
@@ -98,7 +96,8 @@
                             <div class="c-icon"><span class="c-hr c-hr-last"><span class="c-content-line-icon c-icon-1 c-theme"></span></span></div>
                             <div class="c-title c-font-20 c-font-bold c-font-uppercase">3. WAREHOUSE</div>
                             <div class="c-description c-font-17">
-                                We store discovered products in our contextual database for easy searching.                                
+                                We store discovered products in our contextual database for easy searching.   
+                                <br />&nbsp;
                             </div>
                             <a href="#" class="btn c-btn-square c-theme-btn c-btn-border1-2x c-btn-uppercase c-btn-bold">READ MORE</a>
                         </div>
@@ -133,7 +132,7 @@
                                 <div class="c-content-events-1-content-container">
                                     <div class="c-content-events-1-cat">@post.Category</div>
                                     <h3 class="c-content-events-1-title">@post.Title</h3>
-                                    <p class="c-content-events-1-desc">@post.Content.Ellipse(200)</p>
+                                    <p class="c-content-events-1-desc">@(Html.Raw(post.Summary))</p>
                                     <a href="@Url.Action("RecentPosts", "Blog")" class="c-content-events-1-link">View All</a>
                                 </div>
                             </div>
@@ -142,24 +141,24 @@
                         <div class="col-md-4">
                             <div class="c-content-events-1-item c-events-1-featured wow fadeIn" style="border-radius:0px" data-wow-delay="0.5s" data-wow-duration="1s" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeIn; opacity: 1;">
                                 <div class="c-content-events-1-content-container">
-                                    <div class="c-content-events-1-cat">Featured Event</div>
-                                    <h3 class="c-content-events-1-title">Awesome New Features!</h3>
-                                    <p class="c-content-events-1-desc">Lorem ipsum dolor amet adipicing et noummy eit seat dias estudiat elit dolore et isum siady et dolor amet adipicing noummy set dias set estudat eliat dolore noummy</p>
+                                    <div class="c-content-events-1-cat">Premium Features</div>
+                                    <h3 class="c-content-events-1-title">Premium Features Comming Soon!</h3>
+                                    <p class="c-content-events-1-desc">Welcome to <span class="c-font-black c-font-bold">Trigger<span class="c-font-red">Red</span></span> Beta.<br /> Below are some of the premium features arriving soon.</p>
                                     <ul class="c-content-events-1-list">
                                         <li class="c-content-events-1-list-item">
-                                            <span>Ever Expanding Demos Themes</span>
+                                            <span>Product Performance Tracking</span>
                                         </li>
                                         <li class="c-content-events-1-list-item">
-                                            <span>New Demos to be released consistently</span>
+                                            <span>Daily Email Alerts</span>
                                         </li>
                                         <li class="c-content-events-1-list-item">
-                                            <span>Same Great Code Quality</span>
+                                            <span>Excel Report Download</span>
                                         </li>
                                         <li class="c-content-events-1-list-item">
-                                            <span>Neverending Support</span>
+                                            <span>Tech Support</span>
                                         </li>
                                     </ul>
-                                    <a href="https://themeforest.net/item/jango-highly-flexible-component-based-html5-template/11987314?ref=themehats" class="c-content-events-1-link btn c-btn c-theme-btn c-btn-square c-font-uppercase">Subscribe</a>
+                                    <a href="#" class="c-content-events-1-link btn c-btn c-theme-btn c-btn-square c-font-uppercase">Try Beta</a>
                                 </div>
                             </div>
                         </div>
@@ -284,7 +283,7 @@
                     </div>
 
                 </div><!-- END: CONTENT/SHOPS/SHOP-2-7 -->
-                <div class="row c-margin-t-20">
+                <div class="row c-margin-t-30 c-margin-b-30">
                     <div class="col-xs-12 c-center">
                         <a href="@Url.Action("Explore", "Insights")" class="btn c-btn-square c-theme-btn c-btn-uppercase c-btn-bold">EXPLORE ALL</a>
                     </div>

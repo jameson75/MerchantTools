@@ -13,6 +13,20 @@ namespace CipherPark.TriggerRed.Web.CoreServices
 {
     public static class CoreDataServices
     {
+        internal static List<CategorySelectViewModel> GetRootCategories(string site)
+        {
+            using (OrangeEntities db = new OrangeEntities())
+            {
+                return db.Categories.Where(c => (int)c.PathLevel == 0 &&
+                                                c.Site == site)
+                                    .Select(c => new CategorySelectViewModel()
+                                    {
+                                        Name = c.Name,
+                                        Value = c.Id.ToString()
+                                    }).ToList();
+            }
+        }
+
         internal static List<ProductModel> GetProductsByChildCategoryForPage(int pageSize, int firstItemIndex, long categoryId, string sortKey, ProductSearchFilter filter, out int nTotalItems)
         {
             List<ProductModel> products = new List<ProductModel>();
@@ -117,7 +131,8 @@ namespace CipherPark.TriggerRed.Web.CoreServices
                         .Select(p => new BlogPostModel()
                         {
                             Id = p.Id,
-                            Content = "<h1>Test Content</h1> <img src='https://www.w3schools.com/images/colorpicker.gif'/> " +  p.BlogContent,
+                            Content = p.BlogContent,
+                            Summary = p.BlogSummary,
                             Title = p.Title,
                             DateCreated = p.DateCreated.ToUnixMilliseconds(),
                             DateModified = p.DateModified.ToUnixMilliseconds(),
@@ -129,7 +144,8 @@ namespace CipherPark.TriggerRed.Web.CoreServices
                             CoverImageUrl = ReferenceDataServices.HostedImageUrl(p.CoverImageId),
                             ProductSellerLevel = SellerLevels.ScoreToLevel(p.ProductSellerScore),
                             ProductListingDate = p.ProductListingDate.GetValueOrDefault().ToUnixMilliseconds(),
-                            ProductCategory = p.ProductCategory
+                            ProductCategory = p.ProductCategory,
+                            Category = p.Blog.Caption,
                         })
                         .ToList();
             else
@@ -148,6 +164,7 @@ namespace CipherPark.TriggerRed.Web.CoreServices
                     {
                         Id = p.Id,
                         Content = p.BlogContent,
+                        Summary = p.BlogSummary,
                         Title = p.Title,
                         DateCreated = p.DateCreated.ToUnixMilliseconds(),
                         DateModified = p.DateModified.ToUnixMilliseconds(),
@@ -159,7 +176,8 @@ namespace CipherPark.TriggerRed.Web.CoreServices
                         CoverImageUrl = ReferenceDataServices.HostedImageUrl(p.CoverImageId),
                         ProductSellerLevel = SellerLevels.ScoreToLevel(p.ProductSellerScore),
                         ProductListingDate = p.ProductListingDate.GetValueOrDefault().ToUnixMilliseconds(),
-                        ProductCategory = p.ProductCategory
+                        ProductCategory = p.ProductCategory,
+                        Category = p.Blog.Caption,
                     }));
                     nTotalItems = dbPostsAll.Count();
                 }
@@ -336,13 +354,23 @@ namespace CipherPark.TriggerRed.Web.CoreServices
                     }
                     if (containsParamBuilder.Length > 0)
                     {
-                        string p1 = containsParamBuilder.ToString();                       
-                        var results = db.Database.SqlQuery<BlogPost>(query, p0, p1);                                                 
-                        totalMatches = results.Count();
-                        return results.OrderByDescending(x => x.DateCreated)
+                        string p1 = containsParamBuilder.ToString();
+
+                        var allResults = db.Database.SqlQuery<BlogPost>(query, p0, p1);                          
+                        totalMatches = allResults.Count();                                               
+                        var results = allResults.OrderByDescending(x => x.DateCreated)
                                       .Skip(firstItemIndex)
                                       .Take(pageSize)
                                       .ToList();
+                        //We need to explicitly load the blog related entity.
+                        //NOTE: This results in a database trip per load but is currently the only way I know how.
+                        results.ForEach(x =>
+                        {
+                            db.BlogPosts.Attach(x);
+                            db.Entry(x).Reference(e => e.Blog).Load();
+                        });
+
+                        return results;                               
                     }
                 }
             }

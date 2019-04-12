@@ -24,5 +24,6 @@ namespace CipherPark.TriggerRed.Web.Models
         public string ProductSellerLevel { get; set; }
         public long ProductListingDate { get; set; }
         public string ProductCategory { get; set; }
+        public string Summary { get; set; }
     }  
 }

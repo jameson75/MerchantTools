@@ -1,6 +1,6 @@
 ﻿@using CipherPark.TriggerOrange.Web.Models
 @{
-    ViewBag.Title = "Search Posts";   
+    ViewBag.Title = "Search Posts";
 }
 
 <!-- BEGIN: PAGE CONTAINER -->
@@ -37,255 +37,101 @@
                             <div class="c-line-left c-theme-bg"></div>
                         </div>
                         <ul class="c-menu c-arrow-dot c-theme">
-                            <li>                             <a ng-class="{'c-font-red-2' : isActiveBlog(''), 'c-font-bold' : isActiveBlog('')}" href="@Url.Action("SearchPosts")">All</a></li>
-                            <li ng-repeat="cat in categories"><a ng-class="{'c-font-red-2' : isActiveBlog(cat.Caption), 'c-font-bold' : isActiveBlog(cat.Caption)}" href="@Url.Action("SearchPosts", "Insights")?id={{cat.Id}}">{{cat.Caption}}</a></li>
+                            <li>                             <a ng-class="{'c-font-red-2' : isActiveBlog(''), 'c-font-bold' : isActiveBlog('')}" href="@Url.Action("RecentPosts")">All</a></li>
+                            <li ng-repeat="cat in categories"><a ng-class="{'c-font-red-2' : isActiveBlog(cat.Caption), 'c-font-bold' : isActiveBlog(cat.Caption)}" href="@Url.Action("RecentPosts")?id={{cat.Id}}">{{cat.Caption}}</a></li>
                         </ul>
-                    </div>
-                    <!-- BEGIN SUBSCRIPTION BAR-->
-                    <div class="c-margin-t-50 hidden-sm hidden-xs">                       
-                        <form action="@Url.Action("Subscribe")" method="post">
-                            <div><span class="c-font-bold c-font-grey-3 c-font-14 c-font-uppercase">Subscribe to BI-WEEKLY report</span></div>
-                            <div class="input-group">
-                                <input type="text" ng-model="keywords" class="form-control c-square c-theme-border" placeholder="Enter email...">
-                                <span class="input-group-btn">
-                                    <button class="btn c-theme-btn c-theme-border c-btn-square" type="submit">Subscribe</button>
-                                </span>
-                            </div>
-                         
-                        </form>                        
-                    </div>
-                    <!-- END SUBSCRIPTION BAR -->
+                    </div>                 
                 </div>
                 <!-- END: CONTENT/BLOG/BLOG-SIDEBAR-1 -->
                 <!-- BEGIN MAIN CONTENT AREA -->
-                <div class="col-md-9 col-md-pull-3">                   
+                <div class="col-md-9 col-md-pull-3">
                     <div class="c-content-title-1 c-theme c-title-md">
                         <h3 class="c-font-bold c-font-uppercase"><span class="c-font-grey-3">@(Model.BlogName ?? "All") </span>Posts</h3>
                         <div class="c-line-left c-theme-bg"></div>
                     </div>
                     <!-- BEGIN POSTS -->
                     <div class="c-content-blog-post-card-1-grid">
-
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="c-content-blog-post-card-1 c-option-2 c-bordered">
+                            <div class="col-md-6">                                
+                                <div class="c-content-blog-post-card-1 c-option-2 c-bordered" ng-repeat="post in posts1" >
                                     <div class="c-media c-content-overlay">
                                         <div class="c-overlay-wrapper">
                                             <div class="c-overlay-content">
                                                 <a href="#"><i class="icon-link"></i></a>
-                                                <a href="../../assets/base/img/content/stock2/04.jpg" data-lightbox="fancybox" data-fancybox-group="gallery">
+                                                <a href="{{post.CoverImageUrl}}" data-lightbox="fancybox" data-fancybox-group="gallery" style="height:250px;width:100%">
                                                     <i class="icon-magnifier"></i>
                                                 </a>
                                             </div>
                                         </div>
-                                        <img class="c-overlay-object img-responsive" src="../../assets/base/img/content/stock2/04.jpg" alt="">
+                                        <img class="c-overlay-object img-responsive" src="{{post.CoverImageUrl}}" alt="" style="height:250px;width:100%">
                                     </div>
                                     <div class="c-body">
                                         <div class="c-title c-font-bold c-font-uppercase">
-                                            <a href="#">Web &amp; Mobile Development</a>
+                                            <a href="#">{{post.Title}}</a>
                                         </div>
                                         <div class="c-author">
-                                            By <a href="#"><span class="c-font-uppercase">Nick Strong</span></a>
-                                            on <span class="c-font-uppercase">20 May 2015, 10:30AM</span>
+                                            By <a href="#"><span class="c-font-uppercase">T.R. Staff</span></a>
+                                            on <span class="c-font-uppercase">{{post.DateCreated | date:'medium'}}</span>
                                         </div>
 
                                         <div class="c-panel">
-                                            <ul class="c-tags c-theme-ul-bg">
-                                                <li>ux</li>
-                                                <li>web</li>
-                                                <li>events</li>
+                                            <ul class="c-tags c-theme-ul-bg">     
+                                                <li>{{post.ProductSellerLevel}}</li>
+                                                <li>{{post.ProductPrice | currency}}</li>
                                             </ul>
-                                            <div class="c-comments"><a href="#"><i class="icon-speech"></i> 30 comments</a></div>
+                                            <div class="c-comments"><a href="#"><i class="icon-fire"></i><span class="c-font-bold"> {{post.ProductUnitsSold}}</span> sold first 7 days</a></div>
                                         </div>
                                         <p>
-                                            Lorem ipsum dolor sit amet, dolor adipisicing dolor sit amet elit atis unde omnis iste natus error sit dolor.
-                                            Nulla nemo ad sapiente officia amet. Sed ut perspiciatis unde omnis iste natus error sit.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="c-content-blog-post-card-1 c-option-2 c-bordered">
-                                    <div class="c-media c-content-overlay">
-                                        <div class="c-overlay-wrapper">
-                                            <div class="c-overlay-content">
-                                                <a href="#"><i class="icon-link"></i></a>
-                                                <a href="../../assets/base/img/content/stock2/06.jpg" data-lightbox="fancybox" data-fancybox-group="gallery">
-                                                    <i class="icon-magnifier"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <img class="c-overlay-object img-responsive" src="../../assets/base/img/content/stock2/06.jpg" alt="">
-                                    </div>
-                                    <div class="c-body">
-                                        <div class="c-title c-font-bold c-font-uppercase">
-                                            <a href="#">Efficient Coding</a>
-                                        </div>
-                                        <div class="c-author">
-                                            By <a href="#"><span class="c-font-uppercase">Greg Idra</span></a>
-                                            on <span class="c-font-uppercase">23 May 2015, 10:30AM</span>
-                                        </div>
-
-                                        <div class="c-panel">
-                                            <ul class="c-tags c-theme-ul-bg">
-                                                <li>HTML</li>
-                                                <li>CSS</li>
-                                                <li>PHP</li>
-                                            </ul>
-                                            <div class="c-comments"><a href="#"><i class="icon-speech"></i> 14 comments</a></div>
-                                        </div>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, dolor adipisicing dolor sit amet dolor sit amet elit.
-                                            Nulla nemo ad sapiente officia amet ipsum dolor sit amet.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="c-content-blog-post-card-1 c-option-2 c-bordered">
-                                    <div class="c-media">
-                                        <iframe src="https://player.vimeo.com/video/105329112" width="100%" height="300" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
-                                    </div>
-                                    <div class="c-body">
-                                        <div class="c-title c-font-bold c-font-uppercase">
-                                            <a href="#">Modern Web Trends</a>
-                                        </div>
-                                        <div class="c-author">
-                                            By <a href="#"><span class="c-font-uppercase">Tracy Trendy</span></a>
-                                            on <span class="c-font-uppercase">25 May 2015, 10:30AM</span>
-                                        </div>
-
-                                        <div class="c-panel">
-                                            <ul class="c-tags c-theme-ul-bg">
-                                                <li>Design</li>
-                                                <li>web</li>
-                                                <li>trends</li>
-                                            </ul>
-                                            <div class="c-comments"><a href="#"><i class="icon-speech"></i> 36 comments</a></div>
-                                        </div>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, dolor adipisicing dolor sit amet dolor sit amet elit.
-                                            Nulla nemo ad sapiente officia amet ipsum dolor sit amet.
+                                            {{post.Summary}}
                                         </p>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="c-content-blog-post-card-1 c-option-2 c-bordered">
+                                <div class="c-content-blog-post-card-1 c-option-2 c-bordered" ng-repeat="post in posts2">
                                     <div class="c-media c-content-overlay">
                                         <div class="c-overlay-wrapper">
                                             <div class="c-overlay-content">
                                                 <a href="#"><i class="icon-link"></i></a>
-                                                <a href="../../assets/base/img/content/stock2/2.jpg" data-lightbox="fancybox" data-fancybox-group="gallery">
+                                                <a href="{{post.CoverImageUrl}}" data-lightbox="fancybox" data-fancybox-group="gallery" style="height:250px;width:100%">
                                                     <i class="icon-magnifier"></i>
                                                 </a>
                                             </div>
                                         </div>
-                                        <img class="c-overlay-object img-responsive" src="../../assets/base/img/content/stock2/2.jpg" alt="">
+                                        <img class="c-overlay-object img-responsive" src="{{post.CoverImageUrl}}" alt="" style="height:250px;width:100%">
                                     </div>
                                     <div class="c-body">
                                         <div class="c-title c-font-bold c-font-uppercase">
-                                            <a href="#">Code optimization</a>
+                                            <a href="#">{{post.Title}}</a>
                                         </div>
                                         <div class="c-author">
-                                            By <a href="#"><span class="c-font-uppercase">Paul Roger</span></a>
-                                            on <span class="c-font-uppercase">26 May 2015, 10:30AM</span>
+                                            By <a href="#"><span class="c-font-uppercase">T.R. Staff</span></a>
+                                            on <span class="c-font-uppercase">{{post.DateCreated | date:'medium'}}</span>
                                         </div>
 
                                         <div class="c-panel">
                                             <ul class="c-tags c-theme-ul-bg">
-                                                <li>code</li>
-                                                <li>clean</li>
-                                                <li>HTML</li>
+                                                <li>{{post.ProductSellerLevel}}</li>
+                                                <li>{{post.ProductPrice | currency}}</li>
                                             </ul>
-                                            <div class="c-comments"><a href="#"><i class="icon-speech"></i> 17 comments</a></div>
+                                            <div class="c-comments"><a href="#"><i class="icon-fire"></i><span class="c-font-bold"> {{post.ProductUnitsSold}}</span> sold first 7 days</a></div>
                                         </div>
                                         <p>
-                                            Lorem ipsum dolor sit amet, dolor adipisicing dolor sit amet elit.
-                                            Nulla nemo ad sapiente officia amet.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="c-content-blog-post-card-1 c-option-2 c-bordered">
-                                    <div class="c-media c-content-overlay">
-                                        <div class="c-overlay-wrapper">
-                                            <div class="c-overlay-content">
-                                                <a href="#"><i class="icon-link"></i></a>
-                                                <a href="../../assets/base/img/content/stock2/03.jpg" data-lightbox="fancybox" data-fancybox-group="gallery">
-                                                    <i class="icon-magnifier"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <img class="c-overlay-object img-responsive" src="../../assets/base/img/content/stock2/03.jpg" alt="">
-                                    </div>
-                                    <div class="c-body">
-                                        <div class="c-title c-font-bold c-font-uppercase">
-                                            <a href="#">Device Optimization</a>
-                                        </div>
-                                        <div class="c-author">
-                                            By <a href="#"><span class="c-font-uppercase">Tim Book</span></a>
-                                            on <span class="c-font-uppercase">28 May 2015, 10:30AM</span>
-                                        </div>
-
-                                        <div class="c-panel">
-                                            <ul class="c-tags c-theme-ul-bg">
-                                                <li>iOS</li>
-                                                <li>Android</li>
-                                                <li>Web</li>
-                                            </ul>
-                                            <div class="c-comments"><a href="#"><i class="icon-speech"></i> 38 comments</a></div>
-                                        </div>
-                                        <p>
-                                            Lorem ipsum atis unde omnis iste natus error sit dolor dolor sit amet,
-                                            atis unde omnis iste natus error sit dolor dolor adipisicing dolor sit amet elit.
-                                            Nulla nemo ad sapiente officia amet.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="c-content-blog-post-card-1 c-option-2 c-bordered">
-                                    <div class="c-media c-content-overlay">
-                                        <div class="c-overlay-wrapper">
-                                            <div class="c-overlay-content">
-                                                <a href="#"><i class="icon-link"></i></a>
-                                                <a href="../../assets/base/img/content/stock2/01.jpg" data-lightbox="fancybox" data-fancybox-group="gallery">
-                                                    <i class="icon-magnifier"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <img class="c-overlay-object img-responsive" src="../../assets/base/img/content/stock2/01.jpg" alt="">
-                                    </div>
-                                    <div class="c-body">
-                                        <div class="c-title c-font-bold c-font-uppercase">
-                                            <a href="#">Customer Satisfaction</a>
-                                        </div>
-                                        <div class="c-author">
-                                            By <a href="#"><span class="c-font-uppercase">Sara Conner</span></a>
-                                            on <span class="c-font-uppercase">29 May 2015, 10:30AM</span>
-                                        </div>
-
-                                        <div class="c-panel">
-                                            <ul class="c-tags c-theme-ul-bg">
-                                                <li>Guide</li>
-                                                <li>live</li>
-                                                <li>events</li>
-                                            </ul>
-                                            <div class="c-comments"><a href="#"><i class="icon-speech"></i> 9 comments</a></div>
-                                        </div>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, Sed ut perspiciatis unde omnis iste natus error sit dolor adipisicing dolor sit amet elit.
-                                            Nulla nemo ad sapiente officia amet ipsum dolor sit amet ipsum dolor sit amet  perspiciatis unde omnis iste natus error sit dolo.
+                                            {{post.Summary}}
                                         </p>
                                     </div>
                                 </div>
                             </div>
-                        </div>                        
+                        </div>
                     </div>
                     <!-- END POSTS -->
-                   
                     <!-- BEGIN BOTTOM AD -->
                     <div>
 
                     </div>
                     <!-- END BOTTOM AD -->
                 </div>
-                
-                
+
                 <div class="c-center c-margin-t20">
                     <ul uib-pagination
                         template-url="template/pagination/orangepagination.html"
@@ -306,7 +152,6 @@
 </div>
 <!-- END: BLOG LISTING  -->
 <!-- END: PAGE CONTENT -->
-
 <!-- END: PAGE CONTAINER -->
 
 <script id="template/pagination/orangepagination.html" type="text/ng-template">
@@ -364,7 +209,7 @@
                 $scope.tableState = {
                     pagination: {
                         currentPage: 1,
-                        pageSize: 1,
+                        pageSize: 6,
                         totalItemCount: 0
                     },
                 };
@@ -394,6 +239,9 @@
                        tableState.pagination.currentPage = result.currentPage;
                        tableState.pagination.totalItemCount = result.nTotalItemCount;
                        $scope.posts = result.posts;
+                       var mid = ($scope.tableState.pagination.pageSize / 2);
+                       $scope.posts1 = result.posts.slice(0, mid);
+                       $scope.posts2 = result.posts.slice(mid)
                        $scope.isLoading = false;
                        $scope.isEmpty = result.posts.length == 0;
                        ajaxHistory.Save({
