@@ -18,11 +18,11 @@
                     </h3>
 
                     <h5 class="c-font-24 c-font-thin c-font-uppercase c-font-white c-subtitle c-margin-b-40">
-                        SIGN UP & GET 60 DAYS FREE ACCESS
+                        CATALOG OF HOT SELLING PRODUCTS UPDATED DAILY
                     </h5>
 
                     <form class="form-inline" action="#">                                      
-                        <button type="submit" class="btn btn-lg c-btn-white c-btn-uppercase c-btn-square c-btn-bold c-btn-border-1x">Try it for free</button>
+                        <a href="~/Insights/Explore" class="btn btn-lg c-btn-white c-btn-uppercase c-btn-square c-btn-bold c-btn-border-1x">EXPLORE NOW</a>
                     </form>
                 </div>
                 <div class="tp-banner rev_slider" data-version="5.0">
@@ -122,7 +122,7 @@
                 </div>
                 <div class="c-content-events-1">
                     <div class="row">
-                        @foreach (var post in Model.BlogPosts.Take(2))
+                        @foreach (var post in Model.BlogPosts.Take(3))
                         {
                         <div class="col-md-4">
                             <div class="c-content-events-1-item wow fadeInLeft" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInLeft; opacity: 1;">
@@ -137,7 +137,8 @@
                                 </div>
                             </div>
                         </div>
-                        }                        
+                        }               
+                        <!--
                         <div class="col-md-4">
                             <div class="c-content-events-1-item c-events-1-featured wow fadeIn" style="border-radius:0px" data-wow-delay="0.5s" data-wow-duration="1s" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeIn; opacity: 1;">
                                 <div class="c-content-events-1-content-container">
@@ -162,6 +163,7 @@
                                 </div>
                             </div>
                         </div>
+                        -->
                     </div>
                 </div>
             </div>
@@ -300,19 +302,19 @@
     <div class="c-postfooter">
         <div class="container">
             <div class="row">
-                <div class="col-md-6 col-sm-6">
+                <div class="col-md-8 col-sm-6">
                     <p class="c-copyright c-font-grey">
-                        2018 &copy; Trigger<span class="c-font-red">Red</span>
+                        2019 &copy; Trigger<span class="c-font-red">Red</span>
                         <span class="c-font-grey-3">All Rights Reserved.</span>
                     </p>
                 </div>
-                <div class="col-md-6 col-sm-6">
-                    <ul class="c-socials">
-                        <li><a href="#"><i class="icon-social-twitter"></i></a></li>
-                        <li><a href="#"><i class="icon-social-facebook"></i></a></li>
-                        <li><a href="#"><i class="icon-social-youtube"></i></a></li>
-                        <li><a href="#"><i class="icon-social-dribbble"></i></a></li>
-                    </ul>
+                <div class="col-md-4 col-sm-6">
+                    <p class="c-copyright c-font-white c-font-uppercase c-font-bold"> 
+                        <a class="c-copyright c-font-14 c-font-grey-4 c-font-uppercase c-font-bold" href="~/Home/Index">HOME</a>&nbsp;&nbsp; 
+                        <a class="c-copyright c-font-14 c-font-grey-4 c-font-uppercase c-font-bold" href="~/Home/About">ABOUT</a>&nbsp;&nbsp;
+                        <a class="c-copyright c-font-14 c-font-grey-4 c-font-uppercase c-font-bold" href="~/Content/agreements/Privacy.html">Privacy</a>&nbsp;&nbsp;
+                        <a class="c-copyright c-font-14 c-font-grey-4 c-font-uppercase c-font-bold" href="~/Content/agreements/Terms.html">Terms &amp; Conditions</a>&nbsp;&nbsp;
+                    </p>
                 </div>
             </div>
         </div>

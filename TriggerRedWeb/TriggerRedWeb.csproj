@@ -173,11 +173,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\agreements\Disclaimer.txt" />
+    <Content Include="Content\agreements\Privacy.html" />
+    <Content Include="Content\agreements\Terms.txt" />
+    <Content Include="Content\agreements\Privacy.txt" />
+    <Content Include="Content\agreements\Terms.html" />
     <Content Include="Content\ajax-loader.gif" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\BusyRoomHeroSample.jpg" />
-    <Content Include="Content\BusyRoomHeroSample_v1.jpg" />
     <Content Include="Content\customized-bootstrap.css" />
     <Content Include="Content\gumbo\ng-notification-bar\bower_components\angular-mocks\angular-mocks.js" />
     <Content Include="Content\gumbo\ng-notification-bar\bower_components\angular-sanitize\angular-sanitize.js" />
@@ -3026,8 +3029,6 @@
     <Content Include="Content\trigger_red_header_color.png" />
     <Content Include="Content\trigger_red_hero.jpg" />
     <Content Include="Content\trigger_red_hero_2.jpg" />
-    <Content Include="Content\trigger_red_hero_3_preview.jpg" />
-    <Content Include="Content\trigger_red_hero_4_preview.jpg" />
     <Content Include="Content\trigger_red_hero_5.jpg" />
     <Content Include="Content\trigger_red_hero_6.jpg" />
     <Content Include="Content\ui-bootstrap-csp.css" />
@@ -4375,6 +4376,11 @@
     <Content Include="Content\gumbo\ng-notification-bar\bower_components\hmps-animate-scss\partials\_wiggle.scss" />
     <Content Include="Content\gumbo\ng-notification-bar\bower_components\hmps-animate-scss\partials\_wobble.scss" />
     <Content Include="Content\gumbo\ng-notification-bar\bower_components\hmps-animate-scss\README.md" />
+    <None Include="Properties\PublishProfiles\TriggerOrangeInternal.pubxml" />
+    <None Include="Properties\PublishProfiles\TriggerRedInternal.pubxml" />
+    <None Include="Properties\PublishProfiles\TriggerRed_Ftp.pubxml" />
+    <None Include="Properties\PublishProfiles\TriggerRed_Production.pubxml" />
+    <None Include="Properties\PublishProfiles\TriggerRed_Staging.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -4429,12 +4435,14 @@
     <Content Include="Views\Home\Landing.cshtml" />
     <Content Include="Views\Blog\RecentPosts.cshtml" />
     <Content Include="Views\Home\Subscribe.cshtml" />
-    <Content Include="Views\Home\Strategy.cshtml" />
+    <Content Include="Views\Home\MessageSent.cshtml" />
     <Content Include="Views\Shared\Layout.cshtml" />
     <Content Include="Views\Shared\LandingLayout.cshtml" />
     <Content Include="Views\Insights\Explore.cshtml" />
-    <Content Include="Views\Home\ContactUs.cshtml" />
+    <Content Include="Views\Home\ReleaseNotes.cshtml" />
     <Content Include="Views\Shared\AboutLayout.cshtml" />
+    <Content Include="Views\Blog\SinglePost.cshtml" />
+    <Content Include="Views\Shared\BlogLayout.cshtml" />
     <None Include="Web.Internal.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -4481,7 +4489,9 @@
     <Compile Include="Util\SellerLevels.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\web.config" />
+    <Content Include="Views\web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="packages.config" />
     <Content Include="Scripts\version.json" />
     <Content Include="Scripts\errors.json" />

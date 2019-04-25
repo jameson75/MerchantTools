@@ -168,7 +168,7 @@
                             </div>
                             <div class="row c-margin-t-5">
                                 <div class="col-md-12">
-                                    <a href="{{product.ProductUrl}}" target="_blank" class="btn btn-lg btn-default c-btn-square c-btn-uppercase c-btn-bold" ng-click="onBeginAddProductToReport(product.Id)">Visit Listing</a>
+                                    <a href="{{product.ProductUrl}}" target="_blank" class="btn btn-lg btn-default c-btn-square c-btn-uppercase c-btn-bold">Visit Listing</a>
                                 </div>
                             </div>
                         </div>
@@ -329,7 +329,20 @@
                     });
                 };
 
-                $scope.onSearchClick = function () {
+                $scope.onSearchClick = function () {                    
+                    $scope.tableState.pagination.currentPage = 1;
+                    $scope.getProductsPipe($scope.tableState);
+                };
+
+                $scope.onClearClick = function () {
+                    $scope.filter.priceLow = null;
+                    $scope.filter.priceHigh = null;
+                    $scope.filter.unitsLow = null;
+                    $scope.filter.unitsHigh = null;
+                    $scope.filter.sellerRankLow = null;
+                    $scope.filter.sellerRankHigh = null;
+                    $scope.keywords = null;
+                    $scope.selectedValues.rootCategory = null;
                     $scope.tableState.pagination.currentPage = 1;
                     $scope.getProductsPipe($scope.tableState);
                 };
@@ -351,44 +364,8 @@
 
                 $scope.isProductListed = function (productId) {
                     return $scope.listedProductIds.find(function (id) { return id == productId; });
-                };
-
-                $scope.onBeginAddProductToReport = function (productId) {
-                    const modalInstance = $uibModal.open({
-                        "templateUrl": "AddProduct.html",
-                        "controller": "ModalInstanceCtrl",
-                        "size": "lg"
-                    });
-                    modalInstance.result.then(function (result) {
-                        if (result.id == 'ok') {
-                            //$scope.updateProductsListedStatus();
-                            $scope.AddProductToReport(productId, result.data);
-                        }
-                    });
-                    return modalInstance;
-                };
-
-                $scope.AddProductToReport = function (productId, reportId) {
-                    var postData = {
-                        productId: productId,
-                        reportId: reportId,
-                    };
-                    $http.post('@Url.Action("AddProductToReport", "Product")', postData).success(function (result) {
-                        var notificationType = null;
-                        if (result.isError)
-                            notificationType = "error";
-                        else {
-                            notificationType = "success";
-                            //if(!$scope.listedProductIds.includes(productId))
-                            //    $scope.listedProductIds.push(productId);
-                        }
-                        $scope.notifications.push({ type: notificationType, data: result.message, timeStamp: new Date().getTime() });
-                    }).error(function (result) {
-                        var errorMessage = "Request failed.";
-                        $scope.notifications.push({ type: "error", data: errorMessage, timeStamp: new Date().getTime() });
-                    });
-                };
-
+                };              
+        
                 $scope.onPageChanged = function () {
                     $window.scrollTo(0, 0);
                     $scope.getProductsPipe($scope.tableState);

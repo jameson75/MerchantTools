@@ -95,10 +95,10 @@
                         <div class="col-md-2">                            
                         </div>
                         <div class="col-md-8">
-                            <div class="c-content-v-center c-theme-bg wow bounceInUp" data-wow-delay1="2s" data-height="height" style="height: 160px; visibility: visible; animation-name: bounceInUp; opacity: 1;">
+                            <div class="c-content-v-center c-border-thick c-border-grey-3 wow bounceInUp" data-wow-delay1="2s" data-height="height" style="height: 160px; visibility: visible; animation-name: bounceInUp; opacity: 1;">
                                 <div class="c-wrapper">
                                     <div class="c-body c-padding-20 c-center">
-                                        <h3 class="c-font-19 c-line-height-28 c-font-uppercase c-font-white c-font-bold">
+                                        <h3 class="c-font-19 c-line-height-28 c-font-uppercase c-font-grey-3 c-font-bold">
                                             To provide an effective and affordable platform
                                             where casual Ebay sellers can quickly
                                             discover profitable items to sell.
@@ -256,8 +256,8 @@
                             <div class="wow animate fadeInUp" style="visibility: visible; animation-name: fadeInUp; opacity: 1;">
                                 <h4 class="c-title c-font-20 c-font-uppercase c-font-bold">Is Trigger Red Free to Use?</h4>
                                 <p>
-                                    Our basic market insight service is free. The basic service permits users to view our catalog of Hot Starters listed 7 days ago. Our premium
-                                    service permits users to view our entire catalog of Hot Starters listed 7-28 days ago as well as access to product performance and scheduled email alerts.
+                                    Our basic service tier will always be free. The basic service permits users to view our catalog of Hot Starters listed 7 days ago. In the near future, our premium
+                                    service will users to view our entire catalog of Hot Starters listed 7-28 days ago as well as access to product sale analytics.
                                 </p>
                             </div>
                         </div>
@@ -281,7 +281,7 @@
                         <div class="col-md-6 padding-10">
                             <div class="wow animate fadeInUp" style="visibility: visible; animation-name: fadeInUp; opacity: 1;">
                                 <h4 class="c-title c-font-20 c-font-uppercase c-font-bold">Can I view Hot Starters in markets outside of the U.S.?</h4>
-                                <p>Currently, Trigger Red only supports the U.S. market. A future version, which covers Canada and UK, will be released in the near future.</p>
+                                <p>Currently, Trigger Red only supports the U.S. market. In the near future, we'll release a version to support eBay Canada and eBay UK, will be released in the near future.</p>
                             </div>
                         </div>
                     </div>
@@ -325,18 +325,18 @@
                                             </p>
                                             <br/>
                                         </div>
-                                        <form action="@Url.Action("SubmitEmail")">
+                                        <form action="@Url.Action("SubmitEmail")" method="post">
                                             <div class="form-group">
                                                 <input name="fullName" type="text" placeholder="Your Name" class="form-control c-square c-theme input-lg">
                                             </div>
                                             <div class="form-group">
                                                 <input name="email" type="text" placeholder="Your Email" class="form-control c-square c-theme input-lg">
-                                            </div>
-                                            <div class="form-group">
-                                                <input name="phone" type="text" placeholder="Contact Phone" class="form-control c-square c-theme input-lg">
-                                            </div>
+                                            </div>                                            
                                             <div class="form-group">
                                                 <textarea rows="8" name="message" placeholder="Write comment here ..." class="form-control c-theme c-square input-lg"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="g-recaptcha" data-sitekey="6LeNGqAUAAAAALaaW6BzjSldpejy8VBrpSlEVIrr"></div>
                                             </div>
                                             <button type="submit" class="btn c-theme-btn c-btn-uppercase btn-lg c-btn-bold c-btn-square">Submit</button>
                                         </form>                                                          
@@ -363,6 +363,8 @@
         <li ng-if="::boundaryLinks" ng-class="{disabled: noNext()||ngDisabled}"><a href="#" ng-click="selectPage(totalPages, $event)"><i class="fa fa-angle-double-right"></i></a></li>
     </ul>
 </script>
+
+<script src="https://www.google.com/recaptcha/api.js"></script>
 
 @section links{
     <!-- BEGIN: BASE PLUGINS  -->

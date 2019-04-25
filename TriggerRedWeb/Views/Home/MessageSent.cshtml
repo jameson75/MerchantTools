@@ -1,53 +1,38 @@
 ﻿@using CipherPark.TriggerOrange.Web.Models
 @{
-    ViewBag.Title = "Strategy";    
+    ViewBag.Title = "Strategy";
 }
 
 <!-- BEGIN: PAGE CONTAINER -->
-<div class="c-layout-page">
+<div class="c-layout-page" style="min-height:100%;">
     <!-- BEGIN: LAYOUT/BREADCRUMBS/BREADCRUMBS-1 -->
     <div class="c-layout-breadcrumbs-1 c-fonts-uppercase c-fonts-bold c-bordered c-bordered-both">
         <div class="container">
             <div class="c-page-title c-pull-left">
-                <h3 class="c-font-uppercase c-font-sbold">Strategy</h3>
+                <h3 class="c-font-uppercase c-font-sbold">MESSAGE CENTER</h3>
             </div>
         </div>
     </div><!-- END: LAYOUT/BREADCRUMBS/BREADCRUMBS-1 -->
     <div class="c-content-box c-size-md">
         <div class="container">
-            <div class="row">
-                <div class="col-md-4 col-sm-6 wow animate fadeInLeft" style="visibility: visible; animation-name: fadeInLeft; opacity: 1;">
-                    <div class="c-content-step-1 c-opt-1">
-                        <div class="c-icon"><span class="c-hr c-hr-first"><span class="c-content-line-icon c-icon-14 c-theme"></span></span></div>
-                        <div class="c-title c-font-20 c-font-bold c-font-uppercase">1. First Important STEP</div>
-                        <div class="c-description c-font-17">
-                            Lorem ipsum dolor sit consectetuer
-                            adipiscing elit et diam nonummy.
+            <div class="row c-margin-b-100 c-margin-t-30">
+                <div class="col-md-7">
+                    @if (ViewBag.CaptchaFailed)
+                    {
+                        <div class="c-content-title-1 c-title-md">
+                            <h3 class="c-font-uppercase c-font-bold">Thank <span class="c-theme-font">You</span></h3>
+                            <div class="c-line-left hide"></div>
                         </div>
-                        <button class="btn c-btn-square c-theme-btn c-btn-border1-2x c-btn-uppercase c-btn-bold">EXPLORE</button>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6 wow animate fadeInLeft" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInLeft; opacity: 1;">
-                    <div class="c-content-step-1 c-opt-1">
-                        <div class="c-icon"><span class="c-hr"><span class="c-content-line-icon c-icon-21 c-theme"></span></span></div>
-                        <div class="c-title c-font-20 c-font-bold c-font-uppercase">2. Second Phase</div>
-                        <div class="c-description c-font-17">
-                            Lorem ipsum dolor sit consectetuer
-                            adipiscing elit et diam nonummy.
+                        <p class="c-text c-font-16 c-font-regular">Your message has been sent and we will get back to as soon as possible.</p>
+                    }
+                    else
+                    {
+                        <div class="c-content-title-1 c-title-md">
+                            <h3 class="c-font-uppercase c-font-bold"><span class="c-theme-font">Sorry.</span></h3>
+                            <div class="c-line-left hide"></div>
                         </div>
-                        <button class="btn c-btn-square c-theme-btn c-btn-uppercase c-btn-bold">EXPLORE</button>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-12 wow animate fadeInLeft" data-wow-delay="0.4s" style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInLeft; opacity: 1;">
-                    <div class="c-content-step-1 c-opt-1">
-                        <div class="c-icon"><span class="c-hr c-hr-last"><span class="c-content-line-icon c-icon-32 c-theme"></span></span></div>
-                        <div class="c-title c-font-20 c-font-bold c-font-uppercase">3. Final Action</div>
-                        <div class="c-description c-font-17">
-                            Lorem ipsum dolor sit consectetuer
-                            adipiscing elit et diam nonummy.
-                        </div>
-                        <button class="btn c-btn-square c-theme-btn c-btn-uppercase c-btn-bold">EXPLORE</button>
-                    </div>
+                        <p class="c-text c-font-16 c-font-regular">Your message was not delivered. Please go back and confirm that you are not a robot.</p>
+                    }
                 </div>
             </div>
         </div>

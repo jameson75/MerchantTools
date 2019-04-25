@@ -1,0 +1,238 @@
+﻿@using CipherPark.TriggerRed.Web.Models
+@{
+    ViewBag.Title = "View Post";
+}
+@model BlogPostModel
+<!-- BEGIN: PAGE CONTAINER -->
+<div class="c-layout-page">
+    <!-- BEGIN: LAYOUT/BREADCRUMBS/BREADCRUMBS-1 -->
+    <div class="c-layout-breadcrumbs-1 c-fonts-uppercase c-fonts-bold c-bordered c-bordered-both">
+        <div class="container">
+            <div class="c-page-title c-pull-left">
+                <h3 class="c-font-uppercase c-font-sbold">View Post</h3>
+            </div>
+        </div>
+    </div><!-- END: LAYOUT/BREADCRUMBS/BREADCRUMBS-1 -->
+    <!-- BEGIN: PAGE CONTENT -->
+    <!-- BEGIN: BLOG LISTING -->
+    <div class="c-content-box c-size-md">
+        <div ng-cloak class="container">
+            <div class="row">
+                <!-- BEGIN: CONTENT/BLOG/BLOG-SIDEBAR-1 -->
+                <div class="col-md-3 col-md-push-9 c-margin-b-30">
+                    <!-- BEGIN SEARCH BAR-->
+                    <form action="#" method="post">
+                        <div class="input-group">
+                            <input name="email" type="text" ng-model="keywords" class="form-control c-square c-theme-border" placeholder="Search posts...">
+                            <span class="input-group-btn">
+                                <button class="btn c-theme-btn c-theme-border c-btn-square" type="button" ng-click="onSearchClick()">Go!</button>
+                            </span>
+                        </div>
+                    </form>
+                    <!-- END SEARCH BAR -->
+                </div>
+                <!-- END: CONTENT/BLOG/BLOG-SIDEBAR-1 -->
+                <!-- BEGIN MAIN CONTENT AREA -->
+                <div class="col-md-9 col-md-pull-3">
+                    <div class="c-content-blog-post-1-view">
+                        <div class="c-content-blog-post-1">
+                            <div class="c-media c-content-overlay">                                
+                                <img class="c-overlay-object img-responsive" src="@Model.CoverImageUrl"  alt="" style="max-height:500px;width:100%">
+                            </div>
+
+                            <div class="c-title c-font-bold c-font-uppercase">
+                                @Model.Title
+                            </div>
+
+                            <div class="c-panel c-margin-b-30">
+                                <div class="c-author"><a href="#">By <span class="c-font-uppercase">T.R. Staff</span></a></div>
+                                <div class="c-date">on <span class="c-font-uppercase">@DateTimeHelper.FromUnixMilliseconds(Model.DateCreated).ToLongDateString()</span></div>
+                                <ul class="c-tags c-theme-ul-bg">
+                                    <li>@Model.ProductSellerLevel</li>
+                                    <li>@Model.ProductPrice.ToString("C")</li>                                    
+                                </ul>                              
+                            </div>
+
+                            <div class="c-desc">
+                                <p>
+                                    Lorem ipsum dolor sit amet, coectetuer diam ipsum dolor sit amet nonummy  coectetuer diam ipsum dolor sit
+                                    coectetuer adipiscing elit amipiscing elit sit adipiscing consectetuer ipsum dolor sit amipiscing elit sit amet, sit amet,
+                                    coectetuer adipiscing elit adipiscing consectetuer ipsum dolor sit amet diam nonummy adipiscing elit sit amet, sit ame.
+                                </p>
+                                <p>
+                                    Lorem ipsum dolor sit amet, coectetuer diam ipsum dolor sit amet nonummy  coectetuer diam ipsum dolor sit
+                                    coectetuer adipiscing elit adipiscing consectetuer ipsum dolor sit amipiscing elit sit amet, sit amet,
+                                    coectetuer adipiscing elit adipiscing consectetuer ipsum dolor sit amet diam nonummy adipiscing elit sit amet, sit ame.
+                                </p>
+                                <p>
+                                    Lorem ipsum dolor sit amet, coectetuer diam ipsum dolor sit amet nonummy  coectetuer diam ipsum dolor sit
+                                    coectetuer adipiscing elit adipiscing const sit amet, sit amet,
+                                    coectetuer adipiscing elit adipiscing consectetuer ipsum dolor sit amet diam nonummy adipiscing elit sit amet, sit ame.
+                                </p>
+                                <p>
+                                    Lorem ipsum dolor sit amet, coe  coectetuer diam ipsum dolor sit
+                                    coectetuer adipiscing elit adipiscing consectetuer ipsum dolor sit amipiscing elit sit amet, sit amet,
+                                    coectetuer adipiscing elit adipiscing consectetuer ipsum dolor sit amet diam nonummy adipiscing elit sit amet, sit ame.
+                                </p>
+                            </div>
+
+                            <div class="c-comments">
+
+                                <div class="c-content-title-1">
+                                    <h3 class="c-font-uppercase c-font-bold">Comments(30)</h3>
+                                    <div class="c-line-left"></div>
+                                </div>
+
+                                <div class="c-comment-list">
+
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <a href="#">
+                                                <img class="media-object" alt="" src="~/Content/jango/assets/base/img/content/team/team1.jpg">
+                                            </a>
+                                        </div>
+                                        <div class="media-body">
+                                            <h4 class="media-heading"><a href="#" class="c-font-bold">Sean</a> on <span class="c-date">23 May 2015, 10:40AM</span></h4>
+                                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo.
+                                            Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
+                                        </div>
+                                    </div>
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <a href="#">
+                                                <img class="media-object" alt="" src="~/Content/jango/assets/base/img/content/team/team3.jpg">
+                                            </a>
+                                        </div>
+                                        <div class="media-body">
+                                            <h4 class="media-heading"><a href="#" class="c-font-bold">Strong Strong</a> on <span class="c-date">21 May 2015, 11:40AM</span></h4>
+                                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo.
+                                            Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
+                                            <div class="media">
+                                                <div class="media-left">
+                                                    <a href="#">
+                                                        <img class="media-object" alt="" src="~/Content/jango/assets/base/img/content/team/team4.jpg">
+                                                    </a>
+                                                </div>
+                                                <div class="media-body">
+                                                    <h4 class="media-heading"><a href="#" class="c-font-bold">Emma Stone</a> on <span class="c-date">30 May 2015, 9:40PM</span></h4>
+                                                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo.
+                                                    Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <a href="#">
+                                                <img class="media-object" alt="" src="~/Content/jango/assets/base/img/content/team/team7.jpg">
+                                            </a>
+                                        </div>
+                                        <div class="media-body">
+                                            <h4 class="media-heading"><a href="#" class="c-font-bold">Nick Nilson</a> on <span class="c-date">30 May 2015, 9:40PM</span></h4>
+                                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio,
+                                            vestibulum in vulputate at, tempus viverra turpis.
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="c-content-title-1">
+                                    <h3 class="c-font-uppercase c-font-bold">Leave A Comment</h3>
+                                    <div class="c-line-left"></div>
+                                </div>
+
+                                <form action="#">
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Your Name" class="form-control c-square">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Your Email" class="form-control c-square">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Your Website" class="form-control c-square">
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea rows="8" name="message" placeholder="Write comment here ..." class="form-control c-square"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn c-theme-btn c-btn-uppercase btn-md c-btn-sbold btn-block c-btn-square">Submit</button>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- BEGIN BOTTOM AD -->
+                    <div>
+
+                    </div>
+                    <!-- END BOTTOM AD -->
+                </div>
+            </div>
+            <!-- END MAIN CONTENT AREA -->
+        </div>
+    </div>
+</div>
+<!-- END: BLOG LISTING  -->
+<!-- END: PAGE CONTENT -->
+<!-- END: PAGE CONTAINER -->
+
+<script id="template/pagination/orangepagination.html" type="text/ng-template">
+    <ul class="c-content-pagination c-square c-theme">
+        <li ng-if="::boundaryLinks" ng-class="{disabled: noPrevious()||ngDisabled}"><a href="#" ng-click="selectPage(1, $event)"><i class="fa fa-angle-double-left"></i></a></li>
+        <li ng-if="::directionLinks" ng-class="{disabled: noPrevious()||ngDisabled}"><a href="#" ng-click="selectPage(page - 1, $event)"><i class="fa fa-angle-left"></i></a></li>
+        <li ng-repeat="page in pages track by $index" ng-class="{'c-active': page.active}"><a href="#" ng-click="selectPage(page.number, $event)">{{page.text}}</a></li>
+        <li ng-if="::directionLinks" ng-class="{disabled: noNext()||ngDisabled}"><a href="#" ng-click="selectPage(page + 1, $event)"><i class="fa fa-angle-right"></i></a></li>
+        <li ng-if="::boundaryLinks" ng-class="{disabled: noNext()||ngDisabled}"><a href="#" ng-click="selectPage(totalPages, $event)"><i class="fa fa-angle-double-right"></i></a></li>
+    </ul>
+</script>
+
+<script type="text/ng-template" id="CreateEditReport.html">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()">
+            <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title">Update Report</h4>
+    </div>
+    <div class="modal-body">
+        <label class="control-label">Name:</label>
+        <input type="text" class="form-control c-square c-theme input-lg" placeholder="Enter Report Name" ng-model="reportName">
+        <div class="c-margin-t-5">
+            <textarea ng-model="comments" class="form-control c-square c-theme input-lg" style="min-height: 250px;" placeholder="Enter Description Here"></textarea>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-lg c-theme-btn c-btn-square c-btn-uppercase c-btn-bold" ng-click="ok()">OK</button>
+        <button type="submit" class="btn btn-lg btn-default c-btn-square c-btn-uppercase c-btn-bold" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+
+<script type="text/ng-template" id="ConfirmDelete.html">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()">
+            <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title">Confirm Delete</h4>
+    </div>
+    <div class="modal-body">
+        <label class="control-label">Delete this report?</label>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-lg c-theme-btn c-btn-square c-btn-uppercase c-btn-bold" ng-click="ok()">YES</button>
+        <button type="submit" class="btn btn-lg btn-default c-btn-square c-btn-uppercase c-btn-bold" ng-click="cancel()">NO</button>
+    </div>
+</script>
+
+@section ready{
+    <!-- BEGIN TRIGGER ORANGE APP ANGULAR CONTROLLER(S) -->
+    <script>
+            angular.module('triggerOrangeApp', ['orange', 'ngAnimate', 'ui.bootstrap', 'ngSanitize'])
+                //*** Main Controller ***
+            .controller('triggerOrangeCtlr', function ($scope, $http, $window, $uibModal) {
+
+               $scope.blogName = "@Model.Category";
+            });
+    </script>
+    <!-- END TRIGGER ORANGE APP ANGULAR CONTROLLER(S) -->
+}
+

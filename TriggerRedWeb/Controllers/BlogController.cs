@@ -26,37 +26,42 @@ namespace CipherPark.TriggerOrange.Web.Controllers
                     blog = db.Blogs.FirstOrDefault(x => x.Id == id);
                 }
             }
+
             return View(new RecentBlogPosts
             {
                 BlogId = blog?.Id,
                 BlogName = BlogPages.All.FirstOrDefault(x => x.Name == blog?.Name)?.Caption,
             });
-        }
+        }       
 
-        /*
-        public ActionResult Post(long id)
-        {
-            BlogPostViewModel model = new BlogPostViewModel();
+       
+        public ActionResult SinglePost(long id)
+        {           
             using (var db = new OrangeEntities())
             {
-                var post = db.BlogPosts.First();
-                model.Content = post.BlogContent;
-                model.CoverImageId = post.CoverImageId;
-                model.CoverImageUrl = CoreServices.ReferenceDataServices.HostedImageUrl(post.CoverImageId);
-                model.DateCreated = post.DateCreated;
-                model.DateModified = post.DateModified;
-                model.ProductKeywords = post.ProductKeywords;
-                model.ProductPrice = post.ProductPrice;
-                model.ProductReferenceId = post.ProductReferenceId;
-                model.ProductSellerScore = post.ProductSellerScore;
-                model.ProductSellerLevel = Util.SellerLevels.ScoreToLevel(model.ProductSellerScore);
-                model.ProductUnitsSold = post.ProductUnitsSold;
-                model.ProductUrl = post.ProductUrl;
-                model.Title = post.Title;
+                var p = db.BlogPosts.First(x => x.Id == id);
+                var model = new BlogPostModel()
+                {
+                    Id = p.Id,
+                    Content = p.BlogContent,
+                    Summary = p.BlogSummary,
+                    Title = p.Title,
+                    DateCreated = p.DateCreated.ToUnixMilliseconds(),
+                    DateModified = p.DateModified.ToUnixMilliseconds(),
+                    ProductPrice = p.ProductPrice,
+                    ProductSellerScore = p.ProductSellerScore,
+                    ProductUnitsSold = p.ProductUnitsSold,
+                    ProductUrl = p.ProductUrl,
+                    CoverImageId = p.CoverImageId,
+                    CoverImageUrl = ReferenceDataServices.HostedImageUrl(p.CoverImageId),
+                    ProductSellerLevel = TriggerRed.Web.Util.SellerLevels.ScoreToLevel(p.ProductSellerScore),
+                    ProductListingDate = p.ProductListingDate.GetValueOrDefault().ToUnixMilliseconds(),
+                    ProductCategory = p.ProductCategory,
+                    Category = p.Blog.Caption,
+                };
                 return View(model);
             }
-        }
-        */
+        }        
 
         public JsonResult GetPosts(int pageSize, int currentPage, string sortKey, Guid? blogId, string keywords)
         {

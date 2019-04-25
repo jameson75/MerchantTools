@@ -45,7 +45,7 @@ namespace CipherPark.TriggerRed.Web.Models
         public static long ToUnixMilliseconds(this DateTime dateTime)
         {
             return (long)(dateTime.ToUniversalTime() - _UnixEpoc).TotalMilliseconds;
-        }
+        }        
     }
 
     public static class AsHtmlSafeExtension

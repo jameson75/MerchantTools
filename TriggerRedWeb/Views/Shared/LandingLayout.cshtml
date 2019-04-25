@@ -33,9 +33,9 @@
     <link href="~/Content/jango/assets/demos/default/css/themes/red1.css" rel="stylesheet" id="style_theme" type="text/css" />
     <link href="~/Content/jango/assets/demos/default/css/custom.css" rel="stylesheet" type="text/css" />
     <!-- END THEME STYLES -->
-    <link rel="shortcut icon" href="~/Content/tr-icon.ico" />   
+    <link rel="shortcut icon" href="~/Content/tr-icon.ico" />
     @RenderSection("links", false)
-    @RenderSection("localcss", false) 
+    @RenderSection("localcss", false)
 </head>
 <body class="c-layout-header-fixed c-layout-header-mobile-fixed c-layout-header-fullscreen">
     <div ng-app="triggerOrangeApp">
@@ -63,7 +63,7 @@
                                 </button>
                                 <button class="c-search-toggler" type="button">
                                     <i class="fa fa-search"></i>
-                                </button>                               
+                                </button>
                             </div>
                             <!-- END: BRAND -->
                             <!-- BEGIN: QUICK SEARCH -->
@@ -77,50 +77,53 @@
                             <!-- BEGIN: MEGA MENU -->
                             <!-- Dropdown menu toggle on mobile: c-toggler class can be applied to the link arrow or link itself depending on toggle mode -->
                             <nav class="c-mega-menu c-pull-right c-mega-menu-dark c-mega-menu-dark-mobile c-fonts-uppercase c-fonts-bold">
-                                <nav class="c-mega-menu c-pull-right c-mega-menu-dark c-mega-menu-dark-mobile c-fonts-uppercase c-fonts-bold">
-                                    <ul class="nav navbar-nav c-theme-nav">
-                                        <li>
-                                            <a href="~/Blog/RecentPosts" class="c-link">
-                                                Blog
-                                                <span class="c-arrow c-toggler"></span>
-                                            </a>                                           
-                                        </li>   
-                                        <li>
-                                            <a href="~/Insights/Index" class="c-link dropdown-toggle">
-                                                Insights
-                                                <span class="c-arrow c-toggler"></span>
-                                            </a>
-                                            <ul class="dropdown-menu c-menu-type-classic c-pull-left">
-                                                <li>
-                                                    <a href="~/Insights/SearchProducts">Search Products</a>
-                                                </li>
-                                                <li>
-                                                    <a href="~/Insights/Strategy">Our Strategy</a>
-                                                </li>
-                                            </ul>
-                                        </li> 
-                                        <li>
-                                            <a href="~/Accounts/Subscribe" class="c-link">
-                                                Subscribe
-                                                <span class="c-arrow c-toggler"></span>
-                                            </a>
-                                        </li>   
-                                        <li>
-                                            <a href="~/Home/About" class="c-link dropdown-toggle">
-                                                About
-                                                <span class="c-arrow c-toggler"></span>
-                                            </a>
-                                            <ul class="dropdown-menu c-menu-type-classic c-pull-left">
-                                                <li>
-                                                    <a href="~Home/About">About Us</a>
-                                                </li>
-                                                <li>
-                                                    <a href="~Home/ContactUs">Contact Us</a>
-                                                </li>
-                                            </ul>
-                                        </li>                                                                   
-                                    </ul>
-                                </nav>
+                                <ul class="nav navbar-nav c-theme-nav">
+                                    <li>
+                                        <a href="~/Insights/Explore" class="c-link">
+                                            Explore
+                                            <span class="c-arrow c-toggler"></span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="~/Blog/RecentPosts" class="c-link">
+                                            Blog
+                                            <span class="c-arrow c-toggler"></span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="~/Home/About" class="c-link dropdown-toggle">
+                                            About
+                                            <span class="c-arrow c-toggler"></span>
+                                        </a>
+                                        <ul class="dropdown-menu c-menu-type-mega c-menu-type-classic" style="min-width: auto">
+                                            <li>
+                                                <ul class="dropdown-menu c-menu-type-inline">
+                                                    <li>
+                                                        <a href="~/Home/About">About Us</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="~/Home/ReleaseNotes">Release Notes</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <ul class="dropdown-menu c-menu-type-inline">
+                                                    <li>
+                                                        <a href="~/Home/About#guide">How To</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="~/Home/About#faq">FAQs</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="~/Home/About#contact">Contact Us</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+
+
                             </nav>
                             <!-- END: MEGA MENU --><!-- END: LAYOUT/HEADERS/MEGA-MENU -->
                             <!-- END: HOR NAV -->
@@ -241,7 +244,7 @@
                 </div>
             </div><!-- END: CONTENT/USER/LOGIN-FORM -->
             @RenderBody()
-            
+
         </div>
     </div>
     <!-- BEGIN: LAYOUT/BASE/BOTTOM -->

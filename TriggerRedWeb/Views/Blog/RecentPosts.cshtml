@@ -9,7 +9,7 @@
     <div class="c-layout-breadcrumbs-1 c-fonts-uppercase c-fonts-bold c-bordered c-bordered-both">
         <div class="container">
             <div class="c-page-title c-pull-left">
-                <h3 class="c-font-uppercase c-font-sbold">Insights</h3>
+                <h3 class="c-font-uppercase c-font-sbold">Recent Blogs</h3>
             </div>
         </div>
     </div><!-- END: LAYOUT/BREADCRUMBS/BREADCRUMBS-1 -->
@@ -46,7 +46,7 @@
                 <!-- BEGIN MAIN CONTENT AREA -->
                 <div class="col-md-9 col-md-pull-3">
                     <div class="c-content-title-1 c-theme c-title-md">
-                        <h3 class="c-font-bold c-font-uppercase"><span class="c-font-grey-3">@(Model.BlogName ?? "All") </span>Posts</h3>
+                        <h3 class="c-font-bold c-font-uppercase">SHOWING <span class="c-font-grey-3">@(Model.BlogName ?? "All") </span>Posts</h3>
                         <div class="c-line-left c-theme-bg"></div>
                     </div>
                     <!-- BEGIN POSTS -->
@@ -56,9 +56,8 @@
                                 <div class="c-content-blog-post-card-1 c-option-2 c-bordered" ng-repeat="post in posts1" >
                                     <div class="c-media c-content-overlay">
                                         <div class="c-overlay-wrapper">
-                                            <div class="c-overlay-content">
-                                                <a href="#"><i class="icon-link"></i></a>
-                                                <a href="{{post.CoverImageUrl}}" data-lightbox="fancybox" data-fancybox-group="gallery" style="height:250px;width:100%">
+                                            <div class="c-overlay-content">                                                
+                                                <a href="~/Blog/SinglePost/{{post.Id}}" target="_blank" data-lightbox="fancybox" data-fancybox-group="gallery" style="height:250px;width:100%">
                                                     <i class="icon-magnifier"></i>
                                                 </a>
                                             </div>
@@ -67,7 +66,7 @@
                                     </div>
                                     <div class="c-body">
                                         <div class="c-title c-font-bold c-font-uppercase">
-                                            <a href="#">{{post.Title}}</a>
+                                            <a href="~/Blog/SinglePost/{{post.Id}}" target="_blank">{{post.Title}}</a>
                                         </div>
                                         <div class="c-author">
                                             By <a href="#"><span class="c-font-uppercase">T.R. Staff</span></a>

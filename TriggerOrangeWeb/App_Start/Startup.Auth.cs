@@ -50,7 +50,7 @@ namespace CipherPark.TriggerOrange.Web
                         {
                             Id = blogPage.Id,
                             Name = blogPage.Name,
-                            Title = blogPage.Caption
+                            Caption = blogPage.Caption
                         });
                 }
                 db.SaveChanges();                
