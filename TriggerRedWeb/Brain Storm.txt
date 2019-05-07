@@ -6,6 +6,7 @@ Registered Domains
 
 Project ideas.
 
+
 Financial Dashboard
 	-Javascript:
 		-Support for JQuery, AngularJS, Angular2+, ReactJS, Vue
@@ -22,6 +23,7 @@ Liquid Real Estate Portfolio Manager
 	- Valuation/Modeling
 	- IP's
 		www.liquidfort.com		
+Leverage approval process in smart contract??
 		
 Crowd Video
 
@@ -63,7 +65,7 @@ Social Collab
 Moderated Chat:
 - Round Robin discussion
 
-Leverage approval process in smart contract??
+
 
 	
 

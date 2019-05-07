@@ -115,6 +115,12 @@ HL: GoLang
 Ethereum: Solidity
 
 
-
-
 https://learn.g2crowd.com/2019-fintech-trends
+
+----------------------------------------------------------------------------------------------------
+
+
+Flexible Exchange 
+	- Trading Desks
+	(Alpha Point)
+	

@@ -25,6 +25,8 @@ namespace CipherPark.TriggerRed.Web.Models
         public long ProductListingDate { get; set; }
         public string ProductCategory { get; set; }
         public string Summary { get; set; }
+        public long? PrevId { get; internal set; }
+        public long? NextId { get; internal set; }
     }
 
     public static class DateTimeHelper
@@ -32,7 +34,7 @@ namespace CipherPark.TriggerRed.Web.Models
         private static readonly DateTime _UnixEpoc = new DateTime(1970, 1, 1);
         public static DateTime FromUnixMilliseconds(long dateTime)
         {
-            return DateTime.MinValue.AddMilliseconds(dateTime + (_UnixEpoc - DateTime.MinValue).TotalMilliseconds);
+            return DateTime.MinValue.AddMilliseconds(dateTime + (_UnixEpoc - DateTime.MinValue).TotalMilliseconds).ToLocalTime();
         }
     }
 }

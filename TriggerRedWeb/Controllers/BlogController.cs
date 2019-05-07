@@ -40,6 +40,12 @@ namespace CipherPark.TriggerOrange.Web.Controllers
             using (var db = new OrangeEntities())
             {
                 var p = db.BlogPosts.First(x => x.Id == id);
+                var next = db.BlogPosts.OrderBy(x => x.Id)
+                                       .FirstOrDefault(x => x.Id < id)
+                                       ?.Id;
+                var prev = db.BlogPosts.OrderBy(x => x.Id)
+                                       .FirstOrDefault(x => x.Id > id)
+                                       ?.Id;                                       
                 var model = new BlogPostModel()
                 {
                     Id = p.Id,
@@ -58,6 +64,8 @@ namespace CipherPark.TriggerOrange.Web.Controllers
                     ProductListingDate = p.ProductListingDate.GetValueOrDefault().ToUnixMilliseconds(),
                     ProductCategory = p.ProductCategory,
                     Category = p.Blog.Caption,
+                    PrevId = prev,
+                    NextId = next,
                 };
                 return View(model);
             }
