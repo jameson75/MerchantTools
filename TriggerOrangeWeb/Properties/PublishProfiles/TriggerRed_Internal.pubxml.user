@@ -6,20 +6,20 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>C:\Users\EUGENE\Documents\Projects\Deployments\TriggerOrange\v0.8\Web</_PublishTargetUrl>
+    <_PublishTargetUrl>C:\Users\EUGENE\Documents\Projects\Deployments\TriggerRed\0.1\Web\Back</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/AlibabaLib.dll">
-      <publishTime>05/31/2018 15:17:24</publishTime>
+      <publishTime>05/07/2019 08:42:37</publishTime>
     </File>
     <File Include="bin/AlibabaLib.pdb">
-      <publishTime>05/31/2018 15:17:24</publishTime>
+      <publishTime>05/07/2019 08:42:37</publishTime>
     </File>
     <File Include="bin/AmazonLib.dll">
-      <publishTime>05/31/2018 15:17:23</publishTime>
+      <publishTime>05/07/2019 08:42:36</publishTime>
     </File>
     <File Include="bin/AmazonLib.pdb">
-      <publishTime>05/31/2018 15:17:23</publishTime>
+      <publishTime>05/07/2019 08:42:36</publishTime>
     </File>
     <File Include="bin/Antlr3.Runtime.dll">
       <publishTime>02/22/2013 08:43:40</publishTime>
@@ -28,19 +28,22 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/22/2013 08:43:40</publishTime>
     </File>
     <File Include="bin/BestBuyLib.dll">
-      <publishTime>05/31/2018 15:17:23</publishTime>
+      <publishTime>05/07/2019 08:42:36</publishTime>
     </File>
     <File Include="bin/BestBuyLib.pdb">
-      <publishTime>05/31/2018 15:17:23</publishTime>
+      <publishTime>05/07/2019 08:42:36</publishTime>
+    </File>
+    <File Include="bin/DotNetZip.dll">
+      <publishTime>05/07/2018 12:35:40</publishTime>
     </File>
     <File Include="bin/EbayLib.dll">
-      <publishTime>05/31/2018 15:17:23</publishTime>
+      <publishTime>05/07/2019 08:42:36</publishTime>
     </File>
     <File Include="bin/EbayLib.dll.config">
       <publishTime>02/27/2018 10:13:48</publishTime>
     </File>
     <File Include="bin/EbayLib.pdb">
-      <publishTime>05/31/2018 15:17:23</publishTime>
+      <publishTime>05/07/2019 08:42:36</publishTime>
     </File>
     <File Include="bin/EntityFramework.BulkInsert.dll">
       <publishTime>02/15/2016 10:44:19</publishTime>
@@ -172,25 +175,25 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/28/2015 04:04:30</publishTime>
     </File>
     <File Include="bin/TriggerOrangeCore.dll">
-      <publishTime>05/31/2018 15:17:29</publishTime>
+      <publishTime>05/07/2019 08:42:38</publishTime>
     </File>
     <File Include="bin/TriggerOrangeCore.dll.config">
-      <publishTime>02/27/2018 10:13:51</publishTime>
+      <publishTime>02/21/2019 10:39:04</publishTime>
     </File>
     <File Include="bin/TriggerOrangeCore.pdb">
-      <publishTime>05/31/2018 15:17:29</publishTime>
+      <publishTime>05/07/2019 08:42:38</publishTime>
     </File>
     <File Include="bin/TriggerOrangeWeb.dll">
-      <publishTime>05/31/2018 15:39:51</publishTime>
+      <publishTime>05/07/2019 08:42:50</publishTime>
     </File>
     <File Include="bin/TriggerOrangeWeb.pdb">
-      <publishTime>05/31/2018 15:39:51</publishTime>
+      <publishTime>05/07/2019 08:42:50</publishTime>
     </File>
     <File Include="bin/WalmartLib.dll">
-      <publishTime>05/31/2018 15:17:23</publishTime>
+      <publishTime>05/07/2019 08:42:36</publishTime>
     </File>
     <File Include="bin/WalmartLib.pdb">
-      <publishTime>05/31/2018 15:17:23</publishTime>
+      <publishTime>05/07/2019 08:42:36</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>07/17/2013 17:03:52</publishTime>
@@ -203,6 +206,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Content/bootstrap.min.css">
       <publishTime>02/27/2018 10:13:55</publishTime>
+    </File>
+    <File Include="Content/BusyRoomHeroSample.jpg">
+      <publishTime>11/18/2018 23:36:32</publishTime>
+    </File>
+    <File Include="Content/BusyRoomHeroSample_v1.jpg">
+      <publishTime>11/01/2018 22:50:30</publishTime>
     </File>
     <File Include="Content/customized-bootstrap.css">
       <publishTime>02/27/2018 10:13:55</publishTime>
@@ -5245,7 +5254,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/27/2018 10:20:42</publishTime>
     </File>
     <File Include="Content/jango/assets/base/js/components.js">
-      <publishTime>02/27/2018 10:20:42</publishTime>
+      <publishTime>07/21/2018 08:46:04</publishTime>
     </File>
     <File Include="Content/jango/assets/base/media/video/video-1.mp4">
       <publishTime>02/27/2018 10:21:16</publishTime>
@@ -10522,13 +10531,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/09/2017 20:02:19</publishTime>
     </File>
     <File Include="Content/orange/custom-checkbox.css">
-      <publishTime>04/19/2018 08:38:50</publishTime>
+      <publishTime>07/31/2018 11:38:02</publishTime>
     </File>
     <File Include="Content/orange/images/tr-logo3-i.png">
       <publishTime>02/27/2018 10:25:00</publishTime>
     </File>
     <File Include="Content/orange/images/tr-logo3.png">
       <publishTime>02/27/2018 10:25:00</publishTime>
+    </File>
+    <File Include="Content/orange/images/tr-logo4-i.png">
+      <publishTime>12/02/2018 20:41:49</publishTime>
     </File>
     <File Include="Content/orange/images/trigger_red_footer_color.png">
       <publishTime>02/27/2018 10:25:00</publishTime>
@@ -11215,7 +11227,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/27/2018 10:25:01</publishTime>
     </File>
     <File Include="Content/trigger_red_hero_2.jpg">
-      <publishTime>02/27/2018 10:25:01</publishTime>
+      <publishTime>02/22/2019 20:08:50</publishTime>
+    </File>
+    <File Include="Content/trigger_red_hero_3_preview.jpg">
+      <publishTime>11/29/2018 23:43:49</publishTime>
+    </File>
+    <File Include="Content/trigger_red_hero_4_preview.jpg">
+      <publishTime>11/30/2018 14:07:05</publishTime>
     </File>
     <File Include="Content/ui-bootstrap-csp.css">
       <publishTime>02/27/2018 10:25:01</publishTime>
@@ -11236,7 +11254,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/27/2018 10:25:03</publishTime>
     </File>
     <File Include="packages.config">
-      <publishTime>02/27/2018 10:27:26</publishTime>
+      <publishTime>10/05/2018 11:15:21</publishTime>
     </File>
     <File Include="Scripts/ajaxhistory.js">
       <publishTime>02/27/2018 10:25:11</publishTime>
@@ -14391,6 +14409,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/Admin/Dashboard.cshtml">
       <publishTime>04/28/2018 19:48:13</publishTime>
     </File>
+    <File Include="Views/Admin/Scheduler.cshtml">
+      <publishTime>06/30/2018 09:45:01</publishTime>
+    </File>
+    <File Include="Views/Admin/TaskDetails.cshtml">
+      <publishTime>02/27/2018 10:27:14</publishTime>
+    </File>
     <File Include="Views/Admin/TaskManager.cshtml">
       <publishTime>02/27/2018 10:27:14</publishTime>
     </File>
@@ -14400,8 +14424,20 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/Admin/_ViewStart.cshtml">
       <publishTime>02/27/2018 10:27:14</publishTime>
     </File>
+    <File Include="Views/Blog/EditPost.cshtml">
+      <publishTime>04/05/2019 20:04:03</publishTime>
+    </File>
+    <File Include="Views/Blog/PostVoided.cshtml">
+      <publishTime>03/16/2019 09:37:34</publishTime>
+    </File>
+    <File Include="Views/Blog/SearchPosts.cshtml">
+      <publishTime>03/20/2019 20:35:04</publishTime>
+    </File>
     <File Include="Views/Home/About.cshtml">
       <publishTime>02/27/2018 10:27:14</publishTime>
+    </File>
+    <File Include="Views/Home/AdminStart.cshtml">
+      <publishTime>02/22/2019 11:28:58</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
       <publishTime>05/31/2018 19:03:32</publishTime>
@@ -14440,7 +14476,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/17/2018 14:11:44</publishTime>
     </File>
     <File Include="Views/Reports/Details.cshtml">
-      <publishTime>02/27/2018 10:27:15</publishTime>
+      <publishTime>03/07/2019 20:39:08</publishTime>
     </File>
     <File Include="Views/Reports/Details2.cshtml">
       <publishTime>03/27/2018 09:15:30</publishTime>
@@ -14473,7 +14509,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/27/2018 10:27:20</publishTime>
     </File>
     <File Include="Views/Search/HotStarters.cshtml">
-      <publishTime>03/17/2018 10:58:38</publishTime>
+      <publishTime>04/03/2019 22:41:58</publishTime>
     </File>
     <File Include="Views/Search/_PartialProductTable.cshtml">
       <publishTime>02/27/2018 10:27:21</publishTime>
@@ -14488,7 +14524,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/27/2018 10:27:25</publishTime>
     </File>
     <File Include="Views/Shared/_LandingLayout.cshtml">
-      <publishTime>02/27/2018 10:27:25</publishTime>
+      <publishTime>02/22/2019 20:20:10</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
       <publishTime>02/27/2018 10:27:25</publishTime>
@@ -14512,16 +14548,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/27/2018 10:27:25</publishTime>
     </File>
     <File Include="Views/_Shared/_LandingLayout.cshtml">
-      <publishTime>02/27/2018 10:27:25</publishTime>
+      <publishTime>03/20/2019 20:35:04</publishTime>
     </File>
     <File Include="Views/_Shared/_Layout.cshtml">
-      <publishTime>04/19/2018 10:29:09</publishTime>
+      <publishTime>03/20/2019 20:35:04</publishTime>
     </File>
     <File Include="Views/_ViewStart.cshtml">
       <publishTime>02/27/2018 10:27:25</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>05/31/2018 15:18:44</publishTime>
+      <publishTime>05/07/2019 21:58:17</publishTime>
     </File>
   </ItemGroup>
 </Project>
