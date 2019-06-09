@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using CipherPark.TriggerRed.Web.Util;
 
-namespace CipherPark.TriggerOrange.Web.MvcHelpers
+namespace CipherPark.TriggerRed.Web.MvcHelpers
 {
     public static class HtmlHelperExtension
     {
@@ -33,6 +34,12 @@ namespace CipherPark.TriggerOrange.Web.MvcHelpers
             //return new MvcHtmlString($"<a href=\"{href}\" class=\"btn btn-default\">{caption}</a>");
             string toolTip = isUserAuthenticated ? $"Sign Out {html.ViewContext.HttpContext.User.Identity.Name}" : null;
             return new MvcHtmlString($"<a href=\"{href}\" data-toggle=\"{data_toggle}\" data-target=\"{data_target}\" class=\"c-btn-border-opacity-04 c-btn btn-no-focus c-btn-header btn btn-sm c-btn-border-1x c-btn-white c-btn-circle c-btn-uppercase c-btn-sbold\" uib-tooltip=\"{toolTip}\"><i class=\"icon-user\"></i> {caption}</a>");
+        }
+
+        public static MvcHtmlString GetRotatingAd(this HtmlHelper html, string adGroup)
+        {
+            var randomAd = RotatingAd.SelectRandom(RotatingAd.BoxAds);
+            return new MvcHtmlString(randomAd?.HtmlString);
         }
 
         public static MvcHtmlString UnorderedList(this HtmlHelper html, IEnumerable<string> list, object liHtmlElements = null, object ulHtmlElements = null)

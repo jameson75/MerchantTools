@@ -173,6 +173,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\agreements\CookiePolicy.html" />
     <Content Include="Content\agreements\Disclaimer.txt" />
     <Content Include="Content\agreements\Privacy.html" />
     <Content Include="Content\agreements\Terms.txt" />
@@ -208,6 +209,7 @@
     <Content Include="Content\gumbo\ng-notification-bar\example\index.html" />
     <Content Include="Content\gumbo\ng-notification-bar\example\js\app.js" />
     <Content Include="Content\gumbo\ng-notification-bar\src\ngNotificationsBar.js" />
+    <Content Include="Content\inventory_source_ad.jpg" />
     <Content Include="Content\jango\assets\base\css\components-rtl.css" />
     <Content Include="Content\jango\assets\base\css\components.css" />
     <Content Include="Content\jango\assets\base\css\custom-rtl.css" />
@@ -4442,7 +4444,6 @@
     <Content Include="Views\Home\ReleaseNotes.cshtml" />
     <Content Include="Views\Shared\AboutLayout.cshtml" />
     <Content Include="Views\Blog\SinglePost.cshtml" />
-    <Content Include="Views\Shared\BlogLayout.cshtml" />
     <None Include="Web.Internal.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -4486,6 +4487,7 @@
     <Compile Include="Services\CoreDataServices.cs" />
     <Compile Include="Services\ReferenceDataServices.cs" />
     <Compile Include="Services\WCFClientServices.cs" />
+    <Compile Include="Util\RotatingAd.cs" />
     <Compile Include="Util\SellerLevels.cs" />
   </ItemGroup>
   <ItemGroup>

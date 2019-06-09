@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using CipherPark.TriggerOrange.Core.Data;
 using CipherPark.TriggerRed.Web.CoreServices;
+using CipherPark.TriggerRed.Web.Util;
 
 namespace CipherPark.TriggerOrange.Web.Controllers
 {
@@ -19,6 +20,13 @@ namespace CipherPark.TriggerOrange.Web.Controllers
                 var path = db.HostedImages.First(x => x.Id == id).PhysicalPath;                
                 return new FileStreamResult(new System.IO.FileStream(path, System.IO.FileMode.Open), "image/jpeg");                
             }
+        }
+
+        [AllowAnonymous]
+        public ContentResult GetRotatingAd(string adGroup)
+        {
+            var ad = RotatingAd.SelectRandom(RotatingAd.BoxAds);
+            return Content(ad?.HtmlString);
         }
 
         /*

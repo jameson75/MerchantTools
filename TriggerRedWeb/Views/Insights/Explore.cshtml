@@ -1,7 +1,7 @@
 ﻿@model CipherPark.TriggerRed.Web.Models.ExploreProductsViewModel
-
+@using CipherPark.TriggerRed.Web.MvcHelpers;
 @{
-    ViewBag.Title = "Hot Starters";
+    ViewBag.Title = "Explore Early Product Trends | Trigger Red";
 }
 
 <!-- BEGIN: PAGE CONTAINER -->
@@ -10,9 +10,12 @@
     <div class="c-layout-breadcrumbs-1 c-subtitle c-fonts-uppercase c-fonts-bold c-bordered c-bordered-both">
         <div class="container">
             <div class="c-page-title c-pull-left">
-                <h3 class="c-font-uppercase c-font-sbold">Find Product Ideas</h3>
-                <h4 class="">Recent eBay Hot Starters</h4>                
-            </div>            
+                <h3 class="c-font-uppercase c-font-sbold">Early Product Trends</h3>
+                <h4 class="">Research Fast-Selling Products On eBay</h4>                
+            </div>    
+            <div class="c-page-title c-pull-right">
+                <img width="148" height="55" src="https://developer.ebay.com/cms/img/promote/ebay-rightnow-vert.png" />
+            </div>
         </div>
     </div><!-- END: LAYOUT/BREADCRUMBS/BREADCRUMBS-2 -->
     <div class="container" ng-cloak>
@@ -88,14 +91,13 @@
 
             <!-- BEGIN: CONTENT/SHOPS/SHOP-RESULT-FILTER-1 -->
             <div class="c-shop-result-filter-1 clearfix form-inline">
-
                 <div class="c-filter">
                     <label class="control-label c-font-16">Show:</label>
                     <select class="form-control c-square c-theme c-input" ng-model="tableState.pagination.pageSize">
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
+                        <option value="12">12</option>
+                        <option value="24">24</option>
+                        <option value="48">48</option>
+                        <option value="99">99</option>
                     </select>
                 </div>
                 <div class="c-filter">
@@ -107,13 +109,43 @@
                 </div>
             </div>
             <!-- END: CONTENT/SHOPS/SHOP-RESULT-FILTER-1 -->
-
             <div class="c-margin-t-40"></div>
             <div class="c-margin-t-20"></div>
-
             <!-- BEGIN: CONTENT/SHOPS/SHOP-2-8 -->
             <!-- BEGIN: CSS TABLE -->
-
+            <div class="c-bs-grid-small-space" ng-show="!isLoading && !isEmpty">
+                <div class="row" ng-repeat="productRow in productRows" >                    
+                    <div class="col-lg-4 c-margin-b-20" ng-repeat="product in productRow.products">
+                        <div class="c-content-product-2 c-bg-white c-border">
+                            <div class="c-content-overlay">
+                                <div class="c-label c-bg-red c-font-uppercase c-font-white c-font-13 c-font-bold">{{product.SellerLevel}} ({{product.SellerScore}})</div>                                
+                                <div class="c-overlay-wrapper">
+                                    <div class="c-overlay-content">
+                                        <a href="{{product.ProductUrl}}" target="_blank" class="btn btn-md c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">View On eBay</a>
+                                    </div>
+                                </div>
+                                <div class="c-bg-img-center c-overlay-object" data-height="height" style="height: 230px; background-image: url({{product.LargeImageUrl}});"></div>
+                            </div>
+                            <div class="row c-info">
+                                <p class="c-title c-font-16 c-font-slim">{{product.CategoryName}}</p>
+                                <div class="col-xs-4 c-price c-font-14 c-font-slim">
+                                    <span class="c-font-14 c-font-red">{{product.Price|currency}}</span>
+                                </div>
+                                <div class="col-xs-8 c-price c-font-14 c-font-slim">
+                                    Sold <span class="c-font-14 c-font-red">{{product.UnitsSold}}</span> units in 7 days
+                                </div>
+                            </div>
+                            <div class="btn-group btn-group-justified" role="group">
+                                <div class="btn-group c-border-top" role="group">
+                                    <a href="{{product.ProductUrl}}" target="_blank" class="btn btn-sm c-btn-white c-btn-uppercase c-btn-square c-font-grey-3 c-font-white-hover c-bg-red-2-hover c-btn-product">View On eBay</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
+                </div>
+            </div>                       
+            <div class="c-center" ng-bind-html="rotatingAd"></div>
+            @*
             <div class="c-content">
                 <div class="c-content-product-2 c-margin-b-40" ng-repeat="product in products" ng-show="!isLoading && !isEmpty">
                     <div class="row c-margin-b-10">
@@ -175,37 +207,38 @@
                     </div>
                 </div>
             </div>
+            *@
+                <div ng-show="!isLoading && isEmpty">
+                    <div class="c-center">
+                        <span class="c-font-20 c-font-red-1"><i class="fa fa-meh-o fa-5x fa-red"></i></span><br /><br />
+                        <div class="c-desc c-font-20 c-font-bold c-font-grey-3"> NO RESULTS FOUND. TRY <span class="c-font-red-1">AGAIN</span>.</div>
+                    </div>
+                </div>
+                <div ng-show="isLoading">
+                    <div class="c-center">
+                        <span class="c-font-20 c-font-red-1"><i class="fa fa-spinner fa-pulse fa-5x"></i></span><br /><br />
+                        <div class="c-desc c-font-20 c-font-bold c-font-grey-3"> LOADING RESULTS. PLEASE <span class="c-font-red-1">WAIT</span>.</div>
+                    </div>
+                </div>
 
-            <div ng-show="!isLoading && isEmpty">
+                <!-- END CSS TABLE -->
+                <!-- END: CONTENT/SHOPS/SHOP-2-8 -->
+                <div class="c-margin-t-20"></div>
                 <div class="c-center">
-                    <span class="c-font-20 c-font-red-1"><i class="fa fa-meh-o fa-5x fa-red"></i></span><br /><br />
-                    <div class="c-desc c-font-20 c-font-bold c-font-grey-3"> NO RESULTS FOUND. TRY <span class="c-font-red-1">AGAIN</span>.</div>
+                    <ul uib-pagination
+                        template-url="template/pagination/orangepagination.html"
+                        ng-model="tableState.pagination.currentPage"
+                        ng-change="onPageChanged()"
+                        max-size="10"
+                        total-items="tableState.pagination.totalItemCount"
+                        boundary-link-numbers="true"
+                        items-per-page="tableState.pagination.pageSize"
+                        class="pagination-sm"
+                        rotate="false"
+                        ng-show="!isLoading && !isEmpty"></ul>
                 </div>
             </div>
-            <div ng-show="isLoading">
-                <div class="c-center">
-                    <span class="c-font-20 c-font-red-1"><i class="fa fa-spinner fa-pulse fa-5x"></i></span><br /><br />
-                    <div class="c-desc c-font-20 c-font-bold c-font-grey-3"> LOADING RESULTS. PLEASE <span class="c-font-red-1">WAIT</span>.</div>
-                </div>
-            </div>
 
-            <!-- END CSS TABLE -->
-            <!-- END: CONTENT/SHOPS/SHOP-2-8 -->
-            <div class="c-margin-t-20"></div>
-            <div class="c-center">
-                <ul uib-pagination
-                    template-url="template/pagination/orangepagination.html"
-                    ng-model="tableState.pagination.currentPage"
-                    ng-change="onPageChanged()"
-                    max-size="10"
-                    total-items="tableState.pagination.totalItemCount"
-                    boundary-link-numbers="true"
-                    items-per-page="tableState.pagination.pageSize"
-                    class="pagination-sm"
-                    rotate="false"
-                    ng-show="!isLoading && !isEmpty"></ul>
-            </div>
-        </div>
     </div>
 </div>
 <!-- END: PAGE CONTAINER -->
@@ -261,13 +294,13 @@
 @section ready{
     <!-- BEGIN TRIGGER ORANGE APP ANGULAR CONTROLLER(S) -->
     <script>
-        angular.module('triggerOrangeApp', ['orange', 'ngAnimate', 'ui.bootstrap', 'ngCookies'])
+        angular.module('triggerOrangeApp', ['orange', 'ngAnimate', 'ngSanitize', 'ui.bootstrap', 'ngCookies'])
             //*** Main Controller ***
             .controller('triggerOrangeCtlr', function ($scope, $http, $window, $uibModal, $cookies) {
                 $scope.tableState = {
                     pagination: {
                         currentPage: 1,
-                        pageSize: "10",
+                        pageSize: "12",
                         totalItemCount: 0
                     },
                 };
@@ -319,19 +352,21 @@
                         tableState.pagination.currentPage = result.currentPage;
                         tableState.pagination.totalItemCount = result.totalItemCount;
                         $scope.products = result.products;
+                        $scope.productRows = $scope.createProductRows(result.products, tableState.pagination.pageSize, 3);
                         //$scope.listedProductIds = result.listedProductIds;
                         $scope.isLoading = false;
                         $scope.isEmpty = result.products.length == 0;
                         $scope.saveCache();
+                        $scope.getRotatingAd();
                     }).error(function (result) {
                         $scope.isLoading = false;
                         $scope.isEmpty = true;
                     });
                 };
 
-                $scope.onSearchClick = function () {                    
+                $scope.onSearchClick = function () {
                     $scope.tableState.pagination.currentPage = 1;
-                    $scope.getProductsPipe($scope.tableState);
+                    $scope.getProductsPipe($scope.tableState);                
                 };
 
                 $scope.onClearClick = function () {
@@ -364,8 +399,8 @@
 
                 $scope.isProductListed = function (productId) {
                     return $scope.listedProductIds.find(function (id) { return id == productId; });
-                };              
-        
+                };
+
                 $scope.onPageChanged = function () {
                     $window.scrollTo(0, 0);
                     $scope.getProductsPipe($scope.tableState);
@@ -382,12 +417,12 @@
                         {
                             category: $scope.selectedValues.rootCategory,
                             keywords: $scope.keywords,
-                            tableState : $scope.tableState
+                            tableState: $scope.tableState
                         });
                     $cookies.put('explore-cache', cacheString);
                 };
 
-                $scope.restoreCache = function () {                    
+                $scope.restoreCache = function () {
                     var cacheString = $cookies.get('explore-cache');
                     if (cacheString != null) {
                         var cacheObj = JSON.parse(cacheString);
@@ -400,6 +435,28 @@
                 $scope.Init = function () {
                     //$scope.restoreCache();
                     $scope.getProductsPipe($scope.tableState);
+                };
+
+                $scope.createProductRows = function (products, pageSize, nColumns) {
+                    var nGridColumns = nColumns;
+                    var nGridRows = Math.floor(pageSize / nGridColumns);
+                    if ((pageSize % nGridColumns) != 0)
+                        nGridRows++;
+                    var productRows = [];
+                    for (var i = 0; i < nGridRows; i++)
+                        productRows.push({
+                            products: products.slice(i * nGridColumns, Math.min(i * nGridColumns + nGridColumns, products.length)),
+                        });
+                    return productRows;
+                };
+
+                $scope.getRotatingAd = function () {
+                    var postData = {
+                        adGroup: null
+                    };
+                    $http.post('@Url.Action("GetRotatingAd", "HostedImage")', postData).success(function (result) {
+                        $scope.rotatingAd = result;
+                    });
                 };
 
                 $scope.Init();

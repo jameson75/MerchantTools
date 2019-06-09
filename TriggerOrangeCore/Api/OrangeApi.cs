@@ -1017,6 +1017,8 @@ namespace CipherPark.TriggerOrange.Core
                 var tx = db.Database.BeginTransaction();
                 try
                 {
+                    //override default timeout of 30 seconds and allow 60 seconds to transfer.
+                    db.Database.CommandTimeout = 60;
                     //Clear product table.
                     db.Database.ExecuteSqlCommand(@"DELETE Product WHERE CategoryId IN 
                                                     (SELECT Id FROM Category
