@@ -95,10 +95,10 @@
                 <div class="c-filter">
                     <label class="control-label c-font-16">Show:</label>
                     <select class="form-control c-square c-theme c-input" ng-model="tableState.pagination.pageSize">
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
+                        <option value="12">12</option>
+                        <option value="24">24</option>
+                        <option value="48">48</option>
+                        <option value="99">99</option>
                     </select>
                 </div>
                 <div class="c-filter">
@@ -113,10 +113,42 @@
 
             <div class="c-margin-t-40"></div>
             <div class="c-margin-t-20"></div>
-
             <!-- BEGIN: CONTENT/SHOPS/SHOP-2-8 -->
-            <!-- BEGIN: CSS TABLE -->
-            
+            <!-- BEGIN: CSS TABLE -->           
+            <div class="c-bs-grid-small-space" ng-show="!isLoading && !isEmpty">
+                <div class="row" ng-repeat="productRow in productRows">
+                    <div class="col-lg-4 c-margin-b-20" ng-repeat="product in productRow.products">
+                        <div class="c-content-product-2 c-bg-white c-border">
+                            <div class="c-content-overlay">
+                                <div class="c-label c-bg-red c-font-uppercase c-font-white c-font-13 c-font-bold">{{product.SellerLevel}} ({{product.SellerScore}})</div>
+                                <div class="c-overlay-wrapper">
+                                    <div class="c-overlay-content">
+                                        <a href="{{product.ProductUrl}}" target="_blank" class="btn btn-md c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">View On eBay</a>
+                                    </div>
+                                </div>
+                                <div class="c-bg-img-center c-overlay-object" data-height="height" style="height: 230px; background-image: url({{product.LargeImageUrl}});"></div>
+                            </div>
+                            <div class="row c-info">
+                                <p class="c-title c-font-16 c-font-slim">{{product.CategoryName}}</p>
+                                <div class="col-xs-4 c-price c-font-14 c-font-slim">
+                                    <span class="c-font-14 c-font-red">{{product.Price|currency}}</span>
+                                </div>
+                                <div class="col-xs-8 c-price c-font-14 c-font-slim">
+                                    Sold <span class="c-font-14 c-font-red">{{product.UnitsSold}}</span> units in 7 days
+                                </div>
+                            </div>
+                            <div class="btn-group btn-group-justified" role="group">
+                                <div class="btn-group c-border-top" role="group">
+                                    <button class="btn btn-sm c-btn-white c-btn-uppercase c-btn-square c-font-grey-3 c-font-white-hover c-bg-red-2-hover c-btn-product" ng-click="onAddProductToSpotLight(product.Id)">
+                                        Add To Spot Light
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>            
+            @*
             <div class="c-content">
                 <div class="c-content-blog-post-1 c-margin-b-40" ng-repeat="product in products" ng-show="!isLoading && !isEmpty">
                     <div class="row c-margin-b-10">
@@ -167,15 +199,15 @@
                             </div>
                             <div class="row c-margin-t-5">
                                 <div class="col-md-12">
-                                <a href="/Blog/NewPost?sourceId={{product.Id}}&sourceType=product" target="_blank" style="width:125px" class="btn btn-lg btn-default c-btn-square c-btn-uppercase c-btn-bold">Blog This</a>
-                                <button class="btn btn-lg btn-default c-btn-square c-btn-uppercase c-btn-bold" ng-click="onBeginAddProductToReport(product.Id)">Save This</button>
+                                <!--<a href="/Blog/NewPost?sourceId={{product.Id}}&sourceType=product" target="_blank" style="width:125px" class="btn btn-lg btn-default c-btn-square c-btn-uppercase c-btn-bold">Blog This</a>-->
+                                <button class="btn btn-lg btn-default c-btn-square c-btn-uppercase c-btn-bold" ng-click="onBeginAddProductToSpotLight(product.Id)">Save This</button>
                                 </div>
                             </div>
                         </div>
                     </div>                        
                 </div>
             </div>               
-
+            *@
             <div ng-show="!isLoading && isEmpty">
                 <div class="c-center">
                     <span class="c-font-20 c-font-red-1"><i class="fa fa-meh-o fa-5x fa-red"></i></span><br /><br />
@@ -198,7 +230,7 @@
                     template-url="template/pagination/orangepagination.html"
                     ng-model="tableState.pagination.currentPage"
                     ng-change="onPageChanged()"
-                    max-size="10"
+                    max-size="12"
                     total-items="tableState.pagination.totalItemCount"
                     boundary-link-numbers="true"
                     items-per-page="tableState.pagination.pageSize"
@@ -253,7 +285,7 @@
                 $scope.tableState = {
                     pagination: {
                         currentPage: 1,
-                        pageSize: "10",
+                        pageSize: "12",
                         totalItemCount: 0
                     },
                 };
@@ -305,6 +337,7 @@
                        tableState.pagination.currentPage = result.currentPage;
                        tableState.pagination.totalItemCount = result.totalItemCount;
                        $scope.products = result.products;
+                       $scope.productRows = $scope.createProductRows(result.products, tableState.pagination.pageSize, 3);
                        //$scope.listedProductIds = result.listedProductIds;
                        $scope.isLoading = false;
                        $scope.isEmpty = result.products.length == 0;
@@ -336,6 +369,40 @@
                    return $scope.listedProductIds.find(function (id) { return id == productId; });
                };
 
+               $scope.onAddProductToSpotLight = function (productId) {
+                   var postData = {
+                           productId: productId,                          
+                   };
+                   $http.post('@Url.Action("AddProductToSpotLight", "Product")', postData).success(function (result) {
+                        var notificationType = null;
+                        if (result.isError)
+                            notificationType = "error";
+                        else {
+                            notificationType = "success";
+                            //if(!$scope.listedProductIds.includes(productId))
+                            //    $scope.listedProductIds.push(productId);
+                        }
+                        $scope.notifications.push({ type: notificationType, data: result.message, timeStamp: new Date().getTime() });
+                    }).error(function (result) {
+                        var errorMessage = "Request failed.";
+                        $scope.notifications.push({ type: "error", data: errorMessage, timeStamp: new Date().getTime() });
+                    });
+               };
+
+               $scope.createProductRows = function (products, pageSize, nColumns) {
+                   var nGridColumns = nColumns;
+                   var nGridRows = Math.floor(pageSize / nGridColumns);
+                   if ((pageSize % nGridColumns) != 0)
+                       nGridRows++;
+                   var productRows = [];
+                   for (var i = 0; i < nGridRows; i++)
+                       productRows.push({
+                           products: products.slice(i * nGridColumns, Math.min(i * nGridColumns + nGridColumns, products.length)),
+                       });
+                   return productRows;
+               };
+
+               @*
                $scope.onBeginAddProductToReport = function (productId) {
                    const modalInstance = $uibModal.open({
                        "templateUrl": "AddProduct.html",
@@ -345,12 +412,12 @@
                    modalInstance.result.then(function (result) {
                        if (result.id == 'ok') {
                            //$scope.updateProductsListedStatus();
-                           $scope.AddProductToReport(productId, result.data);                          
+                           $scope.AddProductToReport(productId, result.data);
                        }
                    });
                    return modalInstance;
                };
-                
+                   
                $scope.AddProductToReport = function (productId, reportId) {
                    var postData = {
                            productId: productId,
@@ -371,6 +438,8 @@
                         $scope.notifications.push({ type: "error", data: errorMessage, timeStamp: new Date().getTime() });
                     });
                };
+               *@
+
                $scope.onPageChanged = function () {
                    $window.scrollTo(0, 0);
                    $scope.getProductsPipe($scope.tableState);

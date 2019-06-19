@@ -27,6 +27,11 @@ namespace CipherPark.TriggerRed.Web.CoreServices
             }
         }
 
+        internal static object GetSpotLightPostsForPage(int pageSize, int firstItemIndex, string sortKey, string keywords, bool isPublic, string userId, out int nTotalItemCount)
+        {
+            throw new NotImplementedException();
+        }
+
         internal static List<ProductModel> GetProductsByChildCategoryForPage(int pageSize, int firstItemIndex, long categoryId, string sortKey, ProductSearchFilter filter, out int nTotalItems)
         {
             List<ProductModel> products = new List<ProductModel>();

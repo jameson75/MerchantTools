@@ -142,7 +142,10 @@ namespace CipherPark.Ebay.Api.Trading
     }
 
     public class OrderType
-    { /*TODO: Continute Implementing*/ }
+    {
+        public long OrderLineItemCount { get; set; }
+        /*TODO: Continute Implementing*/
+    }
 
     public class DigitalDeliverySelectedType
     { /*TODO: Continute Implementing*/}

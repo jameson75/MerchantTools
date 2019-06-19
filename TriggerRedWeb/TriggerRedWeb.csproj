@@ -209,7 +209,6 @@
     <Content Include="Content\gumbo\ng-notification-bar\example\index.html" />
     <Content Include="Content\gumbo\ng-notification-bar\example\js\app.js" />
     <Content Include="Content\gumbo\ng-notification-bar\src\ngNotificationsBar.js" />
-    <Content Include="Content\inventory_source_ad.jpg" />
     <Content Include="Content\jango\assets\base\css\components-rtl.css" />
     <Content Include="Content\jango\assets\base\css\components.css" />
     <Content Include="Content\jango\assets\base\css\custom-rtl.css" />
@@ -4444,6 +4443,7 @@
     <Content Include="Views\Home\ReleaseNotes.cshtml" />
     <Content Include="Views\Shared\AboutLayout.cshtml" />
     <Content Include="Views\Blog\SinglePost.cshtml" />
+    <Content Include="Views\SpotLight\Index.cshtml" />
     <None Include="Web.Internal.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -4461,6 +4461,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\SpotLightController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\HostedImageController.cs" />
     <Compile Include="Controllers\InsightsController.cs" />
