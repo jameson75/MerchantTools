@@ -1,69 +1,38 @@
-﻿@using CipherPark.TriggerOrange.Web.Models
+﻿
 @{
-    ViewBag.Title = "Search Posts";
+    ViewBag.Title = "Spot Light";
+    Layout = "~/Views/_Shared/_Layout.cshtml";
 }
 
 <!-- BEGIN: PAGE CONTAINER -->
 <div class="c-layout-page">
-    <!-- BEGIN: LAYOUT/BREADCRUMBS/BREADCRUMBS-1 -->
-    <div class="c-layout-breadcrumbs-1 c-fonts-uppercase c-fonts-bold c-bordered c-bordered-both">
+    <!-- BEGIN: LAYOUT/BREADCRUMBS/BREADCRUMBS-2 -->
+    <div class="c-layout-breadcrumbs-1 c-subtitle c-fonts-uppercase c-fonts-bold c-bordered c-bordered-both">
         <div class="container">
-            <div class="c-page-title">                
-                <h3 class="c-font-uppercase c-font-sbold">Recent Blogs</h3>
-                <h4 class="c-font-uppercase c-font-sbold">@DateTime.Today.ToLongDateString()</h4>                
-            </div>                        
+            <div class="c-page-title c-pull-left">
+                <h3 class="c-font-uppercase c-font-sbold">Spotlight</h3>
+                <h4 class="">Staff Picks for @DateTime.Today.ToString("MMMM yyyy")</h4>
+            </div>
         </div>
-    </div><!-- END: LAYOUT/BREADCRUMBS/BREADCRUMBS-1 -->
-    <!-- BEGIN: PAGE CONTENT -->
-    <!-- BEGIN: BLOG LISTING -->
+    </div>
+    <!-- END: LAYOUT/BREADCRUMBS/BREADCRUMBS-2 -->
     <div class="c-content-box c-size-md">
         <div ng-cloak class="container">
             <div class="row">
-                <!-- BEGIN: CONTENT/BLOG/BLOG-SIDEBAR-1 -->
-                <div class="col-md-3 col-md-push-9 c-margin-b-30">
-                    <!-- BEGIN SEARCH BAR-->
-                    <form action="#" method="post">
-                        <div class="input-group">
-                            <input name="email" type="text" ng-model="keywords" class="form-control c-square c-theme-border" placeholder="Search posts...">
-                            <span class="input-group-btn">
-                                <button class="btn c-theme-btn c-theme-border c-btn-square" type="button" ng-click="onSearchClick()">Go!</button>
-                            </span>
-                        </div>
-                    </form>
-                    <!-- END SEARCH BAR -->
-                    <!-- BEGIN QUICK NAV -->
-                    <div class="c-content-ver-nav">
-                        <div class="c-content-title-1 c-theme c-title-md c-margin-t-40">
-                            <h3 class="c-font-bold c-font-uppercase">CATEGORIES</h3>
-                            <div class="c-line-left c-theme-bg"></div>
-                        </div>
-                        <ul class="c-menu c-arrow-dot c-theme">
-                            <li>                             <a ng-class="{'c-font-red-2' : isActiveBlog(''), 'c-font-bold' : isActiveBlog('')}" href="@Url.Action("RecentPosts")">All</a></li>
-                            <li ng-repeat="cat in categories"><a ng-class="{'c-font-red-2' : isActiveBlog(cat.Caption), 'c-font-bold' : isActiveBlog(cat.Caption)}" href="@Url.Action("RecentPosts")?id={{cat.Id}}">{{cat.Caption}}</a></li>
-                        </ul>
-                    </div>                 
-                </div>
-                <!-- END: CONTENT/BLOG/BLOG-SIDEBAR-1 -->
                 <!-- BEGIN MAIN CONTENT AREA -->
-                <div class="col-md-9 col-md-pull-3">
-                    <div class="c-content-title-1 c-theme c-title-md">
-                        <h3 class="c-font-bold c-font-uppercase">SHOWING <span class="c-font-grey-3">@(Model.BlogName ?? "All") </span>Posts</h3>
-                        <div class="c-line-left c-theme-bg"></div>
-                    </div>
+                <div class="col-md-12">                  
                     <!-- BEGIN POSTS -->
                     <div class="c-content-blog-post-card-1-grid">
                         <div class="row">
-                            <div class="col-md-6">                                
-                                <div class="c-content-blog-post-card-1 c-option-2 c-bordered" ng-repeat="post in posts1" >
+                            <div class="col-md-4">
+                                <div class="c-content-blog-post-card-1 c-option-2 c-bordered" ng-repeat="post in posts1">
                                     <div class="c-media c-content-overlay">
                                         <div class="c-overlay-wrapper">
-                                            <div class="c-overlay-content">                                                
-                                                <a href="~/Blog/SinglePost/{{post.Id}}" target="_blank" data-lightbox="fancybox" data-fancybox-group="gallery" style="height:250px;width:100%">
-                                                    <i class="icon-magnifier"></i>
-                                                </a>
+                                            <div class="c-overlay-content">
+                                                <button ng-click="onEditPost(post)" class="btn btn-md c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">Edit</button>                                               
                                             </div>
                                         </div>
-                                        <img class="c-overlay-object img-responsive" src="{{post.CoverImageUrl}}" alt="" style="height:250px;width:100%">
+                                        <img class="c-overlay-object img-responsive" ng-src="{{post.CoverImageUrl}}" alt="" style="height:250px;width:100%">
                                     </div>
                                     <div class="c-body">
                                         <div class="c-title c-font-bold c-font-uppercase">
@@ -75,7 +44,7 @@
                                         </div>
 
                                         <div class="c-panel">
-                                            <ul class="c-tags c-theme-ul-bg">     
+                                            <ul class="c-tags c-theme-ul-bg">
                                                 <li>{{post.ProductSellerLevel}}</li>
                                                 <li>{{post.ProductPrice | currency}}</li>
                                             </ul>
@@ -87,18 +56,49 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="c-content-blog-post-card-1 c-option-2 c-bordered" ng-repeat="post in posts2">
                                     <div class="c-media c-content-overlay">
                                         <div class="c-overlay-wrapper">
                                             <div class="c-overlay-content">
-                                                <a href="#"><i class="icon-link"></i></a>
-                                                <a href="{{post.CoverImageUrl}}" data-lightbox="fancybox" data-fancybox-group="gallery" style="height:250px;width:100%">
-                                                    <i class="icon-magnifier"></i>
-                                                </a>
+                                                <div class="c-overlay-content">
+                                                    <button ng-click="onEditPost(post)" class="btn btn-md c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">Edit</button>
+                                                </div>
                                             </div>
                                         </div>
-                                        <img class="c-overlay-object img-responsive" src="{{post.CoverImageUrl}}" alt="" style="height:250px;width:100%">
+                                        <img class="c-overlay-object img-responsive" ng-src="{{post.CoverImageUrl}}" alt="" style="height:250px;width:100%">
+                                    </div>
+                                    <div class="c-body">
+                                        <div class="c-title c-font-bold c-font-uppercase">
+                                            <a href="#">{{post.Title}}</a>
+                                        </div>
+                                        <div class="c-author">
+                                            By <a href="#"><span class="c-font-uppercase">T.R. Staff</span></a>
+                                            on <span class="c-font-uppercase">{{post.DateCreated | date:'medium'}}</span>
+                                        </div>
+
+                                        <div class="c-panel">
+                                            <ul class="c-tags c-theme-ul-bg">
+                                                <li>{{post.ProductSellerLevel}}</li>
+                                                <li>{{post.ProductPrice | currency}}</li>
+                                            </ul>
+                                            <div class="c-comments"><a href="#"><i class="icon-fire"></i><span class="c-font-bold"> {{post.ProductUnitsSold}}</span> sold first 7 days</a></div>
+                                        </div>
+                                        <p>
+                                            {{post.Summary}}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="c-content-blog-post-card-1 c-option-2 c-bordered" ng-repeat="post in posts3">
+                                    <div class="c-media c-content-overlay">
+                                        <div class="c-overlay-wrapper">
+                                            <div class="c-overlay-content">
+                                                <button ng-click="onEditPost(post)" class="btn btn-md c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">Edit</button>
+                                            </div>
+                                        </div>
+                                        <img class="c-overlay-object img-responsive" ng-src="{{post.CoverImageUrl}}" alt="" style="height:250px;width:100%">
                                     </div>
                                     <div class="c-body">
                                         <div class="c-title c-font-bold c-font-uppercase">
@@ -127,11 +127,9 @@
                     <!-- END POSTS -->
                     <!-- BEGIN BOTTOM AD -->
                     <div>
-
                     </div>
                     <!-- END BOTTOM AD -->
                 </div>
-
                 <div class="c-center c-margin-t20">
                     <ul uib-pagination
                         template-url="template/pagination/orangepagination.html"
@@ -164,6 +162,27 @@
     </ul>
 </script>
 
+<script type="text/ng-template" id="EditPost.html">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()">
+            <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title">Edit Post</h4>
+    </div>
+    <div class="modal-body">        
+        <div class="row">            
+            <input ng-model="title" type="text" class="form-control c-square c-theme input-lg" placeholder="Title" />
+        </div>          
+        <div class="c-margin-b-20"></div>
+        <div class="row">
+            <textarea ng-model="summary" name="Content" id="Content" class="form-control c-square c-theme input-lg" ng-model="postContent" ng-show="!isPreview" placeholder="Summary" style="min-height: 250px;"></textarea>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-lg c-theme-btn c-btn-square c-btn-uppercase c-btn-bold" ng-click="ok()">OK</button>
+        <button type="submit" class="btn btn-lg btn-default c-btn-square c-btn-uppercase c-btn-bold" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
 
 @section ready{
     <!-- BEGIN TRIGGER ORANGE APP ANGULAR CONTROLLER(S) -->
@@ -174,14 +193,12 @@
                 $scope.tableState = {
                     pagination: {
                         currentPage: 1,
-                        pageSize: 6,
+                        pageSize: 9,
                         totalItemCount: 0
                     },
                 };
                $scope.keywords = null,
                $scope.sortKey = null;
-               $scope.blogId = "@Model.BlogId";
-               $scope.blogName = "@Model.BlogName";
                $scope.isEmpty = false;
                $scope.isLoading = false;
                $scope.isInitializing = true;
@@ -195,18 +212,22 @@
                        "pageSize": tableState.pagination.pageSize,
                        "currentPage": tableState.pagination.currentPage,
                        "sortKey": $scope.sortKey,
-                       "blogId": $scope.blogId,
+                       "category": null,
                        "keywords": $scope.keywords,
                    };
                    $scope.isLoading = true;
                    $scope.isEmpty = true;
-                   $http.post('@Url.Action("GetPosts", "Blog")', postData).success(function (result) {
+                   $http.post('@Url.Action("GetPosts", "Spotlight")', postData).success(function (result) {
                        tableState.pagination.currentPage = result.currentPage;
-                       tableState.pagination.totalItemCount = result.nTotalItemCount;
+                       tableState.pagination.totalItemCount = result.totalItemCount;
                        $scope.posts = result.posts;
-                       var mid = ($scope.tableState.pagination.pageSize / 2);
-                       $scope.posts1 = result.posts.slice(0, mid);
-                       $scope.posts2 = result.posts.slice(mid)
+                       const columnSize = 3;
+                       var rowSize = Math.ceil((Math.min($scope.tableState.pagination.pageSize, result.posts.length) / columnSize));
+                       var col1Height = rowSize;
+                       $scope.posts1 = result.posts.slice(0, col1Height);
+                       var col2Height = Math.ceil((result.posts.length - col1Height) / 2);
+                       $scope.posts2 = result.posts.slice(col1Height, col1Height + col2Height);
+                       $scope.posts3 = result.posts.slice(col1Height + col2Height);
                        $scope.isLoading = false;
                        $scope.isEmpty = result.posts.length == 0;
                        ajaxHistory.Save({
@@ -218,7 +239,7 @@
                };
                $scope.getCategories = function () {
                    var postData = null;
-                   $http.post('@Url.Action("GetCategories", "Blog")', postData).success(function (result) {
+                   $http.post('@Url.Action("GetCategories", "Spotlight")', postData).success(function (result) {
                        $scope.categories = result.categories;
                    });
                };
@@ -236,11 +257,52 @@
                    var lastItemOrdinal = Math.min($scope.tableState.pagination.currentPage * $scope.tableState.pagination.pageSize, $scope.tableState.pagination.totalItemCount);
                    return firstItemOrdinal + " - " + lastItemOrdinal;
                };
-               $scope.isActiveBlog = function (caption) {
-                   return $scope.blogName == caption;
-               }
+               $scope.onEditPost = function (post) {
+                   const modalInstance = $uibModal.open({
+                       "templateUrl": "EditPost.html",
+                       "controller": "ModalInstanceCtrl",
+                       "size": "md",
+                       "resolve": {
+                           input: function () {
+                               return {
+                                   title: post.Title,
+                                   summary: post.Summary,
+                               }
+                           }
+                       },
+                   });
+                   modalInstance.result.then(function (result) {
+                       if (result.id == 'ok') {
+                           //$scope.updateProductsListedStatus();
+                           $scope.EditPost(post.Id, result.data.title, result.data.summary);
+                       }
+                   });
+                   return modalInstance;
+               };
+               $scope.EditPost = function (postId, title, summary) {
+                   var postData = {
+                       postId: postId,
+                       title: title,
+                       summary: summary,
+                   };
+                   $http.post('@Url.Action("EditPost", "Spotlight")', postData).success(function (result) {
+                       $scope.notifications.push({ type: "success", data: "Spotlight Edited", timeStamp: new Date().getTime() });
+                   }).error(function (result) {
+                       $scope.notifications.push({ type: "error", data: errorMessage, timeStamp: new Date().getTime() });
+                   });
+               };
                $scope.getPostsPipe($scope.tableState);
-               $scope.getCategories();
+            }).controller("ModalInstanceCtrl", function ($scope, $uibModalInstance, $http, input) {
+                $scope.title = input.title;
+                $scope.summary = input.summary;
+                $scope.ok = function () {
+                    $uibModalInstance.close({ id: 'ok', data: { title: $scope.title, summary: $scope.summary } });
+                };
+                $scope.cancel = function () {
+                    $uibModalInstance.dismiss({ id: 'cancel', data: null });
+                };
+                $scope.yes = $scope.ok;
+                $scope.no = $scope.cancel;               
             });
     </script>
     <!-- END TRIGGER ORANGE APP ANGULAR CONTROLLER(S) -->

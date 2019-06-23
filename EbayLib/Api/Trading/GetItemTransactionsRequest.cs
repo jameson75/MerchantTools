@@ -17,12 +17,12 @@ namespace CipherPark.Ebay.Api.Trading
         public bool IncludeFinalValueFee { get; set; }
         public bool IncludeVariations { get; set; }
         public string ItemID { get; set; }
-        public DateTime ModTimeFrom { get; set; }
-        public DateTime ModTimeTo { get; set; }
-        public int NumberOfDays { get; set; }
+        public string ModTimeFrom { get; set; }
+        public string ModTimeTo { get; set; }
+        public string NumberOfDays { get; set; }
         public string OrderLineItemID { get; set; }
         public Pagination Pagination { get; set; }
-        public TransactionPlatformCodeType Platform { get; set; }
+        //public TransactionPlatformCodeType Platform { get; set; }
         public string TransactionID { get; set; }
         public string DetailLevel { get; set; }
     }

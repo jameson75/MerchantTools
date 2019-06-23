@@ -87,6 +87,8 @@
     <Compile Include="Api\Shopping\GetMultipleItemsRequest.cs" />
     <Compile Include="Api\Shopping\GetMultipleItemsResponse.cs" />
     <Compile Include="Api\Shopping\EbayShoppingClient.cs" />
+    <Compile Include="Api\Shopping\GetSingleItemRequest.cs" />
+    <Compile Include="Api\Shopping\GetSingleItemResponse.cs" />
     <Compile Include="Api\Trading\EbayTradingClient.cs" />
     <Compile Include="Api\Trading\GetCategoriesRequest.cs" />
     <Compile Include="Api\Trading\GetCategoriesResponse.cs" />

@@ -12,7 +12,7 @@ namespace CipherPark.TriggerOrange.Web.Util
         public static bool IsOrphaned(this HostedImage image)            
         {
             return image.ReportItems.Any() == false &&
-                   image.BlogPosts.Any() == false;
+                   image.SpotlightPosts.Any() == false;
         }
     }
 }

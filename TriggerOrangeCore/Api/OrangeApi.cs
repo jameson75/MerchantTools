@@ -248,71 +248,42 @@ namespace CipherPark.TriggerOrange.Core
             }
         }
 
-        public void UpdateSpotLightItemSales(long spotLightItemId, bool enableTracking = true, bool updateImmediatley = true, int maxDaysLookBack = 10)
+        public void UpdateSalesForSpotLightItems()
         {
-            string operationName = "UpdateEbayProductSalesData";
-            LogOperationInfo(operationName, "Pulling sales data from site");           
+            string operationName = "UpdateSalesForSpotLightItems";
+            LogOperationInfo(operationName, "Pulling sales data from site");
+
+            EbayShoppingClient shoppingClient = new EbayShoppingClient()
+            {
+                AppId = EbayProductionAppId,
+                Version = EbayShoppingApiVersion
+            };
+
             using (var db = new OrangeEntities())
             {
-                var spotLightItem = db.SpotLightItems.First(p => p.Id == spotLightItemId);                
-
-                //Retreive sales data from ebay.
-                LogOperationInfo(operationName, "Retreiving sales data from ebay");
-                EbayTradingClient tradingClient = new EbayTradingClient()
+                var today = DateTime.Today.Date;
+                List<SpotlightSale> newData = new List<SpotlightSale>();
+                foreach (var spotLightItem in db.SpotlightPosts.Where(x => x.DateCreated >= DateTime.Today.AddDays(-30) &&
+                                                                           !x.SpotlightSales.Any(s => s.SnapshotDate >= today)))
                 {
-                    AppId = EbayProductionAppId,
-                    DevId = EbayProductionDevId,
-                    CertId = EbayProductionCertId
-                };
+                    //Retreive sales data from ebay.
+                    LogOperationInfo(operationName, $"Retreiving sales data from ebay for item {spotLightItem.ProductReferenceId}");
 
-                //We will minimize the eBay query payload by only looking back the maximum required days.               
-                var nLookBackDays = spotLightItem.SalesTimestamp == null ? maxDaysLookBack : 
-                                                                          (int)Math.Max(maxDaysLookBack, (DateTime.Today - spotLightItem.SalesTimestamp.Value).TotalDays + 1);
-
-                //Query transaction history for ebay product listing.
-                var transactions = tradingClient.GetItemTransactions(new GetItemTransactionsRequest()
-                {
-                    RequesterCredentials = new RequesterCredentials()
+                    //Query transaction history for ebay product listing.
+                    var item = shoppingClient.GetSingleItem(new GetSingleItemRequest()
                     {
-                        EBayAuthToken = EbayUserTokenMeganova75
-                    },
-                    ItemID = spotLightItem.ProductReferenceId,
-                    NumberOfDays = nLookBackDays,
-                    Platform = TransactionPlatformCodeType.eBay,
-                    IncludeContainingOrder = true,
-                });
+                        ItemID = spotLightItem.ProductReferenceId,
+                    }).Item;
 
-                //Trim away any sales we've already captured for the spotlight item.
-                var transactionsArray = transactions.TransactionArray.Where(x => spotLightItem.SalesTimestamp == null ||
-                                                                                 spotLightItem.SalesTimestamp <= x.CreatedDate);
-
-                //Store uncaptured sales data to database.
-                LogOperationInfo(operationName, "Saving new sales data to database");
-                List<SpotLightSale> newSales = new List<SpotLightSale>();               
-                newSales.AddRange(transactionsArray.GroupBy(t => t.CreatedDate.Date) 
-                                                            .Select(g => new SpotLightSale()
-                {
-                    SpotLightId = spotLightItem.Id,   
-                    UnitsSold = (int)g.Sum(t => t.ContainingOrder.OrderLineItemCount),
-                    AveragePrice = g.Average(t => Convert.ToDecimal(t.ConvertedTransactionPrice.Value)),
-                    SaleDate = g.Key,                   
-                }));
-
-                //The sales data we're storing in the database are aggregated by day. If we aggregated sales for 
-                //a date we already have stored in the db we update that aggregate in the db. Otherwise, we store the
-                //insert the new aggregate into the db.
-                foreach (var newSale in newSales.ToList())
-                {
-                    var oldSale = spotLightItem.SpotLightSales.FirstOrDefault(s => s.SaleDate == newSale.SaleDate);
-                    if (oldSale != null)
+                    newData.Add(new SpotlightSale()
                     {
-                        oldSale.UnitsSold = newSale.UnitsSold;
-                        oldSale.AveragePrice = newSale.AveragePrice;
-                        newSales.Remove(newSale);
-                    }
-                }           
+                        SnapshotDate = DateTime.Today,
+                        UnitsSold = item.QuantitySold,                       
+                        SpotlightPostId = spotLightItem.Id,
+                    });
+                }
                 //Insert new sales.
-                db.BulkInsert(newSales);
+                db.BulkInsert(newData);
                 //Push new aggs and updated aggs to database.
                 db.SaveChanges();
             }
@@ -981,8 +952,8 @@ namespace CipherPark.TriggerOrange.Core
                         EBayAuthToken = EbayUserTokenMeganova75
                     },
                     ItemID = productReferenceId,
-                    NumberOfDays = 30,
-                    Platform = TransactionPlatformCodeType.eBay,
+                    NumberOfDays = "30",
+                    //Platform = TransactionPlatformCodeType.eBay,
                     Pagination = new Pagination()
                     {
                         EntriesPerPage = 100,

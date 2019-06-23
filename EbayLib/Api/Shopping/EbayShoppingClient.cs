@@ -18,6 +18,11 @@ namespace CipherPark.Ebay.Api.Shopping
             return SendRequest<GetMultipleItemsResponse, GetMultipleItemsRequest>(request, env); 
         }
 
+        public GetSingleItemResponse GetSingleItem(GetSingleItemRequest request, EbayServiceEnvironment env = EbayServiceEnvironment.Production)
+        {
+            return SendRequest<GetSingleItemResponse, GetSingleItemRequest>(request, env);
+        }
+
         private TResponse SendRequest<TResponse, TRequest>(TRequest request, EbayServiceEnvironment env) where TRequest : IEbayRequest
         {
             string requestXml = SerializeToXml(request);

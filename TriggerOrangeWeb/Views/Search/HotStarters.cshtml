@@ -98,7 +98,7 @@
                         <option value="12">12</option>
                         <option value="24">24</option>
                         <option value="48">48</option>
-                        <option value="99">99</option>
+                        <option value="96">96</option>
                     </select>
                 </div>
                 <div class="c-filter">
@@ -117,7 +117,7 @@
             <!-- BEGIN: CSS TABLE -->           
             <div class="c-bs-grid-small-space" ng-show="!isLoading && !isEmpty">
                 <div class="row" ng-repeat="productRow in productRows">
-                    <div class="col-lg-4 c-margin-b-20" ng-repeat="product in productRow.products">
+                    <div class="col-lg-4 col-sm-6 c-margin-b-20" ng-repeat="product in productRow.products">
                         <div class="c-content-product-2 c-bg-white c-border">
                             <div class="c-content-overlay">
                                 <div class="c-label c-bg-red c-font-uppercase c-font-white c-font-13 c-font-bold">{{product.SellerLevel}} ({{product.SellerScore}})</div>
@@ -279,9 +279,9 @@
 @section ready{
     <!-- BEGIN TRIGGER ORANGE APP ANGULAR CONTROLLER(S) -->
     <script>
-            angular.module('triggerOrangeApp', ['orange', 'ngAnimate', 'ui.bootstrap'])
+            angular.module('triggerOrangeApp', ['orange', 'ngAnimate', 'ui.bootstrap', 'matchMedia'])
                 //*** Main Controller ***
-            .controller('triggerOrangeCtlr', function ($scope, $http, $window, $uibModal) {
+                .controller('triggerOrangeCtlr', function ($scope, $http, $window, $uibModal, screenSize) {                
                 $scope.tableState = {
                     pagination: {
                         currentPage: 1,
@@ -337,7 +337,7 @@
                        tableState.pagination.currentPage = result.currentPage;
                        tableState.pagination.totalItemCount = result.totalItemCount;
                        $scope.products = result.products;
-                       $scope.productRows = $scope.createProductRows(result.products, tableState.pagination.pageSize, 3);
+                       $scope.productRows = $scope.createProductRows(result.products, tableState.pagination.pageSize, screenSize.get());
                        //$scope.listedProductIds = result.listedProductIds;
                        $scope.isLoading = false;
                        $scope.isEmpty = result.products.length == 0;
@@ -389,8 +389,8 @@
                     });
                };
 
-               $scope.createProductRows = function (products, pageSize, nColumns) {
-                   var nGridColumns = nColumns;
+               $scope.createProductRows = function (products, pageSize, mediaSize) {
+                   var nGridColumns = mediaSize == 'lg' ? 3 : 2;
                    var nGridRows = Math.floor(pageSize / nGridColumns);
                    if ((pageSize % nGridColumns) != 0)
                        nGridRows++;
@@ -440,16 +440,23 @@
                };
                *@
 
+               screenSize.onChange($scope, 'lg', function(isMatch) {
+                   $scope.productRows = $scope.createProductRows($scope.products, $scope.tableState.pagination.pageSize, screenSize.get());
+               });
+
                $scope.onPageChanged = function () {
                    $window.scrollTo(0, 0);
                    $scope.getProductsPipe($scope.tableState);
                };
+
                $scope.resultRangeText = function () {
                    var firstItemOrdinal = ($scope.tableState.pagination.currentPage - 1) * $scope.tableState.pagination.pageSize + 1;
                    var lastItemOrdinal = Math.min($scope.tableState.pagination.currentPage * $scope.tableState.pagination.pageSize, $scope.tableState.pagination.totalItemCount);
                    return firstItemOrdinal + " - " + lastItemOrdinal;
                };
+
                $scope.getProductsPipe($scope.tableState);
+
                 }).controller("ModalInstanceCtrl", function ($scope, $uibModalInstance, $http) {
                     $scope.selectedReport = null;
                     $scope.reports = null;

@@ -58,12 +58,35 @@ namespace CipherPark.Ebay.Api.Trading
         public string LogisticsPlanType { get; set; }
         public PaymentInformationType MonetaryDetails { get; set; }
         public MultiLegShippingDetailsType MultiLegShippingDetails { get; set; }
-        //TODO: Continue Implementing.
+        public string OrderLineItemID { get; set; }
+        public DateTime PaidTime { get; set; }
+        public PaymentHoldDetailType PaymentHoldDetails { get; set; }
+        public string PayPalEmailAddress { get; set; }
+        public PickupDetailsType PickupDetails { get; set; }
+        public PickupMethodSelectedType PickupMethodSelected { get; set; }
+        public TransactionPlatformCodeType Platform { get; set; }
+        public int QuantityPurchased { get; set; }
+        //TODO: Continue Implementing.        
+    }
+
+    public class PaymentHoldDetailType
+    {
+        //TODO: Continue Implementing
+    }
+
+    public class PickupDetailsType
+    {
+        //TODO: Continue Implementing
+    }
+
+    public class PickupMethodSelectedType
+    {
+        //TODO: Continue Implementing
     }
 
     public class PaginationResultType
     {
-        public int TotalEntriesPerPage { get; set; }
+        public int TotalNumberOfEntries { get; set; }
         public int TotalNumberOfPages { get; set; }
     }
 

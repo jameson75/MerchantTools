@@ -10,7 +10,7 @@ namespace CipherPark.TriggerRed.Web.Models
     {
         public List<ProductModel> Products { get; set; }
         public int TotalProducts { get; set; }
-        public List<BlogPostModel> BlogPosts { get; set; }
+        public List<SpotlightPostJsonModel> SpotlightPosts { get; set; }
         public int TotalBlogPosts { get; set; }
     }
 }

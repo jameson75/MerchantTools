@@ -4390,6 +4390,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\match-media.js" />
     <Content Include="Scripts\mediator\meditor.css" />
     <Content Include="Scripts\mediator\meditor.js" />
     <Content Include="Scripts\mediator\meditor.min.css" />
@@ -4434,7 +4435,6 @@
     </Content>
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Landing.cshtml" />
-    <Content Include="Views\Blog\RecentPosts.cshtml" />
     <Content Include="Views\Home\Subscribe.cshtml" />
     <Content Include="Views\Home\MessageSent.cshtml" />
     <Content Include="Views\Shared\Layout.cshtml" />
@@ -4442,7 +4442,6 @@
     <Content Include="Views\Insights\Explore.cshtml" />
     <Content Include="Views\Home\ReleaseNotes.cshtml" />
     <Content Include="Views\Shared\AboutLayout.cshtml" />
-    <Content Include="Views\Blog\SinglePost.cshtml" />
     <Content Include="Views\SpotLight\Index.cshtml" />
     <None Include="Web.Internal.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -4462,7 +4461,6 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\SpotLightController.cs" />
-    <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\HostedImageController.cs" />
     <Compile Include="Controllers\InsightsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -4476,6 +4474,7 @@
     <Compile Include="Models\RecentBlogPosts.cs" />
     <Compile Include="Models\SearchViewModel.cs" />
     <Compile Include="Models\SendGridEventModel.cs" />
+    <Compile Include="Models\SpotlightPostJsonModel.cs" />
     <Compile Include="Services\UserAuthServices.cs" />
     <Compile Include="Services\WebApiServices.cs" />
     <Compile Include="Util\ControllerExtension.cs" />
@@ -4532,6 +4531,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\jango\assets\base\templates\" />
     <Folder Include="Scripts\App\" />
+    <Folder Include="Views\Blog\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TriggerOrangeCore\TriggerOrangeCore.csproj">

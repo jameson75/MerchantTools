@@ -28,7 +28,7 @@ namespace CipherPark.TriggerOrange.Web.Controllers
             {
                 Products = CoreDataServices.GetProductsBySiteForPage(12, 0, MarketPlaceSiteNames.eBayHotStarters, SearchSortKey.UnitsSold, null, out nTotalProducts),
                 TotalProducts = nTotalProducts,
-                BlogPosts = CoreDataServices.GetBlogPostsForPage(3, 0, null, null, null, out nTotalBlogPosts),
+                SpotlightPosts = CoreDataServices.GetSpotlightPostsForPage(3, 0, null, null, null, out nTotalBlogPosts),
                 TotalBlogPosts = nTotalBlogPosts,
             };
             return View(model);

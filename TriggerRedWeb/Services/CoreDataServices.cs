@@ -27,9 +27,74 @@ namespace CipherPark.TriggerRed.Web.CoreServices
             }
         }
 
-        internal static object GetSpotLightPostsForPage(int pageSize, int firstItemIndex, string sortKey, string keywords, bool isPublic, string userId, out int nTotalItemCount)
+        internal static List<SpotlightPostJsonModel> GetSpotlightPostsForPage(int pageSize, int firstItemIndex, string sortKey, string categoryRefId, string keywords, out int nTotalItems)
         {
-            throw new NotImplementedException();
+            if (!string.IsNullOrWhiteSpace(keywords))
+            {
+                var posts = GetSpotlightPostsByKeywords(pageSize, firstItemIndex, categoryRefId, keywords.Split(' '), sortKey, true, out nTotalItems);
+                //NOTE: the posts returned are shallow - they don't contain references to sales data. So we load them explicility.
+                using (var db = new TriggerOrange.Core.Data.OrangeEntities())
+                {
+                    foreach (var post in posts)
+                        db.Entry(post).Collection(p => p.SpotlightSales).Load();
+                }
+                return posts.Select(p => new SpotlightPostJsonModel()
+                {
+                    Id = p.Id,
+                    Title = p.Title,
+                    Summary = p.Summary,
+                    DateCreated = p.DateCreated.ToUnixMilliseconds(),
+                    DateModified = p.DateModified.ToUnixMilliseconds(),
+                    ProductPrice = p.ProductPrice,
+                    ProductSellerScore = p.ProductSellerScore,
+                    ProductUnitsSold = p.ProductUnitsSold,
+                    ProductUrl = p.ProductUrl,
+                    CoverImageId = p.CoverImageId,
+                    CoverImageUrl = ReferenceDataServices.HostedImageUrl(p.CoverImageId),
+                    ProductSellerLevel = SellerLevels.ScoreToLevel(p.ProductSellerScore),
+                    ProductListingDate = p.ProductListingDate.GetValueOrDefault().ToUnixMilliseconds(),
+                    ProductCategory = p.ProductCategory,
+                    Sales = p.SpotlightSales.Select(s => new SpotlightSaleJsonModel()
+                    {
+                        Date = s.SnapshotDate.ToUnixMilliseconds(),
+                        UnitsSold = s.UnitsSold
+                    }).ToArray(),
+                })
+                .ToList();
+            }
+            else
+            {
+                List<SpotlightPostJsonModel> blogPosts = new List<SpotlightPostJsonModel>();
+                nTotalItems = 0;
+                int nPageSize = pageSize;
+                using (OrangeEntities db = new OrangeEntities())
+                {
+                    var dbPostsAll = db.SpotlightPosts.Where(b => categoryRefId == null || b.ProductCategoryReferenceId == categoryRefId);
+                    var dbPosts = dbPostsAll.OrderByDescending(x => x.DateCreated)
+                                                   .Skip(firstItemIndex)
+                                                   .Take(pageSize)
+                                                   .ToList();
+                    blogPosts.AddRange(dbPosts.Select(p => new SpotlightPostJsonModel()
+                    {
+                        Id = p.Id,
+                        Title = p.Title,
+                        Summary = p.Summary,
+                        DateCreated = p.DateCreated.ToUnixMilliseconds(),
+                        DateModified = p.DateModified.ToUnixMilliseconds(),
+                        ProductPrice = p.ProductPrice,
+                        ProductSellerScore = p.ProductSellerScore,
+                        ProductUnitsSold = p.ProductUnitsSold,
+                        ProductUrl = p.ProductUrl,
+                        CoverImageId = p.CoverImageId,
+                        CoverImageUrl = ReferenceDataServices.HostedImageUrl(p.CoverImageId),
+                        ProductSellerLevel = SellerLevels.ScoreToLevel(p.ProductSellerScore),
+                        ProductListingDate = p.ProductListingDate.GetValueOrDefault().ToUnixMilliseconds(),
+                        ProductCategory = p.ProductCategory
+                    }));
+                    nTotalItems = dbPostsAll.Count();
+                }
+                return blogPosts;
+            }
         }
 
         internal static List<ProductModel> GetProductsByChildCategoryForPage(int pageSize, int firstItemIndex, long categoryId, string sortKey, ProductSearchFilter filter, out int nTotalItems)
@@ -129,6 +194,7 @@ namespace CipherPark.TriggerRed.Web.CoreServices
                 return GetProductsByChildCategoryForPage(pageSize, firstItemIndex, categoryId, sortKey, filter, out nTotalItems);
         }
 
+        /*
         internal static List<BlogPostModel> GetBlogPostsForPage(int pageSize, int firstItemIndex, string sortKey, Guid? blogId, string keywords, out int nTotalItems)
         {
             if (!string.IsNullOrWhiteSpace(keywords))
@@ -189,6 +255,52 @@ namespace CipherPark.TriggerRed.Web.CoreServices
                 return blogPosts;
             }
         }       
+        */
+
+        private static IEnumerable<SpotlightPost> GetSpotlightPostsByKeywords(int pageSize, int firstItemIndex, string p0, string[] searchTerms, string sortKey, bool enableInflectionalSearch, out int totalMatches)
+        {
+            if (searchTerms != null)
+            {
+                using (OrangeEntities db = new OrangeEntities())
+                {
+                    string query = $"SELECT * FROM SpotlightPost WHERE (CategoryReferenceId = @p0 OR @p0 IS NULL) AND CONTAINS ((Title, ProductKeywords), @p1)";
+
+                    System.Text.StringBuilder containsParamBuilder = new System.Text.StringBuilder();
+                    for (int i = 0; i < searchTerms.Length; i++)
+                    {
+                        if (!string.IsNullOrWhiteSpace(searchTerms[i]) &&
+                            !FullTextTSQLReservedWords.Contains(searchTerms[i].ToUpper()))
+                        {
+                            //Join each search term with AND - (Meaning any record returned must contain all expressions).
+                            if (containsParamBuilder.Length > 0)
+                                containsParamBuilder.Append(" AND");
+                            //If the search term consists of more than one token or contains a keyword recognized by the Full Text "CONTAINS" function,
+                            //We surround the term with double quotes.
+                            if (searchTerms[i].Contains(" "))
+                                containsParamBuilder.Append($" \"{searchTerms[i]}\"");
+                            //Otherwise, if variant search is enabled we search also search for variants of the the search term.
+                            else if (enableInflectionalSearch)
+                                containsParamBuilder.Append($" FORMSOF(INFLECTIONAL, \"{searchTerms[i]}\")");
+                            //Otherwise
+                            else
+                                containsParamBuilder.Append($" {searchTerms[i]}");
+                        }
+                    }
+                    if (containsParamBuilder.Length > 0)
+                    {
+                        string p1 = containsParamBuilder.ToString();
+                        var results = db.Database.SqlQuery<SpotlightPost>(query, p0, p1);
+                        totalMatches = results.Count();
+                        return results.OrderByDescending(x => x.DateCreated)
+                                      .Skip(firstItemIndex)
+                                      .Take(pageSize)
+                                      .ToList();
+                    }
+                }
+            }
+            totalMatches = 0;
+            return new List<SpotlightPost>();
+        }
 
         internal static void UpdateTaskSchedule(string taskName, string siteName, bool enabled, bool Sunday, bool Monday, bool Tuesday, bool Wednesday, bool Thursday, bool Friday, bool Saturday, DateTime startTime)
         {
@@ -328,6 +440,7 @@ namespace CipherPark.TriggerRed.Web.CoreServices
             "AND", "&", "AND NOT", "&!", "OR", "|"
         };
 
+        /*
         private static IEnumerable<BlogPost> GetBlogPostsByKeywords(int pageSize, int firstItemIndex, Guid? p0, string[] searchTerms, string sortKey, bool enableInflectionalSearch, out int totalMatches)
         {
             if (searchTerms != null)
@@ -382,7 +495,7 @@ namespace CipherPark.TriggerRed.Web.CoreServices
             totalMatches = 0;
             return new List<BlogPost>();
         }
-
+        */
 
         private static string IconFileForMessageType(string messageType)
         {

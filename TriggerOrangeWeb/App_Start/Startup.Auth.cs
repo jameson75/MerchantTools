@@ -24,9 +24,7 @@ namespace CipherPark.TriggerOrange.Web
                 LoginPath = new PathString("/Account/Login"),                                           
             });
 
-            CreateAdmin();
-            CreateBlogs();
-            CreateSystemProductLists();
+            CreateAdmin();            
         }
 
         private void CreateAdmin()
@@ -37,43 +35,6 @@ namespace CipherPark.TriggerOrange.Web
             string password = "trigg3rBaby75";
             if (!UserAuthServices.UserExists(systemAdminName))
                 UserAuthServices.Register(systemAdminName, "meganova75@gmail.com", password, password, TriggerOrangeRoles.Admin);
-        }
-
-        private void CreateBlogs()
-        {
-            using (var db = new TriggerOrange.Core.Data.OrangeEntities())
-            {
-                foreach (var blogPage in BlogPages.All)
-                {
-                    if (db.Blogs.All(x => x.Id != blogPage.Id))
-                        db.Blogs.Add(new Core.Data.Blog()
-                        {
-                            Id = blogPage.Id,
-                            Name = blogPage.Name,
-                            Caption = blogPage.Caption
-                        });
-                }
-                db.SaveChanges();                
-            }
-        }
-
-        private void CreateSystemProductLists()
-        {
-            using (var db = new TriggerOrange.Core.Data.OrangeEntities())
-            {
-                foreach (var listName in SystemProductLists.Names)
-                {
-                    if (db.Reports.All(x => x.Name != listName))
-                        db.Reports.Add(new Core.Data.Report()
-                        {
-                            Comments = $"System {listName} list",
-                            RunDate = DateTime.Now,
-                            IsPublic = false,
-                            Name = listName,                          
-                        });
-                    db.SaveChanges();
-                }
-            }
-        }
+        }     
     }
 }

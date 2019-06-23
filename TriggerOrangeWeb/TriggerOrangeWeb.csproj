@@ -4381,6 +4381,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\match-media.js" />
     <Content Include="Scripts\mediator\meditor.css" />
     <Content Include="Scripts\mediator\meditor.js" />
     <Content Include="Scripts\mediator\meditor.min.css" />
@@ -4434,9 +4435,7 @@
     <Content Include="Views\_Shared\_Layout.cshtml" />
     <Content Include="Views\_Shared\_LandingLayout.cshtml" />
     <Content Include="Views\Home\AdminStart.cshtml" />
-    <Content Include="Views\Blog\EditPost.cshtml" />
-    <Content Include="Views\Blog\PostVoided.cshtml" />
-    <Content Include="Views\Blog\SearchPosts.cshtml" />
+    <Content Include="Views\Spotlight\RecentPosts.cshtml" />
     <None Include="Web.Internal.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -4455,7 +4454,6 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\EbayLifeController.cs" />
     <Compile Include="Controllers\HostedImageController.cs" />
     <Compile Include="Controllers\ListsController.cs" />
@@ -4464,6 +4462,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\SpotlightController.cs" />
     <Compile Include="Controllers\WebHooksController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -4485,6 +4484,7 @@
     <Compile Include="Models\SimilarProductViewModel.cs" />
     <Compile Include="Models\SourceProductViewModel.cs" />
     <Compile Include="Models\SourcesViewModel.cs" />
+    <Compile Include="Models\SpotlightPostJsonModel.cs" />
     <Compile Include="Services\UserAuthServices.cs" />
     <Compile Include="Services\WebApiServices.cs" />
     <Compile Include="Util\ControllerExtension.cs" />
@@ -4558,6 +4558,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\jango\assets\base\templates\" />
     <Folder Include="Scripts\App\" />
+    <Folder Include="Views\Blog\" />
     <Folder Include="Views\HostedImage\" />
   </ItemGroup>
   <ItemGroup>
