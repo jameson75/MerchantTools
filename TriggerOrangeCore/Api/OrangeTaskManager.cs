@@ -146,7 +146,7 @@ namespace CipherPark.TriggerOrange.Core
                                                     "Scheduler",
                                                     () =>
                                                     {
-                                                        _api.UpdateMarketPlaceHotLists(site);
+                                                        _api.UpdateMarketPlaceHotLists(site);                                                        
                                                     });
                         }
 

@@ -17,7 +17,16 @@
         <div class="container">
             <div class="row c-margin-b-100 c-margin-t-30">
                 <div class="col-md-7">
-                    @if (ViewBag.CaptchaFailed)
+                    @if (ViewBag.InputInvalid)
+                    {
+                        <div class="c-content-title-1 c-title-md">
+                            <h3 class="c-font-uppercase c-font-bold"><span class="c-theme-font">Sorry.</span></h3>
+                            <div class="c-line-left hide"></div>
+                        </div>
+                        <p class="c-text c-font-16 c-font-regular">Your message was not delivered. Please go back and make sure you entered your full name, your email and the message you wish to send.</p>
+
+                    }
+                    else if (ViewBag.CaptchaFailed == false)
                     {
                         <div class="c-content-title-1 c-title-md">
                             <h3 class="c-font-uppercase c-font-bold">Thank <span class="c-theme-font">You</span></h3>

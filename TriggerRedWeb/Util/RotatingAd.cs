@@ -24,7 +24,7 @@ namespace CipherPark.TriggerRed.Web.Util
                 HtmlString = @"<a href=""https://www.salehoo.com/learn-more?aff=cipherseller"" target=""_blank"">
                                <img width=""480"" height=""250"" border=""0"" style=""border:none"" src=""https://cdn.salehoo.com/files/image/fb-banners/fb-1200-x-628-wholesale-a.png"" />
                                </a>",
-                Enabled = true,
+                Enabled = false,
             },
 
             new RotatingAd
@@ -44,7 +44,7 @@ namespace CipherPark.TriggerRed.Web.Util
                 HtmlString = @"<a href=""http://www.kqzyfj.com/click-1-13618431"" target=""_blank"">                              
                               <img src=""https://www.triggerred.com/Content/inventory_source.jpg"" width=""450"" height=""250"" alt=""Inventory Source"" border=""0""/>
                               </a>",
-                Enabled = true,
+                Enabled = false,
             },
 
             new RotatingAd

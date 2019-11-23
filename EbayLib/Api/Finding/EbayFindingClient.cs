@@ -77,13 +77,18 @@ namespace CipherPark.Ebay.Api.Finding
 
             catch (WebException webEx)
             {
-                using (Stream responseStream = webEx.Response.GetResponseStream())
+                if (webEx.Response != null)
                 {
-                    using (StreamReader reader = new StreamReader(responseStream, Encoding.Default))
+                    using (Stream responseStream = webEx.Response.GetResponseStream())
                     {
-                        responseData = reader.ReadToEnd();
+                        using (StreamReader reader = new StreamReader(responseStream, Encoding.Default))
+                        {
+                            responseData = reader.ReadToEnd();
+                        }
                     }
                 }
+                else                
+                    throw new InvalidOperationException("Unknown web exception occured", webEx);                
             }
 
             return responseData;

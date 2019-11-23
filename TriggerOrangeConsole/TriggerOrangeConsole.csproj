@@ -125,6 +125,10 @@
       <Project>{3fb540b6-46a2-48c3-995b-b11947a80e27}</Project>
       <Name>EbayLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MerchantScraperLib\MerchantScraperLib.csproj">
+      <Project>{2cf1b2c5-196f-491e-89fb-f0ea9fad8f6c}</Project>
+      <Name>MerchantScraperLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TriggerOrangeCore\TriggerOrangeCore.csproj">
       <Project>{c74900f4-ce03-4f55-9190-b08d41bd52c6}</Project>
       <Name>TriggerOrangeCore</Name>

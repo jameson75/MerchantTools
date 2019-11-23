@@ -178,6 +178,8 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\BusyRoomHeroSample.jpg" />
     <Content Include="Content\BusyRoomHeroSample_v1.jpg" />
+    <Content Include="Content\Chart.css" />
+    <Content Include="Scripts\Chart.js" />
     <Content Include="Content\customized-bootstrap.css" />
     <Content Include="Content\gumbo\ng-notification-bar\bower_components\angular-mocks\angular-mocks.js" />
     <Content Include="Content\gumbo\ng-notification-bar\bower_components\angular-sanitize\angular-sanitize.js" />
@@ -3036,6 +3038,7 @@
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />
     <Content Include="Scripts\angular-aria.min.js" />
+    <Content Include="Scripts\angular-chart.js" />
     <Content Include="Scripts\angular-cookies.js" />
     <Content Include="Scripts\angular-cookies.min.js" />
     <Content Include="Scripts\angular-csp.css" />

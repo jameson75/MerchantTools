@@ -54,9 +54,10 @@ namespace CipherPark.TriggerOrange.Web.Controllers
             return View();
         }
 
-        public ActionResult MessageSent(bool? captchaFailed)
+        public ActionResult MessageSent(bool? captchaFailed, bool? inputInValid)
         {
             ViewBag.CaptchaFailed = captchaFailed.GetValueOrDefault();
+            ViewBag.InputInvalid = inputInValid.GetValueOrDefault();
             return View();
         }
 
@@ -68,20 +69,32 @@ namespace CipherPark.TriggerOrange.Web.Controllers
         [HttpPost]
         public ActionResult SubmitEmail(FormCollection collection)
         {
+            bool inputInvalid = false;
+            bool captchaValid = true;
             string fullName = collection["fullName"];
             string email = collection["email"];
-            string message = collection["message"];           
-            SmtpClient smtpClient = new SmtpClient();
-            smtpClient.EnableSsl = true;
-            MailMessage mail = new MailMessage();
-            mail.From = new MailAddress("system@triggerred.com", fullName);
-            mail.To.Add(new MailAddress("info@triggerRed.com"));          
-            mail.ReplyToList.Add(email);
-            mail.Body = message;
-            var captchaValid = IsReCaptchaResponseValid(collection["g-recaptcha-response"]);      
-            if(captchaValid)
-                smtpClient.Send(mail);
-            return RedirectToAction("MessageSent", new { captchFailed = true});
+            string message = collection["message"];
+
+            if (string.IsNullOrEmpty(fullName) ||
+               string.IsNullOrEmpty(email) ||
+               string.IsNullOrEmpty(message))
+            {
+                inputInvalid = true;
+            }
+            else
+            {
+                SmtpClient smtpClient = new SmtpClient();
+                smtpClient.EnableSsl = false;
+                MailMessage mail = new MailMessage();
+                mail.From = new MailAddress("mailadmin@triggerred.com", fullName);
+                mail.To.Add(new MailAddress("info@triggerRed.com"));
+                mail.ReplyToList.Add(email);
+                mail.Body = message;
+                captchaValid = IsReCaptchaResponseValid(collection["g-recaptcha-response"]);
+                if (captchaValid)
+                    smtpClient.Send(mail);
+            }
+            return RedirectToAction("MessageSent", new { captchaFailed = !captchaValid, inputInvalid});
         }
 
         public bool IsReCaptchaResponseValid(string captchaResponse)

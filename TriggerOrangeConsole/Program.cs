@@ -15,6 +15,7 @@ using CipherPark.Ebay.Api.Merchandising;
 using CipherPark.Ebay.Api.Shopping;
 using CipherPark.Ebay.Util;
 using CipherPark.Alibaba.Api;
+using CipherPark.MerchantScraper.Api;
 
 namespace CipherPark.TriggerOrange.Console
 {    
@@ -57,7 +58,8 @@ namespace CipherPark.TriggerOrange.Console
         {
             //ConnectivityTest();
             //BestSellingTest();
-            //EbayHotStarters();         
+            //EbayHotStarters();        
+            GuessStoreTest();
         }    
 
         private void ConsoleBackOffice()
@@ -471,6 +473,12 @@ namespace CipherPark.TriggerOrange.Console
             }
 
             #endregion
+        }
+
+        static void GuessStoreTest()
+        {
+            GuessStoreScraper scraper = new GuessStoreScraper();
+            var items = scraper.FindItemsOnSale();
         }
 
         static void EbayHotStarters()

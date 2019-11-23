@@ -248,6 +248,7 @@ namespace CipherPark.TriggerOrange.Core
             }
         }
 
+        /*
         public void UpdateSalesForSpotLightItems()
         {
             string operationName = "UpdateSalesForSpotLightItems";
@@ -263,8 +264,12 @@ namespace CipherPark.TriggerOrange.Core
             {
                 var today = DateTime.Today.Date;
                 List<SpotlightSale> newData = new List<SpotlightSale>();
-                foreach (var spotLightItem in db.SpotlightPosts.Where(x => x.DateCreated >= DateTime.Today.AddDays(-30) &&
-                                                                           !x.SpotlightSales.Any(s => s.SnapshotDate >= today)))
+
+                //*For each spot light item which was created less than 28 days ago and was not updated today*...
+                //Update
+                var cutOffDate = DateTime.Today.AddDays(-28);
+                foreach (var spotLightItem in db.SpotlightPosts.Where(x => x.DateCreated >= cutOffDate &&
+                                                                          !x.SpotlightSales.Any(s => s.SnapshotDate >= today)))
                 {
                     //Retreive sales data from ebay.
                     LogOperationInfo(operationName, $"Retreiving sales data from ebay for item {spotLightItem.ProductReferenceId}");
@@ -288,6 +293,7 @@ namespace CipherPark.TriggerOrange.Core
                 db.SaveChanges();
             }
         }
+        */
 
         public void UpdateMarketPlaceHotLists(string siteName)
         {
@@ -866,8 +872,7 @@ namespace CipherPark.TriggerOrange.Core
         public IEnumerable<Data.Product> FullTextProductSearch(int pageSize, int firstItemIndex, long categoryId, string[] searchTerms, string sortKey, ProductSearchFilter filter, bool enableInflectionalSearch, out int totalMatches)
         {            
             return _FullTextProductSearch(pageSize, firstItemIndex, true, categoryId, searchTerms, sortKey, filter, enableInflectionalSearch, out totalMatches);
-        }
-     
+        }     
 
         private IEnumerable<Data.Product> _FullTextProductSearch(int pageSize, int firstItemIndex, bool searchByCategoryId, object p0, string[] searchTerms, string sortKey, ProductSearchFilter filter, bool enableInflectionalSearch, out int totalMatches)
         {

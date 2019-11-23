@@ -42,7 +42,6 @@
                                             By <a href="#"><span class="c-font-uppercase">T.R. Staff</span></a>
                                             on <span class="c-font-uppercase">{{post.DateCreated | date:'medium'}}</span>
                                         </div>
-
                                         <div class="c-panel">
                                             <ul class="c-tags c-theme-ul-bg">
                                                 <li>{{post.ProductSellerLevel}}</li>
@@ -50,9 +49,9 @@
                                             </ul>
                                             <div class="c-comments"><a href="#"><i class="icon-fire"></i><span class="c-font-bold"> {{post.ProductUnitsSold}}</span> sold first 7 days</a></div>
                                         </div>
-                                        <p>
-                                            {{post.Summary}}
-                                        </p>
+                                        <div class="c-center"><span class="c-font-uppercase c-font-12 c-font-bold">Performance in first 4 weeks</span></div>
+                                        <canvas id="bar" class="chart chart-bar" chart-data="post.chartProp.data" chart-labels="post.chartProp.labels" chart-series="post.chartProp.series" chart-options="post.chartProp.options"></canvas>
+                                        <p ng-bind-html="post.Summary"></p>
                                     </div>
                                 </div>
                             </div>
@@ -84,9 +83,7 @@
                                             </ul>
                                             <div class="c-comments"><a href="#"><i class="icon-fire"></i><span class="c-font-bold"> {{post.ProductUnitsSold}}</span> sold first 7 days</a></div>
                                         </div>
-                                        <p>
-                                            {{post.Summary}}
-                                        </p>
+                                        <p ng-bind-html="post.Summary"></p>
                                     </div>
                                 </div>
                             </div>
@@ -116,9 +113,7 @@
                                             </ul>
                                             <div class="c-comments"><a href="#"><i class="icon-fire"></i><span class="c-font-bold"> {{post.ProductUnitsSold}}</span> sold first 7 days</a></div>
                                         </div>
-                                        <p>
-                                            {{post.Summary}}
-                                        </p>
+                                        <p ng-bind-html="post.Summary"></p>
                                     </div>
                                 </div>
                             </div>
@@ -151,6 +146,8 @@
 <!-- END: BLOG LISTING  -->
 <!-- END: PAGE CONTENT -->
 <!-- END: PAGE CONTAINER -->
+<!-- END: PAGE CONTAINER -->
+<oib-Jango-Notification messages="notifications"></oib-Jango-Notification>
 
 <script id="template/pagination/orangepagination.html" type="text/ng-template">
     <ul class="c-content-pagination c-square c-theme">
@@ -175,8 +172,10 @@
         </div>          
         <div class="c-margin-b-20"></div>
         <div class="row">
-            <textarea ng-model="summary" name="Content" id="Content" class="form-control c-square c-theme input-lg" ng-model="postContent" ng-show="!isPreview" placeholder="Summary" style="min-height: 250px;"></textarea>
+            <textarea ng-model="summary" name="Content" id="Content" class="form-control c-square c-theme input-lg" ng-show="!isPreview" placeholder="Summary" style="min-height: 250px;"></textarea>
         </div>
+        <div class="c-margin-b-20"></div>
+
     </div>
     <div class="modal-footer">
         <button type="submit" class="btn btn-lg c-theme-btn c-btn-square c-btn-uppercase c-btn-bold" ng-click="ok()">OK</button>
@@ -187,7 +186,7 @@
 @section ready{
     <!-- BEGIN TRIGGER ORANGE APP ANGULAR CONTROLLER(S) -->
     <script>
-            angular.module('triggerOrangeApp', ['orange', 'ngAnimate', 'ui.bootstrap', 'ngSanitize'])
+            angular.module('triggerOrangeApp', ['orange', 'ngAnimate', 'ui.bootstrap', 'ngSanitize', 'chart.js'])
                 //*** Main Controller ***
             .controller('triggerOrangeCtlr', function ($scope, $http, $window, $uibModal) {
                 $scope.tableState = {
@@ -224,6 +223,7 @@
                        const columnSize = 3;
                        var rowSize = Math.ceil((Math.min($scope.tableState.pagination.pageSize, result.posts.length) / columnSize));
                        var col1Height = rowSize;
+                       $scope.createChartJSProperties(result.posts);
                        $scope.posts1 = result.posts.slice(0, col1Height);
                        var col2Height = Math.ceil((result.posts.length - col1Height) / 2);
                        $scope.posts2 = result.posts.slice(col1Height, col1Height + col2Height);
@@ -267,6 +267,7 @@
                                return {
                                    title: post.Title,
                                    summary: post.Summary,
+                                   isHidden: post.IsHidden,
                                }
                            }
                        },
@@ -274,29 +275,85 @@
                    modalInstance.result.then(function (result) {
                        if (result.id == 'ok') {
                            //$scope.updateProductsListedStatus();
-                           $scope.EditPost(post.Id, result.data.title, result.data.summary);
+                           $scope.EditPost(post.Id, result.data.title, result.data.summary, result.data.isHidden);
                        }
                    });
                    return modalInstance;
                };
-               $scope.EditPost = function (postId, title, summary) {
+               $scope.EditPost = function (postId, title, summary, isHidden) {
                    var postData = {
                        postId: postId,
-                       title: title,
+                       title: title,                      
                        summary: summary,
+                       isHidden: isHidden,
                    };
                    $http.post('@Url.Action("EditPost", "Spotlight")', postData).success(function (result) {
+                       var post = $scope.posts.find(function (e) {
+                           return e.Id == postId;
+                       });
+                       if (post != null) {
+                           post.Title = result.title;
+                           post.Summary = result.summary;
+                           post.IsHidden = result.isHidden;                            
+                       };                          
                        $scope.notifications.push({ type: "success", data: "Spotlight Edited", timeStamp: new Date().getTime() });
                    }).error(function (result) {
-                       $scope.notifications.push({ type: "error", data: errorMessage, timeStamp: new Date().getTime() });
+                       $scope.notifications.push({ type: "error", data: "An error occured", timeStamp: new Date().getTime() });
                    });
+               };
+               $scope.createChartJSProperties = function (posts) {
+                   for (var i = 0; i < posts.length; i++) {                       
+                       var post = posts[i];
+                       var stepSize = 10;
+                       var maxUnitsSold = 0;
+                       var max = 0;
+                       for (var j = 0; j < Math.min(post.Sales.length, 4); j++)
+                           if (post.Sales[j].UnitsSold > maxUnitsSold)
+                               maxUnitsSold = post.Sales[j].UnitsSold;                       
+                       if (maxUnitsSold <= 100) {
+                           stepSize = 20;
+                           max = 100
+                       }               
+                       else if (maxUnitsSold <= 250) {
+                           stepSize = 50;
+                           max = 250
+                       }  
+                       else if (maxUnitsSold < 500) {
+                           stepSize = 100;
+                           max = 500;
+                       }
+                       else {
+                           stepSize = 200
+                           max = Math.floor(maxUnitsSold / stepSize) * stepSize + stepSize;
+                       }
+                       post.chartProp = {
+                           labels: ["Week 1" , "Week 2", "Week 3", "Week 4"],
+                           data: [1],
+                           options: {
+                               scales: {
+                                   yAxes: [{
+                                       ticks: {
+                                           stepSize: stepSize,
+                                           suggestedMin: 0,
+                                           max: max,
+                                       }
+                                   }]
+                               },
+                           },
+                       };
+                       post.chartProp.data[0] = [];
+                       for (var j = 0; j < Math.min(post.Sales.length, 4); j++)                          
+                           post.chartProp.data[0].push(post.Sales[j].UnitsSold);                       
+                       post.chartProp.series = ["Units Sold"];
+                   }
                };
                $scope.getPostsPipe($scope.tableState);
             }).controller("ModalInstanceCtrl", function ($scope, $uibModalInstance, $http, input) {
                 $scope.title = input.title;
                 $scope.summary = input.summary;
+                $scope.isHidden = input.isHidden;
                 $scope.ok = function () {
-                    $uibModalInstance.close({ id: 'ok', data: { title: $scope.title, summary: $scope.summary } });
+                    $uibModalInstance.close({ id: 'ok', data: { title: $scope.title, summary: $scope.summary, isHidden : $scope.isHidden } });
                 };
                 $scope.cancel = function () {
                     $uibModalInstance.dismiss({ id: 'cancel', data: null });
