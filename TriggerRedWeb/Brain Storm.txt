@@ -6,7 +6,6 @@ Registered Domains
 
 Project ideas.
 
-
 Financial Dashboard
 	-Javascript:
 		-Support for JQuery, AngularJS, Angular2+, ReactJS, Vue
